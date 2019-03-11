@@ -1,4 +1,8 @@
 #importonce
+
+// Zeichenlänge für Spielernamen
+.const playerNameLength = 32
+
 .pc = * "Player memory"
 // Anzahl der Mitspieler
 playerCount:
@@ -6,14 +10,14 @@ playerCount:
 
 // Namen der Mitspieler
 playerNames:
-    .fill 32,0
-    .fill 32,0
-    .fill 32,0
-    .fill 32,0
-    .fill 32,0
-    .fill 32,0
-    .fill 32,0
-    .fill 32,0
+    .fill playerNameLength,0
+    .fill playerNameLength,0
+    .fill playerNameLength,0
+    .fill playerNameLength,0
+    .fill playerNameLength,0
+    .fill playerNameLength,0
+    .fill playerNameLength,0
+    .fill playerNameLength,0
 
 // Variablen für den Spieler
 // 128 Bytes
@@ -88,16 +92,16 @@ player8:
                       // $00-$01   Reserved for IO
 .const ZeroPageTemp    = $02
                       // $03-$8F   Reserved for BASIC
-                      // using $73-$8A CHRGET as BASIC not used for our game
-.const ZeroPageParam1  = $73
-.const ZeroPageParam2  = $74
-.const ZeroPageParam3  = $75
-.const ZeroPageParam4  = $76
-.const ZeroPageParam5  = $77
-.const ZeroPageParam6  = $78
-.const ZeroPageParam7  = $79
-.const ZeroPageParam8  = $7A
-.const ZeroPageParam9  = $7B
+
+.const ZeroPageParam1  = $F7
+.const ZeroPageParam2  = $F8
+.const ZeroPageParam3  = $F9
+.const ZeroPageParam4  = $FA
+//.const ZeroPageParam5  = $77
+//.const ZeroPageParam6  = $78
+//.const ZeroPageParam7  = $79
+//.const ZeroPageParam8  = $7A
+//.const ZeroPageParam9  = $7B
                       // $90-$FA   Reserved for Kernal
 .const ZeroPageLow     = $FB
 .const ZeroPageHigh    = $FC
@@ -107,6 +111,8 @@ player8:
 // additionally free if no RS323 and Tape in use
 //$9E-$9F, $A5-$A7, $A9-$AB, $B0-$B6, $F7-$FA
 
+// ZP Adresse für indirekte Texte
+.const TextPtr          = ZeroPageLow
 
 
 //===============================================================================

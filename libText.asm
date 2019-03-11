@@ -1,8 +1,5 @@
 #importonce
 
-// ZP Adresse
-.const TextPtr          = ZeroPageLow
-
 // PET Cursorbewegung
 .const PET_HOME         = $13
 .const PET_RIGHT        = $9d

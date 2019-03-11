@@ -1,0 +1,6 @@
+# output folders
+bin/
+
+# Editor project files
+.sublime-project
+.sublime-workspace

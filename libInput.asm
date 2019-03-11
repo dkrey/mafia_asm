@@ -1,3 +1,5 @@
+#importonce
+
 //===============================================================================
 // wait for keypress
 // Warten auf den Tastendruck
@@ -152,7 +154,21 @@ got_input:
     .fill 128,0
 
 //===============================================================================
-// Move_input_dst
-// Schiebt
+// Move_input_to_TextPtr
+// Schiebt got_input an die Adresse von TextPtr
+// Y - Register = Offset
 //===============================================================================
-Move_input_dst:
+Move_input_to_TextPtr:
+        ldx #$00            // Init x-Register
+                            // Das Y-Register muss schon mit dem Offser vorgeladen sein
+!loop:
+        lda got_input, x    // Got Input byte-weise laden
+        beq !end+           // 0 Terminiterter String bedeutet Ende
+        sta (TextPtr), y    // und indirekt Y-indiziert speichern
+
+        inx                 // Bytezähler für Quelle
+        iny                 // Bytezähler für Ziel
+        cpx playerNameLength             // Sofern 0 nicht im Akku steht, weiter
+        bne !loop-
+!end:
+        rts

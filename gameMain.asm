@@ -61,10 +61,10 @@ howManyPlayers:
     mov16 #strHowManyScreen : TextPtr  // Adresse vom Text setzen
     jsr Print_text_xy                  // Text anzeigen
 
-    ldy #1                          // Anzahl Zeichen für die Input Routine: 1
-
-    lda #>filter_num_players        // Filter setzen LSB: Zahlen 1-8
-    ldx #<filter_num_players        // Filter setzen MSB: Zahlen 1-8
+    ldy #1
+                      // Anzahl Zeichen für die Input Routine: 1
+    ldx #<filter_num_players        // Filter setzen LSB: Zahlen 1-8
+    lda #>filter_num_players        // Filter setzen MSB: Zahlen 1-8
 
     jsr Get_filtered_input          // Input holen und speichern
     lda got_input                   // Ergebnis holen
@@ -83,9 +83,9 @@ howManyPlayers:
 enterNames:                         // Spielernamen eingeben
     mov16 #strEnterName : TextPtr   // "Namen eingeben" anzeigen
     jsr Print_text
-    stx ZeroPageTemp                // X-Wert sichern, weil Input ihn überschreibt
+    stx ZeroPageTemp                // X-Wert sichern, weil GetInput ihn überschreibt
     txa
-    clc                             // Dazu 0x31h addieren, wegen PetSCI und Ziffer
+    clc                             // Dazu 0x30h addieren, wegen PetSCI und Ziffer
     adc #$31                        // und außerdem noch +1 weil von 0 gezählt
     jsr BSOUT
     lda #'?'                        // Fragezeichen am Satzende
@@ -93,15 +93,27 @@ enterNames:                         // Spielernamen eingeben
     lda #' '                        // Leerzeichen hintendran
     jsr BSOUT
 
-    ldy #32                         // 32 Zeichen darf der Name haben
-    lda #>filter_alphanumeric       // Diese Zeichen sind erlaubt
-    ldx #<filter_alphanumeric
+    ldy #playerNameLength           // 32 Zeichen darf der Name haben
+
+    ldx #<filter_alphanumeric       // Diese Zeichen sind erlaubt
+    lda #>filter_alphanumeric
+
     jsr Get_filtered_input
 
-    //DEBUG
-    mov16 #got_input : TextPtr
-    jsr Print_text
+    ldx ZeroPageTemp                // Aktuelle Spielerzahl für Offset-Schleife
+!loop:
+    txa                             // X in den Akku und mit 32 multiplizieren
+    .for (var i = 0; i < 6; i++) {  // *2^5 = *32
+        asl
+    }
+    tay                             // Offset nach Y
+!end:
+    lda #<playerNames              //  Zieladresse für den Spielernamen
+    sta TextPtr                    //           an TextPtr schreiben
+    lda #>playerNames
+    sta TextPtr+1
 
+    jsr Move_input_to_TextPtr       // Namen an die neue Speicherstelle schreiben
     ldx ZeroPageTemp                // X-Wert aus Temp holen
     inx                             // Spielerzähler erhöhen
     cpx playerCount                 // Mit Anzahl vergleichen
