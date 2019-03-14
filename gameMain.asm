@@ -108,13 +108,15 @@ enterNames:                         // Spielernamen eingeben
     }
     tay                             // Offset nach Y
 !end:
-    lda #<playerNames              //  Zieladresse für den Spielernamen
-    sta TextPtr                    //           an TextPtr schreiben
-    lda #>playerNames
-    sta TextPtr+1
+    mov16 #playerNames : TextPtr
+    //lda #<playerNames              //  Zieladresse für den Spielernamen
+    //sta TextPtr                    //           an TextPtr schreiben
+    //lda #>playerNames
+    //sta TextPtr+1
 
     jsr Move_input_to_TextPtr       // Namen an die neue Speicherstelle schreiben
     ldx ZeroPageTemp                // X-Wert aus Temp holen
+    .break
     inx                             // Spielerzähler erhöhen
     cpx playerCount                 // Mit Anzahl vergleichen
     bne enterNames                  // weiter Spielername

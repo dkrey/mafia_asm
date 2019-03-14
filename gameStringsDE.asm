@@ -31,7 +31,7 @@ strTitleScreen:
     .byte PET_CR,PET_CR,PET_CR,PET_CR,PET_CR
     .text "(c) 2019 Kreybernetisches Institut"
     .byte PET_CR
-    .text "    f. angewandte Informatik"
+    .text "    f. abgewandte Informatik"
     .byte 0
 
 //===============================================================================
