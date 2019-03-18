@@ -157,6 +157,10 @@ checkPlayerNames:
     jmp howManyPlayers      // Ansonsten von vorn
 
 readyToBegin:
+    mov16 #strGoodLuck: TextPtr     // Viel Glück anzeigen
+    jsr Print_text
+    jsr Wait_for_key                // auf Testendruck warten
+
 
 main:
     mov #GREEN : BGCOL0               // Debug

@@ -59,3 +59,9 @@ strCheckAllNames:
 strIsThatCorrect:
     .text "Ist das richtig (j/n)? "
     .byte 0
+strGoodLuck:
+    .byte PET_CR,PET_CR
+    .text "Moege der Bessere gewinnen!"
+    .byte PET_CR
+    .text "(Weiter mit beliebiger Taste)"
+    .byte 0
