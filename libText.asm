@@ -77,3 +77,23 @@ Print_text:
         bne !loop-
 !end:
         rts
+
+//===============================================================================
+// Print_text_offset
+//
+// Gibt einen Null-terminierten Text aus
+// ZP TextPtr: Textstelle
+// y = Offset im Speicher
+//===============================================================================
+Print_text_offset:
+
+!loop:
+        lda (TextPtr), y
+        beq !end+
+        jsr BSOUT
+
+!noreset:
+        iny
+        bne !loop-
+!end:
+        rts

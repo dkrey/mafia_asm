@@ -136,7 +136,9 @@ filter_alphanumeric:
 filter_numeric:
     .text "1234567890"
     .byte 0
-
+filter_yesno:
+    .text "JNjn"
+    .byte 0
 //=================================================
 minchars:
 

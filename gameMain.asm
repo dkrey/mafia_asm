@@ -101,13 +101,13 @@ enterNames:                         // Spielernamen eingeben
     jsr Get_filtered_input
 
     ldx ZeroPageTemp                // Aktuelle Spielerzahl für Offset-Schleife
-!loop:
+
     txa                             // X in den Akku und mit 32 multiplizieren
     .for (var i = 0; i < 6; i++) {  // *2^5 = *32
         asl
     }
-    tay                             // Offset nach Y
-!end:
+    tay                             // Offset aus Akku nach Y
+
     mov16 #playerNames : TextPtr
     //lda #<playerNames              //  Zieladresse für den Spielernamen
     //sta TextPtr                    //           an TextPtr schreiben
@@ -116,7 +116,6 @@ enterNames:                         // Spielernamen eingeben
 
     jsr Move_input_to_TextPtr       // Namen an die neue Speicherstelle schreiben
     ldx ZeroPageTemp                // X-Wert aus Temp holen
-    .break
     inx                             // Spielerzähler erhöhen
     cpx playerCount                 // Mit Anzahl vergleichen
     bne enterNames                  // weiter Spielername
@@ -124,6 +123,39 @@ enterNames:                         // Spielernamen eingeben
 //===============================================================================
 // alles in Ordnung?
 //===============================================================================
+checkPlayerNames:
+    mov16 #strCheckAllNames: TextPtr // Anzeige: Es spielen mit
+    jsr Print_text
+
+    ldx #00                         // Durch die Spielernamen mit X zählen
+    mov16 #playerNames : TextPtr    // Beginn der Spielernamen
+
+!loop:
+    txa                             // X in den Akku und mit 32 multiplizieren
+    .for (var i = 0; i < 6; i++) {  // *2^5 = *32
+        asl
+    }
+    tay                             // Offset aus Akku nach Y
+    jsr Print_text_offset           // Schreibe den Spielernamen
+    lda #PET_CR                      // Zeilenumbruch
+    jsr BSOUT
+    inx
+    cpx playerCount                 // Solange x< Spieleranzahl
+    bne !loop-                      // weiter mit Schleife
+
+    mov16 #strIsThatCorrect: TextPtr // Ist das richtig?
+    jsr Print_text
+
+    ldx #<filter_yesno       // Diese Zeichen sind erlaubt
+    lda #>filter_yesno
+
+    jsr Get_filtered_input  // Ja oder nein
+
+    lda got_input           // Antwort Char in den Akku
+    cmp #'J'
+    beq readyToBegin
+    jmp howManyPlayers      // Ansonsten von vorn
+
 readyToBegin:
 
 main:

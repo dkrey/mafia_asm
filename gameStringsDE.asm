@@ -49,3 +49,13 @@ strEnterName:
     .byte PET_CR
     .text "Ihr Name, Spieler "
     .byte 0
+
+strCheckAllNames:
+    .byte PET_CLEAR_SCREEN
+    .byte PET_YELLOW
+    .text "Es spielen mit: "
+    .byte PET_CR, PET_CR
+    .byte 0
+strIsThatCorrect:
+    .text "Ist das richtig (j/n)? "
+    .byte 0
