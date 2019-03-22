@@ -1,7 +1,7 @@
 #importonce
 
 // Zeichenlänge für Spielernamen
-.const playerNameLength = 32
+.const playerNameLength = 16
 
 .pc = * "Player memory"
 // Anzahl der Mitspieler
@@ -55,7 +55,7 @@ player1:
     // Geisel j/n
     // Geiselname
 
-    .dword $00000000                                            // Vermögenm            4 Byte
+    .dword $00000000                                            // Vermögen             4 Byte
     .byte 00                                                    // Anteile der Gegend   1 Byte
     .word $0000, $0000, $0000, $0000, $0000, $0000, $0000       // Besitz               14 Byte
     .word $0000, $0000, $0000, $0000, $0000                     // Personal             10 Byte
@@ -84,6 +84,15 @@ player7:
 player8:
     .fill 128,00
 
+// Adressen der Spielerarrays zum Durchzählen in der Schleife
+playerAddressTblHigh:
+    .byte player1, player2, player3, player4, player5, player6, player7, player8
+playerAddressTblLow:
+    .byte player1 +1, player2 +1, player3 +1, player4 +1, player5 +1, player6 +1, player7 +1, player8 +1
+
+// Attribut-Offsets der einzelnen Werte
+playerAttrTbl:
+    .byte 4,1,14,10,10,1,1,1,1,32
 
 // Konstanten von hier an
 //===============================================================================

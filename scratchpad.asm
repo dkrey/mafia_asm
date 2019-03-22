@@ -1,3 +1,17 @@
+// Warum nicht eine Tabelle mit den Low (und Hi)-Bytes der Adressen anlegen, das sind vier (8) fixe Bytes. Dann y = gewünschter Player (0-3) und Adresse aus der Tabelle lesen - fertig.
+
+//    txa
+//    tay
+//    lda address_tbl,y
+//    sta pointer_lo
+//    ...
+//    address_tbl:
+//    !byte $08,$08+1*32,$08+2*32,$08+3*32
+
+// ldy #0 ; Name 1
+// lda Table_Address,y ; get Address of Name
+// sta Temp
+//
 //===============================================================================
 //wait for keypress
 //
