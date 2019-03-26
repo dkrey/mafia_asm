@@ -198,12 +198,59 @@ digit_end:
 }
 
 .pseudocommand int16_to_hex_str int16 : destination {
+  // Auf Minus prüfen
+  lda extract_byte_argument(int16, 1)
+  and #$80
+  bpl plus
+  // Minus:
+  lda #'-'
+  sta destination
+  lda #' '
+  sta destination.getValue() + 1
+  :int8_to_hex_str_minus extract_byte_argument(int16, 1) : destination.getValue() + 2
+  :int8_to_hex_str_minus extract_byte_argument(int16, 0) : destination.getValue() + 4
+  jmp !end+
+  plus:
+  // Plus:
   :int8_to_hex_str extract_byte_argument(int16, 1) : destination
   :int8_to_hex_str extract_byte_argument(int16, 0) : destination.getValue() + 2
+  !end:
 }
 
 .pseudocommand int8_to_hex_str int8 : destination {
   lda int8
+  ldx #2
+loopx:
+  pha
+  and #%00001111
+  cmp #10
+  bcs digit_letter
+digit_number:
+  clc
+  adc #'0'
+  jmp digit_end
+digit_letter:
+  clc
+  adc #'a' - 10
+digit_end:
+  sta destination.getValue() - 1, X
+  pla
+  lsr
+  lsr
+  lsr
+  lsr
+  dex
+  bne loopx
+}
+
+.pseudocommand int8_to_hex_str_minus int8 : destination {
+  lda int8
+  eor #$FF
+  cmp #$00
+  beq !is_zero+
+  clc
+  adc #$01
+!is_zero:
   ldx #2
 loopx:
   pha
