@@ -197,18 +197,32 @@ digit_end:
   jsr kernal_chrout
 }
 
+negative_int16:
+  .word 0000
+
 .pseudocommand int16_to_hex_str int16 : destination {
   // Auf Minus prüfen
   lda extract_byte_argument(int16, 1)
   and #$80
   bpl plus
+
   // Minus:
-  lda #'-'
+  lda #'-'                              // Minus mit Leerzeichen anzeigen
   sta destination
   lda #' '
   sta destination.getValue() + 1
-  :int8_to_hex_str_minus extract_byte_argument(int16, 1) : destination.getValue() + 2
-  :int8_to_hex_str_minus extract_byte_argument(int16, 0) : destination.getValue() + 4
+
+  // Zweier Komplement +1
+  lda extract_byte_argument(int16, 1)
+  eor #$FF
+  sta negative_int16 +1
+  lda extract_byte_argument(int16, 0)
+  eor #$FF
+  sta negative_int16
+
+  :add16 negative_int16 : #1 : negative_int16
+  :int8_to_hex_str_minus negative_int16 +1  : destination.getValue() + 2
+  :int8_to_hex_str_minus negative_int16 : destination.getValue() + 4
   jmp !end+
   plus:
   // Plus:
@@ -245,12 +259,6 @@ digit_end:
 
 .pseudocommand int8_to_hex_str_minus int8 : destination {
   lda int8
-  eor #$FF
-  cmp #$00
-  beq !is_zero+
-  clc
-  adc #$01
-!is_zero:
   ldx #2
 loopx:
   pha
