@@ -19,6 +19,64 @@ playerNames:
     .fill playerNameLength,0
     .fill playerNameLength,0
 
+curentPlayerMoney:
+    .dword $0000,$0000                                          // Vermögen             4 Byte
+curentPlayerDisplayMoney:
+    .dword $0000,$0000,$0000,$0000,$0000                        // Vermögen in Dezimal  10 Byte
+currentPlayerDebtFlag:
+    .byte 00                                                    // Schulden in bit 7    1 Byte
+currentPlayerEstate:                                            // Anteile der Gegend   1 Byte
+    .byte 00
+// Besitz               14 Byte
+currentPlayerSlotmachine:
+    .word $0000
+currentPlayerWhore:
+    .word $0000
+currentPlayerBar:
+    .word $0000
+currentPlayerGambling:
+    .word $0000
+currentPlayerBetting:
+    .word $0000
+currentPlayerBrothel:
+    .word $0000
+currentPlayerHotel:
+    .word $0000
+
+// Personal             10 Byte
+currentPlayerGunfighter:
+    .word $0000
+currentPlayerBodyguard:
+    .word $0000
+currentPlayerGuard:
+    .word $0000
+currentPlayerInformant:
+    .word $0000
+currentPlayerAttorney:
+    .word $0000
+
+//Bestechungen          10 Byte
+currentPlayerPolice:
+    .word $0000
+currentPlayerInspector:
+    .word $0000
+currentPlayerJudge:
+    .word $0000
+currentPlayerStateAttorney:
+    .word $0000
+currentPlayerMajor:
+    .word $0000
+currentPlayerJailTotal:
+    .byte 00                                                    // Gefängnisrunden      1 Byte
+currentPlayerJailCurrent:
+    .byte 00                                                    // Abgesessene Runden   1 Byte
+currentPlayerDebtRounds:
+    .byte 00                                                    // Schuldenrunden       1 Byte
+currentPlayerHostageFlag:
+    .byte 00                                                    // Flag Geisel          1 Byte
+currentPlayerHostageName:
+    .fill playerNameLength,0                                    // Name Geisel          16 Bytes
+
 // Variablen für den Spieler
 // 128 Bytes
 player1:
@@ -46,7 +104,7 @@ player1:
     // Anzahl Polizeiwachtmeister
     // Anzahl Kommissare
     // Anzahl Untersuchungsrichter
-    // Anzahl Staatsanwahlt
+    // Anzahl Staatsanwalt
     // Anzahl Bürgermeister
     //
     // Knastrunden
@@ -56,8 +114,9 @@ player1:
     // Geiselname
 
     .dword $00000000                                            // Vermögen             4 Byte
+    .byte 00                                                    // Schulden             1 Byte
     .byte 00                                                    // Anteile der Gegend   1 Byte
-    .word $0000, $0000, $0000, $0000, $0000, $0000, $0000       // Besitz               14 Byte
+    .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000 // Besitz               14 Byte
     .word $0000, $0000, $0000, $0000, $0000                     // Personal             10 Byte
     .word $0000, $0000, $0000, $0000, $0000                     // Bestechungen         10 Byte
     .byte 00                                                    // Gefängnisrunden      1 Byte
@@ -66,7 +125,7 @@ player1:
     .byte 00                                                    // Flag Geisel          1 Byte
     .fill 32,00                                                 // Name der Geisel      32 Byte
 
-    .fill 53,00                                                 // Puffer für mehr      53 Byte
+    .fill 52,00                                                 // Puffer für mehr      50 Byte
                                                                 //                      =======
                                                                 //                      128 Byte
 player2:

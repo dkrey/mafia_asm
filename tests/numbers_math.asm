@@ -7,6 +7,8 @@
 // Import helpers
 #import "../helpers.asm"
 #import "../gameMemory.asm"
+#import "../libText.asm"
+#import "../libInput.asm"
 
 .label border = $d020
 .label background = $d021
@@ -14,7 +16,12 @@
 
 .const DELAY = 120
 :BasicUpstart2(main)
+
 main:
+
+  :print_int32 #$989680
+  jsr Wait_for_key
+/*
   sei
 loop:
 
@@ -31,7 +38,7 @@ loop:
   dec border
 
   jmp loop
-
+*/
 score:
   .word 3
 delay:

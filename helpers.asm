@@ -2,19 +2,8 @@
 
 .label kernal_chrout = $ffd2
 
-.pseudocommand print_int16 value {
-  :plot_get
-  tya
-  pha
-  ldx extract_byte_argument(value, 0)
-  lda extract_byte_argument(value, 1)
-  jsr $bdcd
-  :plot_get
-  pla
-  tay
-  inx
-  :plot_set
-}
+
+
 
 .pseudocommand clear_screen {
   jsr $e544
@@ -35,6 +24,9 @@
   jsr $fff0
 }
 
+.pseudocommand mov32 source : destination {
+  :_mov bits_to_bytes(32) : source : destination
+}
 .pseudocommand mov16 source : destination {
   :_mov bits_to_bytes(16) : source : destination
 }
@@ -87,6 +79,10 @@
   :nops(count/2)
 }
 
+.pseudocommand sub32 left : right : destination {
+  :_sub bits_to_bytes(32) : left : right : destination
+}
+
 .pseudocommand sub16 left : right : destination {
   :_sub bits_to_bytes(16) : left : right : destination
 }
@@ -97,6 +93,10 @@
     sbc extract_byte_argument(right, i)
     sta extract_byte_argument(result, i)
   }
+}
+
+.pseudocommand add32 left : right : destination {
+  :_add bits_to_bytes(32) : left : right : destination
 }
 
 .pseudocommand add16 left : right : destination {
@@ -221,8 +221,8 @@ negative_int16:
   sta negative_int16
 
   :add16 negative_int16 : #1 : negative_int16
-  :int8_to_hex_str_minus negative_int16 +1  : destination.getValue() + 2
-  :int8_to_hex_str_minus negative_int16 : destination.getValue() + 4
+  :int8_to_hex_str negative_int16 +1  : destination.getValue() + 2
+  :int8_to_hex_str negative_int16 : destination.getValue() + 4
   jmp !end+
   plus:
   // Plus:
@@ -232,32 +232,6 @@ negative_int16:
 }
 
 .pseudocommand int8_to_hex_str int8 : destination {
-  lda int8
-  ldx #2
-loopx:
-  pha
-  and #%00001111
-  cmp #10
-  bcs digit_letter
-digit_number:
-  clc
-  adc #'0'
-  jmp digit_end
-digit_letter:
-  clc
-  adc #'a' - 10
-digit_end:
-  sta destination.getValue() - 1, X
-  pla
-  lsr
-  lsr
-  lsr
-  lsr
-  dex
-  bne loopx
-}
-
-.pseudocommand int8_to_hex_str_minus int8 : destination {
   lda int8
   ldx #2
 loopx:
@@ -304,4 +278,114 @@ loopx:
   lsr
   dex
   bne loopx
+}
+
+.pseudocommand print_int8 int8
+{
+  lda int8
+  ldx #0
+loop:
+  jsr div10
+  pha
+  inx
+  tya
+  bne loop
+
+loop2:
+  pla
+  ora #$30
+  jsr kernal_chrout
+  dex
+  bne loop2
+  jmp end
+
+div10:
+  sec
+  ldy #$ff
+divlp:
+  iny
+  sbc #10
+  bcs divlp
+  adc #10
+  rts
+end:
+}
+
+.pseudocommand print_int16 int16 {
+  :plot_get
+  tya
+  pha
+  ldx extract_byte_argument(int16, 0)
+  lda extract_byte_argument(int16, 1)
+  jsr $bdcd
+  :plot_get
+  pla
+  tay
+  inx
+  :plot_set
+}
+
+.pseudocommand print_int32 int32
+{
+  lda extract_byte_argument(int32, 0)
+  sta int32_value
+  lda extract_byte_argument(int32, 1)
+  sta int32_value +1
+  lda extract_byte_argument(int32, 2)
+  sta int32_value +2
+  lda extract_byte_argument(int32, 3)
+  sta int32_value +3
+
+  jsr hex2dec
+  ldx #09
+
+loop1:
+    lda int32_result,x
+    bne loop2
+    dex
+    bne loop1
+
+loop2:
+    lda int32_result, x
+    ora #$30
+    jsr kernal_chrout
+    dex
+    bpl loop2
+    jmp end
+
+hex2dec:
+    ldx #0
+
+loop3:
+    jsr div10
+    sta int32_result,x
+    inx
+    cpx #10
+    bne loop3
+    rts
+
+div10:
+    ldy #32
+    lda #0
+    clc
+loop4:
+    rol
+    cmp #10
+    bcc skip
+    sbc #10
+
+skip:
+    rol int32_value
+    rol int32_value + 1
+    rol int32_value + 2
+    rol int32_value + 3
+    dey
+    bpl loop4
+    rts
+
+int32_value:
+  .byte $FF,$FF,$FF,$FF
+int32_result:
+    .byte 0,0,0,0,0,0,0,0,0,0
+end:
 }

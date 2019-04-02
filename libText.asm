@@ -97,3 +97,6 @@ Print_text_offset:
         bne !loop-
 !end:
         rts
+
+
+Print_hex32_dec:
