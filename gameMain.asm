@@ -93,7 +93,7 @@ enterNames:                         // Spielernamen eingeben
     lda #' '                        // Leerzeichen hintendran
     jsr BSOUT
 
-    ldy #playerNameLength           // 32 Zeichen darf der Name haben
+    ldy #playerNameLength           // 16 Zeichen darf der Name haben
 
     ldx #<filter_alphanumeric       // Diese Zeichen sind erlaubt
     lda #>filter_alphanumeric
@@ -102,8 +102,8 @@ enterNames:                         // Spielernamen eingeben
 
     ldx ZeroPageTemp                // Aktuelle Spielerzahl für Offset-Schleife
 
-    txa                             // X in den Akku und mit 32 multiplizieren
-    .for (var i = 0; i < 6; i++) {  // *2^5 = *32
+    txa                             // X in den Akku und mit 16 multiplizieren
+    .for (var i = 0; i < 5; i++) {  // *2^4 = *16
         asl
     }
     tay                             // Offset aus Akku nach Y
@@ -131,8 +131,8 @@ checkPlayerNames:
     mov16 #playerNames : TextPtr    // Beginn der Spielernamen
 
 !loop:
-    txa                             // X in den Akku und mit 32 multiplizieren
-    .for (var i = 0; i < 6; i++) {  // *2^5 = *32
+    txa                             // X in den Akku und mit 16 multiplizieren
+    .for (var i = 0; i < 5; i++) {  // *2^4 = *16
         asl
     }
     tay                             // Offset aus Akku nach Y
@@ -163,6 +163,7 @@ readyToBegin:
 
 
 main:
+
     mov #GREEN : BGCOL0               // Debug
     nop
     jmp main

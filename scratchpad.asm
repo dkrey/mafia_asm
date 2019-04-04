@@ -1,3 +1,25 @@
+// 16 Bit Vergleich mit größer und kleiner
+
+lda lobyte1
+cmp lobyte2
+lda hibyte1
+sbc hibyte2
+bcc .wert1_kleiner_als_wert2
+bne .skip
+lda lobyte1
+cmp lobyte2
+beq .wert1_ungleich_wert2
+.skip
+
+// 16 Bit Vergleich = !=
+lda lo1
+eor lo2
+bne ungleich
+lda hi1
+eor hi2
+bne ungleich
+beq gleich
+
 // Warum nicht eine Tabelle mit den Low (und Hi)-Bytes der Adressen anlegen, das sind vier (8) fixe Bytes. Dann y = gewünschter Player (0-3) und Adresse aus der Tabelle lesen - fertig.
 
 //    txa

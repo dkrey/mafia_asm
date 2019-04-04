@@ -98,5 +98,62 @@ Print_text_offset:
 !end:
         rts
 
-
+//===============================================================================
+// Print_hex32_dec
+//
+// Gibt den Hex-Wert hex2dec_value
+// als Dezimalzahl aus
+// x und y Register werden überschrieben
+//===============================================================================
 Print_hex32_dec:
+  jsr hex2dec
+  ldx #09
+
+!loop1:
+    lda hex2dec_result,x
+    bne !loop2+
+    dex
+    bne !loop1-
+
+!loop2:
+    lda hex2dec_result, x
+    ora #$30
+    jsr kernal_chrout
+    dex
+    bpl !loop2-
+    rts
+
+hex2dec:
+    ldx #0
+
+!loop3:
+    jsr !div10+
+    sta hex2dec_result,x
+    inx
+    cpx #10
+    bne !loop3-
+    rts
+
+!div10:
+    ldy #32
+    lda #0
+    clc
+!loop4:
+    rol
+    cmp #10
+    bcc !skip+
+    sbc #10
+
+!skip:
+    rol hex2dec_value
+    rol hex2dec_value + 1
+    rol hex2dec_value + 2
+    rol hex2dec_value + 3
+    dey
+    bpl !loop4-
+    rts
+
+hex2dec_value:
+  .byte $FF,$FF,$FF,$FF
+hex2dec_result:
+    .byte 0,0,0,0,0,0,0,0,0,0
