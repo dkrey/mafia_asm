@@ -156,13 +156,39 @@ checkPlayerNames:
     beq readyToBegin
     jmp howManyPlayers      // Ansonsten von vorn
 
+
 readyToBegin:
     mov16 #strGoodLuck: TextPtr     // Viel Glück anzeigen
     jsr Print_text
     jsr Wait_for_key                // auf Testendruck warten
 
 
+//===============================================================================
+// Hauptschleife
+//===============================================================================
 main:
+    ldx #00                         // Durch die Spieler mit X zählen
+                                    // Spieler 1 hat die 0
+nextPlayerLoop:
+    // Wenn Vermögen < 20.000 $ bzw 00004e20h dann nur kleine Diebstähle
+    txa                             // X in den Akku und mit 4 multiplizieren *2^2 = *4
+    asl
+    asl
+    tay                             // Geld-Offset aus Akku nach Y
+
+    lda playerMoney + 4, y
+    cmp #$20
+    lda playerMoney + 3, y
+    sbc #$4e
+    bcc no_money
+
+no_money:
+
+    inx                             // nächster Spieler
+    cpx playerCount                 // Solange x< Spieleranzahl
+    bne nextPlayerLoop              // weiter mit Schleife, nächster Spieler
+    jmp main                        // ansonsten ist Spieler 1 wieder dran
+
 
     mov #GREEN : BGCOL0               // Debug
     nop
