@@ -4,10 +4,9 @@
 // calcPlayerOffsets
 //
 // Berechnet die Player Offsets
-// aktueller Spieler muss ins X-Register
 //===============================================================================
 calcPlayerOffsets:
-    txa
+    lda currentPlayerNumber
     asl
     sta currentPlayerOffset_2   // 2^1
     asl

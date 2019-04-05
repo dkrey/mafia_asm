@@ -73,13 +73,35 @@ strGoodLuck:
 // Kleine Diebstähle
 //===============================================================================
 
-strSmallTheftMenu:
-
+strSmallTheftMenu1:
+    .byte PET_CR, PET_CR
+    .text " Sie k&nnen folgendes tun:"
+    .byte PET_CR
+    .fill 40,PET_LINE
+    .byte PET_CR
+    .text "   Eine Bank ausrauben ........... 1"
+    .byte PET_CR, PET_CR
+    .text "   Einen Automaten knacken ....... 2"
+    .byte PET_CR, PET_CR
+    .text "   Eine Bar *berfallen ........... 3"
+    .byte PET_CR, PET_CR
+    .text "   Ein Auto klauen und verkaufen . 4"
+    .byte PET_CR, PET_CR
+    .byte 0
+strSmallTheftMenu2:
+    .text "   Einen Passanten ausnehmen ..... 5"
+    .byte PET_CR, PET_CR
+    .text "   Eine ehrliche Arbeit annehmen . 6"
+    .byte PET_CR, PET_CR
+    .text "   Keines davon .................. 7"
+    .byte PET_CR, PET_CR
+    .text "  Ihre Wahl ?"
+    .byte 0
 //===============================================================================
 // General Purpose
 //
 // Wiederkehrende Texte
 //===============================================================================
 strYouHaveMoney:
-    .text "Sie haben "
+    .text " Sie haben "
     .byte 0

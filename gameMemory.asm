@@ -3,7 +3,6 @@
 // Zeichenlänge für Spielernamen
 .const playerNameLength = 16
 
-.pc = * "Player memory"
 // Anzahl der Mitspieler
 playerCount:
     .byte 0
@@ -87,14 +86,14 @@ currentPlayerDebtFlags:
 // Vermögen: 4 Byte pro Spieler
 .pc = * "Player Money"
 playerMoney:
-    .dword $00000012
-    .dword $00000035
-    .dword $00000000
-    .dword $00000000
-    .dword $00000000
-    .dword $00000000
-    .dword $00000000
-    .dword $00000000
+    .dword $00000001
+    .dword $00000002
+    .dword $00000003
+    .dword $00000004
+    .dword $00000005
+    .dword $00000006
+    .dword $00000007
+    .dword $00000008
 
 // Vermögen in Dezimal: 10 Byte pro Spieler + 6 Byte Luft für einfaches Multiplizieren
 playerMoneyDec:

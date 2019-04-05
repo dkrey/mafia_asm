@@ -118,7 +118,7 @@ enterNames:                         // Spielernamen eingeben
     ldx currentPlayerNumber         // Aktuelle Spielerzahl für Offset-Schleife
 
     txa                             // X in den Akku und mit 16 multiplizieren
-    .for (var i = 0; i < 5; i++) {  // *2^4 = *16
+    .for (var i = 0; i < 4; i++) {  // *2^4 = *16
         asl
     }
     tay                             // Offset aus Akku nach Y
@@ -147,7 +147,7 @@ checkPlayerNames:
 
 !loop:
     txa                             // X in den Akku und mit 16 multiplizieren
-    .for (var i = 0; i < 5; i++) {  // *2^4 = *16
+    .for (var i = 0; i < 4; i++) {  // *2^4 = *16
         asl
     }
     tay                             // Offset aus Akku nach Y
@@ -185,11 +185,10 @@ main:
     ldx #00                         // Durch die Spieler mit X zählen
                                     // Spieler 1 hat die 0
 nextPlayerLoop:
+    stx currentPlayerNumber         // Aktuelle Spielernummer sichern
     // Wenn Vermögen < 20.000 $ bzw 00004e20h dann nur kleine Diebstähle
     jsr calcPlayerOffsets
     ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte
-
-    stx currentPlayerNumber         // Aktuelle Spielernummer sichern
 
     lda playerMoney + 3, y          // Byte 0 vergleichen, weil little Endian
     cmp minMoneyForMenu + 3
