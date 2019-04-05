@@ -154,6 +154,6 @@ hex2dec:
     rts
 
 hex2dec_value:
-  .byte $FF,$FF,$FF,$FF
+    .byte $FF,$FF,$FF,$FF
 hex2dec_result:
     .byte 0,0,0,0,0,0,0,0,0,0

@@ -8,6 +8,24 @@
 playerCount:
     .byte 0
 
+// Spieler, der an der Reihe ist 0-7(max)
+currentPlayerNumber:
+    .byte 0
+
+// wird durch calcPlayerOffsets aus libMath berrechnet
+currentPlayerOffset_2:
+    .byte 0
+currentPlayerOffset_4:
+    .byte 0
+currentPlayerOffset_8:
+    .byte 0
+currentPlayerOffset_16:
+    .byte 0
+
+// Mindestens 20.000 $ dez, um das Hauptmenu zu bekommen
+minMoneyForMenu:
+    .dword $00004e20
+
 // Spielervariablen
     // Name
     // Schulden j/n
@@ -67,33 +85,34 @@ currentPlayerDebtFlags:
     .byte 00
 
 // Vermögen: 4 Byte pro Spieler
+.pc = * "Player Money"
 playerMoney:
-    .dword $0000,$0000
-    .dword $0000,$0000
-    .dword $0000,$0000
-    .dword $0000,$0000
-    .dword $0000,$0000
-    .dword $0000,$0000
-    .dword $0000,$0000
-    .dword $0000,$0000
+    .dword $00000012
+    .dword $00000035
+    .dword $00000000
+    .dword $00000000
+    .dword $00000000
+    .dword $00000000
+    .dword $00000000
+    .dword $00000000
 
 // Vermögen in Dezimal: 10 Byte pro Spieler + 6 Byte Luft für einfaches Multiplizieren
 playerMoneyDec:
-    .dword $0000,$0000,$0000,$0000,$0000
+    .word $0000,$0000,$0000,$0000,$0000
     .fill 6, 0
-    .dword $0000,$0000,$0000,$0000,$0000
+    .word $0000,$0000,$0000,$0000,$0000
     .fill 6, 0
-    .dword $0000,$0000,$0000,$0000,$0000
+    .word $0000,$0000,$0000,$0000,$0000
     .fill 6, 0
-    .dword $0000,$0000,$0000,$0000,$0000
+    .word $0000,$0000,$0000,$0000,$0000
     .fill 6, 0
-    .dword $0000,$0000,$0000,$0000,$0000
+    .word $0000,$0000,$0000,$0000,$0000
     .fill 6, 0
-    .dword $0000,$0000,$0000,$0000,$0000
+    .word $0000,$0000,$0000,$0000,$0000
     .fill 6, 0
-    .dword $0000,$0000,$0000,$0000,$0000
+    .word $0000,$0000,$0000,$0000,$0000
     .fill 6, 0
-    .dword $0000,$0000,$0000,$0000,$0000
+    .word $0000,$0000,$0000,$0000,$0000
     .fill 6, 0
 
 // Anteile der Gegend: 1 Byte pro Spieler
@@ -386,6 +405,7 @@ playerHostageNames:
 // IO memory space
 // Names taken from 'Mapping the Commodore 64' book
 
+.const TEXTCOL         = $0286
 .const SP0X            = $D000
 .const SP0Y            = $D001
 .const MSIGX           = $D010

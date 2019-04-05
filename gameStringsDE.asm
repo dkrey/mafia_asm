@@ -28,11 +28,12 @@ strTitleScreen:
     .fill 5, PET_SPACE
     .text "(Weiter mit beliebiger Taste)"
 
+    .byte PET_RED
     .byte PET_CR,PET_CR,PET_CR,PET_CR,PET_CR
-    .text "(c) 2019 Kreybernetisches Institut"
+    .text "(c) 2019 Kybernetisches Institut"
     .byte PET_CR
-    .text "    f. abgewandte Informatik"
-    .byte 0
+    .text "    f*r abgewandte Informatik"
+    .byte PET_BLACK, 0
 
 //===============================================================================
 // howManyScreen
@@ -61,7 +62,24 @@ strIsThatCorrect:
     .byte 0
 strGoodLuck:
     .byte PET_CR,PET_CR
-    .text "Moege der Bessere gewinnen!"
+    .text "M&ge der Bessere gewinnen!"
     .byte PET_CR
     .text "(Weiter mit beliebiger Taste)"
+    .byte 0
+
+//===============================================================================
+// smallTheftMenu
+//
+// Kleine Diebstähle
+//===============================================================================
+
+strSmallTheftMenu:
+
+//===============================================================================
+// General Purpose
+//
+// Wiederkehrende Texte
+//===============================================================================
+strYouHaveMoney:
+    .text "Sie haben "
     .byte 0
