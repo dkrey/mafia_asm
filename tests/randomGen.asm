@@ -27,12 +27,15 @@ main:
 
 
 loop:
+    /*
     lda #00 // Random Untergrenze
     sta rnd_low
-    lda #07
+    lda #08
     sta rnd_high
-
     jsr getRandom
+*/
+
+    get_random_range #0 : #08
     sta rnd_result
     :print_int8 rnd_result
     lda rnd_result
@@ -41,6 +44,23 @@ loop:
     sta TextPtr
     lda missfortune_tabl_high, x
     sta TextPtr + 1
+    jsr Print_text
+
+    // Spezial Mutter Event
+    lda rnd_result
+    cmp #07
+    bne return_loop
+    // Spielernamen auswürfeln und anzeigen
+    lda #<nametest
+    sta TextPtr
+    lda #>nametest
+    sta TextPtr +1
+    jsr Print_text
+    // Der Rest der Mutter
+    lda #<strTheftMisfortune8_2
+    sta TextPtr
+    lda #>strTheftMisfortune8_2
+    sta TextPtr +1
     jsr Print_text
 return_loop:
     lda #PET_CR
@@ -52,9 +72,16 @@ return_loop:
 
 
 missfortune_tabl_low:
-    .byte <strTheftMisfortune1, <strTheftMisfortune2, <strTheftMisfortune3, <strTheftMisfortune4, <strTheftMisfortune5, <strTheftMisfortune6, <strTheftMisfortune7
+    .byte <strTheftMisfortune1, <strTheftMisfortune2, <strTheftMisfortune3, <strTheftMisfortune4
+    .byte <strTheftMisfortune5, <strTheftMisfortune6, <strTheftMisfortune7, <strTheftMisfortune8_1
 
 missfortune_tabl_high:
-    .byte >strTheftMisfortune1, >strTheftMisfortune2, >strTheftMisfortune3, >strTheftMisfortune4, >strTheftMisfortune5, >strTheftMisfortune6, >strTheftMisfortune7
+    .byte >strTheftMisfortune1, >strTheftMisfortune2, >strTheftMisfortune3, >strTheftMisfortune4
+    .byte >strTheftMisfortune5, >strTheftMisfortune6, >strTheftMisfortune7, >strTheftMisfortune8_1
+
+nametest:
+    .text "BLARGH"
+    .byte 0
+
 rnd_result:
     .byte 0

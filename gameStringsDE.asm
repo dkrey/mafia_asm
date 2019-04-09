@@ -125,5 +125,14 @@ strTheftMisfortune6:
     .text " Ihre Mutter hat Sie verpfiffen!"
     .byte 0
 strTheftMisfortune7:
-    .text " Ihr Rheuma machte Ihnen wieder zu schaffen."
+    .text " Ihr Rheuma machte Ihnen wieder"
+    .byte PET_CR
+    .text " zu schaffen."
+    .byte 0
+strTheftMisfortune8_1:
+    .text " Die Mutter von "
+    .byte 0
+strTheftMisfortune8_2:
+    .byte PET_CR
+    .text " hat sie verpfiffen. "
     .byte 0
