@@ -105,3 +105,25 @@ strSmallTheftMenu2:
 strYouHaveMoney:
     .text " Sie haben "
     .byte 0
+
+strTheftMisfortune1:
+    .text " Pech"
+    .byte 0
+strTheftMisfortune2:
+    .text " Ein Passant schlug Alarm."
+    .byte 0
+strTheftMisfortune3:
+    .text " Die Polizei wurde auf Sie aufmerksam."
+    .byte 0
+strTheftMisfortune4:
+    .text " Eine Streife ueberraschte Sie."
+    .byte 0
+strTheftMisfortune5:
+    .text " Sie stellten sich ziemlich bl&de an."
+    .byte 0
+strTheftMisfortune6:
+    .text " Ihre Mutter hat Sie verpfiffen!"
+    .byte 0
+strTheftMisfortune7:
+    .text " Ihr Rheuma machte Ihnen wieder zu schaffen."
+    .byte 0
