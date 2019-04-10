@@ -1,5 +1,75 @@
 #importonce
 
+// Resets everything
+resetGame:
+    // Spieleranzahl löschen
+    lda #00
+    sta playerCount
+    sta currentPlayerNumber
+    // Spielernamen löschen
+    tax
+!loop_x:
+    sta playerNames,x
+    inx
+    cpx #(playerNames * playerNameLength)
+    bne !loop_x-
+
+    // Schuldenflag löschen
+    tax
+!loop_x:
+    sta currentPlayerDebtFlags,x
+    inx
+    cpx #8
+    bne !loop_x-
+    // Geld löschen
+    tax
+!loop_x:
+    sta playerMoney,x
+    inx
+    cpx #64
+    bne !loop_x-
+
+    // Geld in Dez löschen
+    tax
+!loop_x:
+    sta playerMoneyDec,x
+    inx
+    cpx #128
+    bne !loop_x-
+
+    // Besitz löschen
+    tax
+!loop_x:
+    sta playerEstates,x
+    inx
+    cpx #120
+    bne !loop_x-
+    rts
+
+    // Personal, Bestechungen Knastrunden etc löschen
+    tax
+!loop_x:
+    sta playerGunfighters,x
+    inx
+    cpx #160
+    bne !loop_x-
+
+    tax
+!loop_x:
+    sta playerGunfighters,x
+    inx
+    cpx #192
+    bne !loop_x-
+
+    // Geiselnamen löschen
+    tax
+!loop_x:
+    sta playerHostageNames,x
+    inx
+    cpx #(playerNames * playerNameLength)
+    bne !loop_x-
+
+    rts
 // Anzahl der Mitspieler
 playerCount:
     .byte 0
@@ -290,7 +360,6 @@ playerMajors:
     .word $0000
     .word $0000
 
-
 // Gefängnisrunden      1 Byte
 playerJailTotal:
     .byte 00
@@ -338,14 +407,14 @@ playerHostageFlags:
 
 // Name Geisel          16 Bytes
 playerHostageNames:
-    .fill playerNameLength,0                                    // Name Geisel          16 Bytes
-    .fill playerNameLength,0                                    // Name Geisel          16 Bytes
-    .fill playerNameLength,0                                    // Name Geisel          16 Bytes
-    .fill playerNameLength,0                                    // Name Geisel          16 Bytes
-    .fill playerNameLength,0                                    // Name Geisel          16 Bytes
-    .fill playerNameLength,0                                    // Name Geisel          16 Bytes
-    .fill playerNameLength,0                                    // Name Geisel          16 Bytes
-    .fill playerNameLength,0                                    // Name Geisel          16 Bytes
+    .fill playerNameLength,0    // Name Geisel          16 Bytes
+    .fill playerNameLength,0    // Name Geisel          16 Bytes
+    .fill playerNameLength,0    // Name Geisel          16 Bytes
+    .fill playerNameLength,0    // Name Geisel          16 Bytes
+    .fill playerNameLength,0    // Name Geisel          16 Bytes
+    .fill playerNameLength,0    // Name Geisel          16 Bytes
+    .fill playerNameLength,0    // Name Geisel          16 Bytes
+    .fill playerNameLength,0    // Name Geisel          16 Bytes
 
 // Rahmenwerte für Diebstähle
 theftBaseBank:

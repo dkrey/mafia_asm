@@ -164,12 +164,15 @@ checkPlayerNames:
 
     ldx #<filter_yesno       // Diese Zeichen sind erlaubt
     lda #>filter_yesno
-
+!getinput:
     jsr Get_filtered_input  // Ja oder nein
 
     lda got_input           // Antwort Char in den Akku
+    cmp #0
+    beq checkPlayerNames          // aus versehen Enter gedrückt
     cmp #'J'
     beq readyToBegin
+    jsr resetGame
     jmp howManyPlayers      // Ansonsten von vorn
 
 
@@ -223,8 +226,6 @@ continueMain:
     bne nextPlayerLoop              // weiter mit Schleife, nächster Spieler
     jmp main                        // ansonsten ist Spieler 1 wieder dran
 
-
-    jmp main
 
 //===============================================================================
 

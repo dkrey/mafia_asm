@@ -27,14 +27,6 @@ main:
 
 
 loop:
-    /*
-    lda #00 // Random Untergrenze
-    sta rnd_low
-    lda #08
-    sta rnd_high
-    jsr getRandom
-*/
-
     get_random_range #0 : #08
     sta rnd_result
     :print_int8 rnd_result
