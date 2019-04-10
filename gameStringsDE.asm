@@ -95,7 +95,7 @@ strSmallTheftMenu2:
     .byte PET_CR, PET_CR
     .text "   Keines davon .................. 7"
     .byte PET_CR, PET_CR
-    .text "  Ihre Wahl ?"
+    .text "  Ihre Wahl ? "
     .byte 0
 //===============================================================================
 // General Purpose
@@ -106,28 +106,45 @@ strYouHaveMoney:
     .text " Sie haben "
     .byte 0
 
+strPressKey:
+    .byte PET_CR
+    .text "(Weiter mit beliebiger Taste)"
+    .byte 0
+
+//===============================================================================
+// TheftMisfortune
+// Pech beim Diebstal
+//===============================================================================
+
 strTheftMisfortune1:
     .text " Pech"
+    .byte PET_CR, PET_CR
     .byte 0
 strTheftMisfortune2:
     .text " Ein Passant schlug Alarm."
+    .byte PET_CR, PET_CR
     .byte 0
 strTheftMisfortune3:
     .text " Die Polizei wurde auf Sie aufmerksam."
+    .byte PET_CR, PET_CR
     .byte 0
 strTheftMisfortune4:
     .text " Eine Streife ueberraschte Sie."
+    .byte PET_CR, PET_CR
     .byte 0
 strTheftMisfortune5:
     .text " Sie stellten sich ziemlich bl&de an."
+    .byte PET_CR, PET_CR
     .byte 0
 strTheftMisfortune6:
     .text " Ihre Mutter hat Sie verpfiffen!"
+    .byte PET_CR, PET_CR
     .byte 0
 strTheftMisfortune7:
     .text " Ihr Rheuma machte Ihnen wieder"
     .byte PET_CR
     .text " zu schaffen."
+    .byte PET_CR, PET_CR
     .byte 0
 strTheftMisfortune8_1:
     .text " Die Mutter von "
@@ -135,4 +152,31 @@ strTheftMisfortune8_1:
 strTheftMisfortune8_2:
     .byte PET_CR
     .text " hat sie verpfiffen. "
+    .byte PET_CR, PET_CR
+    .byte 0
+
+strTheftEscape:
+    .text " Sie konnten jedoch entkommen."
+    .byte PET_CR
+    .byte 0
+
+strTheftJail1:
+    .text " Sie wurden von der Polizei gefasst"
+    .byte PET_CR
+    .text " und erhielten "
+    .byte 0
+strTheftJail2:
+    .text " Runden Gef@ngnis"
+    .byte PET_CR
+    .byte 0
+
+
+//===============================================================================
+// Kleine Diebstähle
+//
+//===============================================================================
+strTheftBankSuccess:
+    .text " Ihr Bankraub war erfolgreich."
+    .byte PET_CR
+    .text " Sie erbeuteten "
     .byte 0

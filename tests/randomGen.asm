@@ -80,8 +80,5 @@ missfortune_tabl_high:
     .byte >strTheftMisfortune5, >strTheftMisfortune6, >strTheftMisfortune7, >strTheftMisfortune8_1
 
 nametest:
-    .text "BLARGH"
-    .byte 0
-
-rnd_result:
+    .text "KEVIN"
     .byte 0

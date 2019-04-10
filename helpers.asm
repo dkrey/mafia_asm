@@ -3,8 +3,6 @@
 .label kernal_chrout = $ffd2
 
 
-
-
 .pseudocommand clear_screen {
   jsr $e544
 }
@@ -22,6 +20,22 @@
 .pseudocommand plot_get {
   sec
   jsr $fff0
+}
+
+.pseudocommand clear32  destination {
+  :_clear bits_to_bytes(32) : destination
+}
+.pseudocommand clear16 source : destination {
+  :_clear bits_to_bytes(16) : destination
+}
+.pseudocommand clear source : destination {
+  :_clear bits_to_bytes(8) : destination
+}
+.pseudocommand _clear bytes_count : destination {
+  lda #00
+  .for (var i = 0; i < bytes_count.getValue(); i++) {
+    sta extract_byte_argument(destination, i)
+  }
 }
 
 .pseudocommand mov32 source : destination {
@@ -111,6 +125,44 @@
   }
 }
 
+.pseudocommand add8To32 val8 : val32 : result {
+  clc
+  lda extract_byte_argument(val32, 0)
+  adc extract_byte_argument(val8, 0)
+  sta extract_byte_argument(result, 0)
+
+  lda extract_byte_argument(val32, 1)
+  adc #00
+  sta extract_byte_argument(result, 1)
+
+  lda extract_byte_argument(val32, 2)
+  adc #00
+  sta extract_byte_argument(result, 2)
+
+  lda extract_byte_argument(val32, 3)
+  adc #00
+  sta extract_byte_argument(result, 3)
+}
+
+.pseudocommand add16To32 val16 : val32 : result {
+  clc
+  lda extract_byte_argument(val32, 0)
+  adc extract_byte_argument(val16, 0)
+  sta extract_byte_argument(result, 0)
+
+  lda extract_byte_argument(val32, 1)
+  adc extract_byte_argument(val16, 1)
+  sta extract_byte_argument(result, 1)
+
+  lda extract_byte_argument(val32, 2)
+  adc #00
+  sta extract_byte_argument(result, 2)
+
+  lda extract_byte_argument(val32, 3)
+  adc #00
+  sta extract_byte_argument(result, 3)
+}
+
 .label vic2_screen_control_register1 = $d011
 .label vic2_screen_control_register2 = $d016
 .label vic2_rasterline_register = $d012
@@ -161,6 +213,13 @@
   } else {
     bpl !wait-
   }
+}
+
+.pseudocommand print_hex32 int32 {
+  :print_hex8 extract_byte_argument(int32, 3)
+  :print_hex8 extract_byte_argument(int32, 2)
+  :print_hex8 extract_byte_argument(int32, 1)
+  :print_hex8 extract_byte_argument(int32, 0)
 }
 
 .pseudocommand print_hex16 int16 {
@@ -318,11 +377,6 @@ end:
   ldx extract_byte_argument(int16, 0)
   lda extract_byte_argument(int16, 1)
   jsr $bdcd
-  :plot_get
-  pla
-  tay
-  inx
-  :plot_set
 }
 
 .pseudocommand print_int32 int32

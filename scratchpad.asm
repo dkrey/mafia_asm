@@ -1,3 +1,10 @@
+  65535 0xffff
++100000 0x0186a0
+=165535 0x2869F
+
+ 0x2869F  165535
++0x086A1   34465
+=0x30D40  200000
 // 16 Bit Vergleich mit größer und kleiner
 
 lda lobyte1

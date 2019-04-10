@@ -10,6 +10,7 @@ BasicUpstart2(init)
 // import all game files
 //
 
+#import "libConstants.asm"
 #import "libCharset.asm"
 #import "helpers.asm"
 #import "gameMemory.asm"
@@ -108,7 +109,7 @@ enterNames:                         // Spielernamen eingeben
     lda #' '                        // Leerzeichen hintendran
     jsr BSOUT
 
-    ldy #playerNameLength           // 16 Zeichen darf der Name haben
+    ldy #playerNameLength-1         // 16 Zeichen darf der Name haben aber Byte 0 am Ende, also 15
 
     ldx #<filter_alphanumeric       // Diese Zeichen sind erlaubt
     lda #>filter_alphanumeric
