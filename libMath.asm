@@ -130,3 +130,48 @@ mulResult:
 
     jsr mul8
 }
+
+//===============================================================================
+// sqrt16
+// Returns the 8-bit square root in $20
+// of the 16-bit number in $20 (low) and $21 (high). The remainder is in location $21.
+//===============================================================================
+sqrt16:
+    ldy #$01        // lsby of first odd number = 1
+    sty $22
+    dey
+    sty $23         // msby of first odd number (sqrt = 0)
+!again:
+    sec
+    lda $20         // save remainder in X register
+    tax             // subtract odd lo from integer lo
+    sbc $22
+    sta $20
+    lda $21         // subtract odd hi from integer hi
+    sbc $23
+    sta $21         // is subtract result negative?
+    bcc !nomore+      // no. increment square root
+    iny
+    lda $22         // calculate next odd number
+    adc #$01
+    sta $22
+    bcc !again-
+    inc $23
+    jmp !again-
+!nomore:
+    sty $20         // all done, store square root
+    stx $21         // and remainder
+    rts
+
+sqrt8_result:
+    .byte 00
+
+.pseudocommand sqrt16 int16 {
+    clear16 mulResult
+    lda extract_byte_argument(int16, 0)
+    sta $20
+    lda extract_byte_argument(int16, 1)
+    sta $21
+    jsr sqrt16
+    sty sqrt8_result
+}

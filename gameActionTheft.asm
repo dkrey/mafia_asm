@@ -67,29 +67,37 @@ smallTheftChoice:
 
     jsr Get_filtered_input          // Input holen und speichern
     lda got_input                   // Ergebnis holen
-    sec                             // Konv PetSCII Zeichen zur Zahl
-    sbc #$30
     cmp #0                          // 0 oder Enter, Abfrage erneut starten
     beq smallTheftChoice
 
+    sec                             // Konv PetSCII Zeichen zur Zahl
+    sbc #$30
+
     // Auswahl 1: Bankraub
     cmp #1
-    beq smallTheftBank
-    // Auswahl 1: Spielautomaten knacken
+    beq branchSmallTheftBank
+
+    // Auswahl 2: Spielautomaten knacken
     cmp #2
-    beq smallTheftSlotMachine
-    jmp continueMain
+    beq branchSmallTheftSlotMachine
+
+    jmp mainContinue
+
+branchSmallTheftBank:
+    jmp smallTheftBank
+branchSmallTheftSlotMachine:
+    jmp smallTheftSlotMachine
 
 // Bankraub
 smallTheftBank:
-    //#import "gameActionTheftBank.asm"
-    jmp continueMain
+    #import "gameActionTheftBank.asm"
+    jmp mainContinue
 
 
 // Automaten knacken
 smallTheftSlotMachine:
     #import "gameActionTheftSlotMachine.asm"
-    jmp continueMain
+    jmp mainContinue
 
 //===============================================================================
 // showMisfortune
@@ -148,10 +156,6 @@ missfortune_table_high:
 
 smallTheftJackpot:      // So viel Geld liegt in der Bank
     .dword $00000000
-
-smallTheftRndFactor:   // Platzhalter für Zufälligkeit
-    .byte 00
-
 
 // Rahmenwerte für Diebstähle
 theftBaseBank:

@@ -342,7 +342,8 @@ loopx:
 
 .pseudocommand print_int8 int8
 {
-  lda int8
+  //lda int8
+  lda extract_byte_argument(int8, 0)
   ldx #0
 loop:
   jsr div10

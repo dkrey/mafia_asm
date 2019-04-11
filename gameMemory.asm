@@ -1,75 +1,6 @@
 #importonce
 
-// Resets everything
-resetGame:
-    // Spieleranzahl löschen
-    lda #00
-    sta playerCount
-    sta currentPlayerNumber
-    // Spielernamen löschen
-    tax
-!loop_x:
-    sta playerNames,x
-    inx
-    cpx #(playerNames * playerNameLength)
-    bne !loop_x-
 
-    // Schuldenflag löschen
-    tax
-!loop_x:
-    sta currentPlayerDebtFlags,x
-    inx
-    cpx #8
-    bne !loop_x-
-    // Geld löschen
-    tax
-!loop_x:
-    sta playerMoney,x
-    inx
-    cpx #64
-    bne !loop_x-
-
-    // Geld in Dez löschen
-    tax
-!loop_x:
-    sta playerMoneyDec,x
-    inx
-    cpx #128
-    bne !loop_x-
-
-    // Besitz löschen
-    tax
-!loop_x:
-    sta playerEstates,x
-    inx
-    cpx #120
-    bne !loop_x-
-    rts
-
-    // Personal, Bestechungen Knastrunden etc löschen
-    tax
-!loop_x:
-    sta playerGunfighters,x
-    inx
-    cpx #160
-    bne !loop_x-
-
-    tax
-!loop_x:
-    sta playerGunfighters,x
-    inx
-    cpx #192
-    bne !loop_x-
-
-    // Geiselnamen löschen
-    tax
-!loop_x:
-    sta playerHostageNames,x
-    inx
-    cpx #(playerNames * playerNameLength)
-    bne !loop_x-
-
-    rts
 // Anzahl der Mitspieler
 playerCount:
     .byte 0
@@ -91,6 +22,11 @@ currentPlayerOffset_16:
 // Mindestens 20.000 $ dez, um das Hauptmenu zu bekommen
 minMoneyForMenu:
     .dword $00004e20
+
+// Platzhalter für Zufälligkeit
+.pc = * "Player Random"
+randomFactor:
+    .byte 00
 
 // Spielervariablen
     // Name
@@ -192,7 +128,6 @@ playerEstates:
     .byte 00
 
 // Besitz: 2 Byte pro Position, 14 Byte pro Spieler
-.pc = * "Player Property"
 playerSlotMachines:
     .word $0000
     .word $0000
@@ -202,7 +137,7 @@ playerSlotMachines:
     .word $0000
     .word $0000
     .word $0000
-playerWhores:
+playerProstitutes:
     .word $0000
     .word $0000
     .word $0000
@@ -371,18 +306,6 @@ playerJailTotal:
     .byte 00
     .byte 00
 
-
-// Abgesessene Runden   1 Byte
-playerJailCurrent:
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
-
 // Schuldenrunden       1 Byte
 playerDebtRounds:
     .byte 00
@@ -415,3 +338,77 @@ playerHostageNames:
     .fill playerNameLength,0    // Name Geisel          16 Bytes
     .fill playerNameLength,0    // Name Geisel          16 Bytes
     .fill playerNameLength,0    // Name Geisel          16 Bytes
+
+
+//===============================================================================
+// Titel anzeigen
+//===============================================================================
+resetGame:
+    // Spieleranzahl löschen
+    lda #00
+    sta playerCount
+    sta currentPlayerNumber
+    // Spielernamen löschen
+    tax
+!loop_x:
+    sta playerNames,x
+    inx
+    cpx #(playerNames * playerNameLength)
+    bne !loop_x-
+
+    // Schuldenflag löschen
+    tax
+!loop_x:
+    sta currentPlayerDebtFlags,x
+    inx
+    cpx #8
+    bne !loop_x-
+    // Geld löschen
+    tax
+!loop_x:
+    sta playerMoney,x
+    inx
+    cpx #64
+    bne !loop_x-
+
+    // Geld in Dez löschen
+    tax
+!loop_x:
+    sta playerMoneyDec,x
+    inx
+    cpx #128
+    bne !loop_x-
+
+    // Besitz löschen
+    tax
+!loop_x:
+    sta playerEstates,x
+    inx
+    cpx #120
+    bne !loop_x-
+    rts
+
+    // Personal, Bestechungen Knastrunden etc löschen
+    tax
+!loop_x:
+    sta playerGunfighters,x
+    inx
+    cpx #160
+    bne !loop_x-
+
+    tax
+!loop_x:
+    sta playerGunfighters,x
+    inx
+    cpx #184
+    bne !loop_x-
+
+    // Geiselnamen löschen
+    tax
+!loop_x:
+    sta playerHostageNames,x
+    inx
+    cpx #(playerNames * playerNameLength)
+    bne !loop_x-
+
+    rts

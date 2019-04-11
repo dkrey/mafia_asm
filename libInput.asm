@@ -15,7 +15,6 @@ Wait_for_key:
 // Wartet einen Moment
 //===============================================================================
 addDelay:
-
         ldy #$00        // Counter reset
         sei             // enable interrupts
 
@@ -28,11 +27,6 @@ addDelay:
         iny             // increase frame counter
         cpy delayVal    // reached 50
         bne !out+       // if not, continue
-        ldy #00 // Wait some extra time
-!endloop:
-        iny
-        cpy delayVal+1
-        bne !endloop-
         rts             // End wait
 !out:
         lda $d012       // make sure we reached
@@ -43,8 +37,13 @@ addDelay:
         jmp !loop1- // jump to main loop
 
 delayVal:
-    .byte $3c
-    .byte $01
+    .byte $1e
+
+.pseudocommand addDelay duration {
+    lda duration
+    sta delayVal
+    jsr addDelay
+}
 
 //======================================================================
 // Input a string and store it in GOTINPUT, terminated with a null byte.

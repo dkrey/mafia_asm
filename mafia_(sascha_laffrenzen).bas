@@ -166,7 +166,7 @@
 !- Anwahlt
 680 IFAN(CO)=0THEN740
 690 ZU=INT(RND(1)*100)
-700 IFZU<100/(SQR(AN(CO)))THEN740 !- Zufall Anwahlt Wurzel der Anzahl der Anwälte
+700 IFZU<100/(SQR(AN(CO)))THEN740 !- Zufall Anwalt Wurzel der Anzahl der Anwälte
 710 PRINT" Ihr Anwalt konnte Sie rausholen!"
 720 AZ(CO)=0:GF(CO)=0
 730 GOTO820

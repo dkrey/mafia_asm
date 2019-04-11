@@ -5,8 +5,6 @@
 //
 // Der Startbildschirm
 //===============================================================================
-.pc = * "Title text"
-
 strTitleScreen:
     .byte PET_BLACK
     .fill 8, PET_SPACE
@@ -16,21 +14,21 @@ strTitleScreen:
     .fill 8, PET_SPACE
     .fill 22,PET_LINE
     .byte PET_CR,PET_CR
-
-    .fill 6, PET_SPACE
-    .text "(Freigegeben ab 18 Jahren)"
+    .text " Nach einer Fabel von Sascha Laffrenzen"
     .byte PET_CR,PET_CR
 
-    .fill 4, PET_SPACE
-    .text "von und ohne Sascha Laffrenzen"
-    .byte PET_CR,PET_CR,PET_CR,PET_CR
+    .fill 7, PET_SPACE
+    .text "Freigegeben ab 80 Jahren"
+    .fill 4,PET_CR
+
+
 
     .fill 5, PET_SPACE
     .text "(Weiter mit beliebiger Taste)"
 
     .byte PET_RED
-    .byte PET_CR,PET_CR,PET_CR,PET_CR,PET_CR
-    .text "(c) 2019 Kybernetisches Institut"
+    .fill 5, PET_CR
+    .text "(c) 2019 Positronisches Institut"
     .byte PET_CR
     .text "    f*r abgewandte Informatik"
     .byte PET_BLACK, 0
@@ -63,9 +61,63 @@ strIsThatCorrect:
 strGoodLuck:
     .byte PET_CR,PET_CR
     .text "M&ge der Bessere gewinnen!"
+    .byte PET_CR, PET_CR
+    .text "(Weiter mit beliebiger Taste)"
+    .byte 0
+
+//===============================================================================
+// General Purpose
+//
+// Wiederkehrende Texte
+//===============================================================================
+strYouHaveMoney:
+    .text " Sie haben "
+    .byte 0
+
+strPressKey:
     .byte PET_CR
     .text "(Weiter mit beliebiger Taste)"
     .byte 0
+strRound:
+    .text " Runde"
+    .byte 0
+strRounds:
+    .text " Runden"
+    .byte 0
+
+//===============================================================================
+// Jail
+//
+// Gefängnisdinge
+//===============================================================================
+strJailEscape:
+    .text " Ihnen ist der Ausbruch gelungen!"
+    .byte PET_CR, 0
+
+strJailProstitute:
+    .text " Sie erhielten die Nachricht, dass eine"
+    .byte PET_CR
+    .text " Ihrer Prostituierten sich einen"
+    .byte PET_CR
+    .text " anderen Zuh@lter gesucht hat."
+    .byte PET_CR, PET_CR, PET_CR, 0
+
+strJailAttorney:
+    .text " Ihr Anwalt konnte Sie rausholen."
+    .byte PET_CR, 0
+
+strJailAlmostFree:
+    .text " Sie kommen dieses Jahr frei."
+    .byte PET_CR, 0
+
+strJailWait1:
+    .text " Sie sind im Gefaengnis und haben noch "
+    .byte PET_CR
+    .byte 0
+
+strJailWait2:
+    .text " abzusitzen."
+    .byte PET_CR, 0
 
 //===============================================================================
 // smallTheftMenu
@@ -97,25 +149,7 @@ strSmallTheftMenu2:
     .byte PET_CR, PET_CR
     .text "  Ihre Wahl ? "
     .byte 0
-//===============================================================================
-// General Purpose
-//
-// Wiederkehrende Texte
-//===============================================================================
-strYouHaveMoney:
-    .text " Sie haben "
-    .byte 0
 
-strPressKey:
-    .byte PET_CR
-    .text "(Weiter mit beliebiger Taste)"
-    .byte 0
-strRound:
-    .text " Runde"
-    .byte 0
-strRounds:
-    .text " Runden"
-    .byte 0
 //===============================================================================
 // TheftMisfortune
 // Pech beim Diebstal

@@ -19,17 +19,17 @@
 smallTheftSlotMachineSuccess:
     lda playerCount
     // asl // erstmal doch nicht
-    sta smallTheftRndFactor
+    sta randomFactor
 
     // Ausrechnen, ob es einen Automaten eines Mitspielers betrifft
     // 160 / Spieleranzahl * 2, entspricht der Originalformel
-    divide8 #160 : smallTheftRndFactor
-    mov16 divResult : smallTheftRndFactor
+    divide8 #160 : randomFactor
+    mov16 divResult : randomFactor
 
     getRandomRange8 #01 : #80
 
     lda rnd8_result
-    cmp smallTheftRndFactor         // Ist es ein Automat eines Mitspielers?
+    cmp randomFactor         // Ist es ein Automat eines Mitspielers?
     bcs smallTheftSlotMachineContinue
 
 
@@ -76,6 +76,9 @@ smallTheftSlotMachineContinue:
 
     lda #'$'
     jsr BSOUT
+    lda #PET_CR
+    jsr BSOUT
+
     ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte
 
     // Gewinn zuweisen
@@ -84,7 +87,7 @@ smallTheftSlotMachineContinue:
     mov16 #strPressKey : TextPtr // Text: Weiter
     jsr Print_text
     jsr Wait_for_key
-    rts
+    jmp !exit+
 
 smallTheftSlotMachineFail:
     jsr showMisfortune
@@ -94,7 +97,10 @@ smallTheftSlotMachineFail:
     cmp #10                    // 90 % Entkommenswahrscheinlichkeit
     bcs smallTheftSlotMachineNoJail
 
-    jmp gameJailBusted
+    jsr gameJailBusted
+    jmp !exit+
 
 smallTheftSlotMachineNoJail:
-    jmp gameJailEvade
+    jsr gameJailEvade
+
+!exit:

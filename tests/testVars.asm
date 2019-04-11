@@ -18,7 +18,7 @@ playerNames:
 
 // Anzahl der Mitspieler
 playerCount:
-    .byte 8
+    .byte 3
 
 // Spieler, der an der Reihe ist 0-7(max)
 currentPlayerNumber:
@@ -38,6 +38,10 @@ currentPlayerOffset_16:
 minMoneyForMenu:
     .dword $00004e20
 
+// Platzhalter für Zufälligkeit
+.pc = * "Player Random"
+randomFactor:
+    .byte 00
 // Spielervariablen
     // Name
     // Schulden j/n
@@ -89,7 +93,6 @@ currentPlayerDebtFlags:
     .byte 00
 
 // Vermögen: 4 Byte pro Spieler
-.pc = * "Player Money"
 playerMoney:
     .dword $00000001
     .dword $00000002
@@ -131,7 +134,6 @@ playerEstates:
     .byte 00
 
 // Besitz: 2 Byte pro Position, 14 Byte pro Spieler
-.pc = * "Player Property"
 playerSlotMachines:
     .word $0001
     .word $0001
@@ -141,15 +143,15 @@ playerSlotMachines:
     .word $0001
     .word $0001
     .word $0001
-playerWhores:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+playerProstitutes:
+    .word $00fa
+    .word $0001
+    .word $0001
+    .word $0001
+    .word $0001
+    .word $0001
+    .word $0001
+    .word $0001
 playerBars:
     .word $0000
     .word $0000
@@ -238,7 +240,7 @@ playerInformants:
     .word $0000
 
 playerAttorneys:
-    .word $0000
+    .word $0009
     .word $0000
     .word $0000
     .word $0000
@@ -301,23 +303,12 @@ playerMajors:
 
 
 // Gefängnisrunden      1 Byte
+.pc = * "Player Jail"
 playerJailTotal:
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
-
-
-// Abgesessene Runden   1 Byte
-playerJailCurrent:
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
+    .byte 06
+    .byte 05
+    .byte 04
+    .byte 03
     .byte 00
     .byte 00
     .byte 00
