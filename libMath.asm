@@ -18,135 +18,115 @@ calcPlayerOffsets:
     rts
 
 //===============================================================================
-// rndSid
-//
-// Bereitet den SID so vor, dass in d41b ein Zufallswert steht
+// divide16
+// div16Dividend / div16Divisor = div16Result
+// 16 Bit Division
 //===============================================================================
-rndSid:
-    lda #$80        //Frequenz
-    sta $d40e       //Low-Byte  der Frequenz für Stimme 3
-    sta $d40f       //High-Byte der Frequenz für Stimme 3
-    sta $d412       //Rauschen für die 3. Stimme setzen
+//
+.label div16Dividend    = $fb     //$fc used for hi-byte
+.label div16Divisor     = $58     //$59 used for hi-byte
+.label div16Remainder   = $fd     //$fe used for hi-byte
+.label div16Res         = div16Dividend
 
-//===============================================================================
-// rndTimer
-//
-// Gibt einen Zufallswert im Akku zurück
-//===============================================================================
-rndTimer:
-    lda $dc04  // Low-Byte  von Timer A aus dem CIA-1
-    eor $dc05  // High-Byte von Timer A aus dem CIA-1
-    eor $dd04  // Low-Byte  von Timer A aus dem CIA-2
-    adc $dd05  // High-Byte von Timer A aus dem CIA-2
-    eor $dd06  // Low-Byte  von Timer B aus dem CIA-2
-    eor $dd07  // High-Byte von Timer B aus dem CIA-2
-    //eor $d012  // eor mit Rasterzeile
-    eor $d41b   // eor mit SID
+divide16:
+    lda #0                  // preset remainder to 0
+    sta div16Remainder
+    sta div16Remainder+1
+    ldx #16                 // repeat for each bit: ...
+
+!divloop:
+    asl div16Dividend       // dividend lb & hb*2, msb -> Carry
+    rol div16Dividend+1
+    rol div16Remainder      // remainder lb & hb * 2 + msb from carry
+    rol div16Remainder+1
+    lda div16Remainder
+    sec
+    sbc div16Divisor        // substract divisor to see if it fits in
+    tay                     // lb result -> Y, for we may need it later
+    lda div16Remainder+1
+    sbc div16Divisor+1
+    bcc !skip+              // if carry=0 then divisor didn't fit in yet
+
+    sta div16Remainder+1    // else save substraction result as new remainder,
+    sty div16Remainder
+    inc div16Res            // and INCrement result cause divisor fit in 1 times
+
+!skip:
+    dex
+    bne !divloop-
+    mov16 div16Res : divResult // Move it to another location, since ZP Adresses are used by printing
     rts
 
-//===============================================================================
-// getRandom8
-//
-// Berechnet einen 8 Bit Zufallswert in den Grenzen von rnd_low und rnd_high
-// das Ergebnis steht dann im Akku
-//===============================================================================
-getRandom8:
-    sec                     // Obergrenze berechnen
-    lda rnd8_high
-    sbc rnd8_low
-    sta rnd8_diff
-    jsr rndSid              // Seed aus dem SID holen
-    jsr rndTimer            // Zufallszahl aus dem CIA Timer generieren
-    cmp rnd8_diff
-    bcs getRandom8           // Wenn der Wert darüber liegt, neu berechnen
-    adc rnd8_low             // Untergrenze hinzufügen
-    sta rnd8_result          // Ergebnis sichern
-    rts
+divResult:
+    .word 0000
 
-rnd8_low:
-    .byte 00
-rnd8_high:
-    .byte 00
-rnd8_diff:
-    .byte 00
-rnd8_result:
-    .byte 00
+.pseudocommand divide16 dividend : divisor {
+    clear16 divResult
+    lda extract_byte_argument(dividend, 0)
+    sta div16Dividend
+    lda extract_byte_argument(dividend, 1)
+    sta div16Dividend +1
 
-.pseudocommand getRandomRange8 low_val8 : high_val8 {
-  lda extract_byte_argument(low_val8, 0)
-  sta rnd8_low
-  lda extract_byte_argument(high_val8, 0)
-  sta rnd8_high
-  jsr getRandom8
+    lda extract_byte_argument(divisor, 0)
+    sta div16Divisor
+    lda extract_byte_argument(divisor, 1)
+    sta div16Divisor +1
+
+    jsr divide16
 }
 
+.pseudocommand divide8 dividend : divisor {
+    clear16 divResult
+    lda extract_byte_argument(dividend, 0)
+    sta div16Dividend
 
-//===============================================================================
-// getRandom16
-//
-// Berechnet einen 16 Bit Zufallswert in den Grenzen von rnd16_low und rnd16_high
-//===============================================================================
-getRandom16:
-    sub16 rnd16_high : rnd16_low : rnd16_diff
-    jsr rndSid              // Seed aus dem SID holen
-    jsr rndTimer            // Zufallszahl aus dem CIA Timer generieren
-    sta rnd16_result
+    lda extract_byte_argument(divisor, 0)
+    sta div16Divisor
 
-    jsr rndTimer            // Zufallszahl aus dem CIA Timer generieren
-    sta rnd16_result +1
-
-    cmp rnd16_diff + 1
-    bcs getRandom16         // Wenn der Wert darüber liegt, neu berechnen
-
-    lda rnd16_result        // Wenn der Wert darüber liegt, neu berechnen, zweites Bit
-    cmp rnd16_diff
-    bcs getRandom16
-
-    add16 rnd16_result : rnd16_low : rnd16_result // Untergrenze hinzuaddieren
-    rts
-
-rnd16_low:
-    .word 0000
-rnd16_high:
-    .word 0000
-rnd16_diff:
-    .word 0000
-rnd16_result:
-    .word 0000
-
-.pseudocommand getRandomRange16 low_val16 : high_val16 {
-  lda extract_byte_argument(low_val16, 0)
-  sta rnd16_low
-  lda extract_byte_argument(low_val16, 1)
-  sta rnd16_low +1
-
-  lda extract_byte_argument(high_val16, 0)
-  sta rnd16_high
-  lda extract_byte_argument(high_val16, 1)
-  sta rnd16_high + 1
-
-  jsr getRandom16
-}
-
-/*
-.pseudocommand conv16To32 int16 {
-    // clear old result
     lda #00
-    sta result16To32 + 3
-    sta result16To32 + 2
-    sta result16To32 + 1
-    sta result16To32
+    sta div16Dividend +1
+    sta div16Divisor +1
 
-    lda extract_byte_argument(int16, 0)
-    sta result16To32
-    lda extract_byte_argument(int16, 1)
-    sta result16To32 + 1
-
+    jsr divide16
 }
 
-result16To32:
-    .dword 00000000
 
-result8To32:
-    .dword 00000000
-*/
+//===============================================================================
+// mul8
+// Fac1 * Fac2 = mul8Result
+// 8 Bit multiplication, 16 Bit result
+//===============================================================================
+mul8:
+.label mul8Fac1     = $58
+.label mul8Fac2     = $59
+        // A*256 + X = FAC1 * FAC2
+        lda #$00
+        ldx #$08
+        clc
+!m0:
+        bcc !m1+
+        clc
+        adc mul8Fac2
+!m1:
+        ror
+        ror mul8Fac1
+        dex
+        bpl !m0-
+        ldx mul8Fac1
+        sta mulResult +1
+        stx mulResult
+        rts
+
+mulResult:
+    .word 0000
+
+.pseudocommand mul8 factor1 : factor2 {
+    clear16 mulResult
+    lda extract_byte_argument(factor1, 0)
+    sta mul8Fac1
+
+    lda extract_byte_argument(factor2, 0)
+    sta mul8Fac2
+
+    jsr mul8
+}

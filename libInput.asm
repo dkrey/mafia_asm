@@ -43,8 +43,8 @@ addDelay:
         jmp !loop1- // jump to main loop
 
 delayVal:
-    .byte $ff
-    .byte $ff
+    .byte $3c
+    .byte $01
 
 //======================================================================
 // Input a string and store it in GOTINPUT, terminated with a null byte.

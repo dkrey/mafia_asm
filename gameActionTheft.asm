@@ -6,11 +6,6 @@
 // Kleine Diebstähle Auswahlmenü
 //===============================================================================
 
-smallTheftJackpot:      // So viel Geld liegt in der Bank
-    .dword $00000000
-
-smallTheftJail:         // Gefängnisrunden für den Diebstahl
-    .byte 00
 
 smallTheft:
     clear32 smallTheftJackpot       // Jackpot reset
@@ -58,6 +53,11 @@ smallTheft:
     mov16 #strSmallTheftMenu2 : TextPtr
     jsr Print_text
 
+//===============================================================================
+// smallTheftChoice
+//
+// Auswahl der Gaunereien
+//===============================================================================
 smallTheftChoice:
     // Abfrage, welcher Diebstahl
     ldy #1                          // Anzahl Zeichen für die Input Routine: 1
@@ -75,18 +75,21 @@ smallTheftChoice:
     // Auswahl 1: Bankraub
     cmp #1
     beq smallTheftBank
-
+    // Auswahl 1: Spielautomaten knacken
+    cmp #2
+    beq smallTheftSlotMachine
     jmp continueMain
 
-//===============================================================================
-// smallTheftBank
-//
 // Bankraub
-//===============================================================================
 smallTheftBank:
-    #import "gameActionTheftBank.asm"
+    //#import "gameActionTheftBank.asm"
     jmp continueMain
 
+
+// Automaten knacken
+smallTheftSlotMachine:
+    #import "gameActionTheftSlotMachine.asm"
+    jmp continueMain
 
 //===============================================================================
 // showMisfortune
@@ -110,8 +113,8 @@ showMisfortune:
     bne showMisfortuneReturn
 
     // Spielernamen auswürfeln und anzeigen
-showMisfortuneRndPlayer:
     mov16 #playerNames : TextPtr
+showMisfortuneRndPlayer:
     getRandomRange8 #0 : playerCount
     cmp currentPlayerNumber                 // Spielernummer darf nicht gleich sein
     beq showMisfortuneRndPlayer
@@ -131,8 +134,8 @@ showMisfortuneRndPlayer:
     jsr Print_text
 showMisfortuneReturn:
     jsr addDelay
-    jsr addDelay
     rts
+
 
 missfortune_table_low:
     .byte <strTheftMisfortune1, <strTheftMisfortune2, <strTheftMisfortune3, <strTheftMisfortune4
@@ -141,3 +144,24 @@ missfortune_table_low:
 missfortune_table_high:
     .byte >strTheftMisfortune1, >strTheftMisfortune2, >strTheftMisfortune3, >strTheftMisfortune4
     .byte >strTheftMisfortune5, >strTheftMisfortune6, >strTheftMisfortune7, >strTheftMisfortune8_1
+
+
+smallTheftJackpot:      // So viel Geld liegt in der Bank
+    .dword $00000000
+
+smallTheftRndFactor:   // Platzhalter für Zufälligkeit
+    .byte 00
+
+
+// Rahmenwerte für Diebstähle
+theftBaseBank:
+    .word $c350 // Min 50000
+
+theftRndBank:
+    .word $c350 // max 50000 oben drauf
+
+theftBaseSlotMachine:
+    .word $0002 // Mindestens 2 $
+
+theftRndSlotMachine:
+    .word $02bc // 700 $ drauf

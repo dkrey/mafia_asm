@@ -12,13 +12,15 @@ BasicUpstart2(init)
 
 #import "libConstants.asm"
 #import "libCharset.asm"
-#import "helpers.asm"
+#import "libMacros.asm"
 #import "gameMemory.asm"
 #import "libText.asm"
 #import "libInput.asm"
+#import "libRandom.asm"
 #import "libMath.asm"
 #import "gameStringsDE.asm"
 #import "gameActionTheft.asm"
+#import "gameJail.asm"
 
 //===============================================================================
 // Spiel initialisieren

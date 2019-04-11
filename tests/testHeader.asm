@@ -9,11 +9,13 @@ BasicUpstart2(init)
 #import "../libConstants.asm"
 #import "testVars.asm"
 #import "../libCharset.asm"
-#import "../helpers.asm"
+#import "../libMacros.asm"
 #import "../libText.asm"
 #import "../libInput.asm"
+#import "../libRandom.asm"
 #import "../libMath.asm"
 #import "../gameStringsDE.asm"
+#import "../gameJail.asm"
 
 
 //===============================================================================

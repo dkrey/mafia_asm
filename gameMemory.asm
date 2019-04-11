@@ -151,7 +151,6 @@ currentPlayerDebtFlags:
     .byte 00
 
 // Vermögen: 4 Byte pro Spieler
-.pc = * "Player Money"
 playerMoney:
     .dword $00000000
     .dword $00000000
@@ -193,7 +192,8 @@ playerEstates:
     .byte 00
 
 // Besitz: 2 Byte pro Position, 14 Byte pro Spieler
-playerSlotmachines:
+.pc = * "Player Property"
+playerSlotMachines:
     .word $0000
     .word $0000
     .word $0000
@@ -415,10 +415,3 @@ playerHostageNames:
     .fill playerNameLength,0    // Name Geisel          16 Bytes
     .fill playerNameLength,0    // Name Geisel          16 Bytes
     .fill playerNameLength,0    // Name Geisel          16 Bytes
-
-// Rahmenwerte für Diebstähle
-theftBaseBank:
-    .word $c350 // Min 50000
-
-theftRndBank:
-    .word $c350 // max 50000 oben drauf

@@ -131,15 +131,16 @@ playerEstates:
     .byte 00
 
 // Besitz: 2 Byte pro Position, 14 Byte pro Spieler
-playerSlotmachines:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+.pc = * "Player Property"
+playerSlotMachines:
+    .word $0001
+    .word $0001
+    .word $0001
+    .word $0001
+    .word $0001
+    .word $0001
+    .word $0001
+    .word $0001
 playerWhores:
     .word $0000
     .word $0000
@@ -354,10 +355,3 @@ playerHostageNames:
     .fill playerNameLength,0                                    // Name Geisel          16 Bytes
     .fill playerNameLength,0                                    // Name Geisel          16 Bytes
     .fill playerNameLength,0                                    // Name Geisel          16 Bytes
-
-// Rahmenwerte für Diebstähle
-theftBaseBank:
-    .word $c350 // Min 50000
-
-theftRndBank:
-    .word $c350 // max 50000 oben drauf

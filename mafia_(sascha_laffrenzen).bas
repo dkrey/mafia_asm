@@ -4,6 +4,76 @@
 !- From Disk : c:\c64\tools\vice\disks\mafia_(sascha_laffrenzen).d64
 !- Commodore 64
 !--------------------------------------------------
+!- Spielervariablen
+!- $A = Anzahl der Mitspieler 1 - 8
+!- $NA() = Namen der Mitspieler als Array
+!- $MA() = Anteile der ganzen Gegend
+!- $VM() = Vermögen
+!- $SF() = Schuldenrunden 0-6
+!- $GF() = Gefängnisrunden
+!- $AZ() = Anzahl der verbrachten Gefängnisrunden
+!-
+!- CO = Aktueller Spieler in Schleife
+!-
+!- Entführungsaktion
+!- $EG() = Anzahl der entführten Geiseln
+!- $OP() = Name Entführungsopfer
+!-
+!-
+!- Besitz
+!- $AU() = Anzahl Automaten
+!- $PR() = Anzahl Prostituierte
+!- $BA() = Anzahl Bars
+!- $SP() = Anzahl Spielsalons
+!- $WE() = Anzahl Wettbüros
+!- $PU() = Anzahl Puffs
+!- $GH() = Anzahl GrandHotels
+!-
+!-
+!- Personal
+!- $RH() = Anzahl Revolverhelden (Angriff)
+!- $LW() = Anzahl Leibwächter (Verteidigung)
+!- $WA() = Wächter (Verteidigung)
+!- $IN() = Anzahl Informanten (verhindern Morde)
+!- $AN() = Anzahl Anwälte (helfen aus dem Knast)
+!-
+!-
+!- Bestechungen
+!- $PW() = Anzahl Polizeiwachtmeister
+!- $KO() = Anzahl Kommissare
+!- $UR() = Anzahl Untersuchungsrichter
+!- $SA() = Anzahl Staatsanwahlt
+!- $BM() = Anzahl Bürgermeister
+!-
+!-
+!- Einnahmen
+!- EA = Automaten
+!- EN = Prostituierte
+!- EB = Bars
+!- EW = Wettbüro
+!- ES = Spielsalon
+!- EP = Bordell
+!- EH = Hotel
+!-
+!- G1 = Gesamt Einnahmen
+!- G2 = Gesamt Kosten
+!- GS = Einnahmen + Kosten
+!-
+!-
+!- Kosten
+!- KA = Anwählte
+!- KL = Leibwächter
+!- KI = Informanten
+!- KR = Revolverhelden
+!- KW = Waechter
+!- KP = Polizisten
+!- KK = Kommisare
+!- KU = U-Richter
+!- KS = Staatsanwählte
+!- KB = Buergermeister
+!-
+!- KZ = Kosten Zusammen
+
 10 CLR:PRINTCHR$(14)
 20 GOTO180
 30 :
@@ -135,13 +205,13 @@
 1020 W=VAL(W$)
 1030 IF(W<1)+(W>7)THEN1010
 
-1040 ZU=INT(RND(1)*100)
+1040 ZU = INT(RND(1)*100)
 1050 PRINT"{clear}"
-1060 ONWGOTO1070,1190,1340,1540,1660,1790,2000
+1060 ON W GOTO 1070,1190,1340,1540,1660,1790,2000
 
 !- Bankraub
 1070 :
-1080 IFZU<90THEN1130 !- Zufall Bankraub 10%
+1080 IF ZU < 90 THEN 1130 !- Zufall Bankraub 10%
 1090 PRINT:PRINT" Ihr Bankraub war erfolgreich."
 1100 BE=INT(RND(1)*50000+50000)
 1110 PRINT" Sie erbeuteten";BE;"$."
@@ -155,8 +225,8 @@
 
 !- Automaten knacken
 1190 :
-1200 IFZU<160/(2*A)-AU(0)THEN1270
-1210 OW=INT(RND(1)*A+1)
+1200 IF ZU<160/(2*A)-AU(0) THEN 1270
+1210 OW=INT(RND(1)*A+1) !- zufälliger Spieler
 1220 IFOW=COTHEN1210
 1230 IFAU(OW)=0THEN1270
 1240 PRINT:PRINT" Der Automat gehoerte ";NA$(OW);"."
@@ -611,20 +681,20 @@
 5110 PW(0)=1:KO(0)=1:UR(0)=1:SA(0)=1:BM(0)=1
 
 5120 FORI=1TOA
-5130 PR(0)=PR(0)+PR(I):AU(0)=AU(0)+AU(I):BA(0)=BA(0)+BA(I)
-5140 WE(0)=WE(0)+WE(I):SP(0)=SP(0)+SP(I):PU(0)=PU(0)+PU(I)
-5150 GH(0)=GH(0)+GH(I):LW(0)=LW(0)+LW(I):RH(0)=RH(0)+RH(I)
-5160 AN(0)=AN(0)+AN(I):IN(0)=IN(0)+IN(I):WA(0)=WA(0)+WA(I)
-5170 PW(0)=PW(0)+PW(I):KO(0)=KO(0)+KO(I):UR(0)=UR(0)+UR(I)
-5180 SA(0)=SA(0)+SA(I):BM(0)=BM(0)+BM(I)
+5130 PR(0)=PR(0)+PR(I): AU(0)=AU(0)+AU(I): BA(0)=BA(0)+BA(I)
+5140 WE(0)=WE(0)+WE(I): SP(0)=SP(0)+SP(I): PU(0)=PU(0)+PU(I)
+5150 GH(0)=GH(0)+GH(I): LW(0)=LW(0)+LW(I): RH(0)=RH(0)+RH(I)
+5160 AN(0)=AN(0)+AN(I): IN(0)=IN(0)+IN(I): WA(0)=WA(0)+WA(I)
+5170 PW(0)=PW(0)+PW(I): KO(0)=KO(0)+KO(I): UR(0)=UR(0)+UR(I)
+5180 SA(0)=SA(0)+SA(I): BM(0)=BM(0)+BM(I)
 5190 NEXTI
 
-5200 M(1)=100*PR(CO)/PR(0):M(2)=100*AU(CO)/AU(0):M(3)=100*BA(CO)/BA(0)
-5210 M(4)=100*WE(CO)/WE(0):M(5)=100*SP(CO)/SP(0):M(6)=100*PU(CO)/PU(0)
-5220 M(7)=100*GH(CO)/GH(0):M(8)=100*LW(CO)/LW(0):M(9)=100*RH(CO)/RH(0)
-5230 M(10)=100*AN(CO)/AN(0):M(11)=100*IN(CO)/IN(0):M(12)=100*WA(CO)/WA(0)
-5240 M(13)=100*PW(CO)/PW(0):M(14)=100*KO(CO)/KO(0):M(15)=100*UR(CO)/UR(0)
-5250 M(16)=100*SA(CO)/SA(0):M(17)=100*BM(CO)/BM(0)
+5200 M(1)=100*PR(CO)/PR(0): M(2)=100*AU(CO)/AU(0): M(3)=100*BA(CO)/BA(0)
+5210 M(4)=100*WE(CO)/WE(0): M(5)=100*SP(CO)/SP(0): M(6)=100*PU(CO)/PU(0)
+5220 M(7)=100*GH(CO)/GH(0): M(8)=100*LW(CO)/LW(0): M(9)=100*RH(CO)/RH(0)
+5230 M(10)=100*AN(CO)/AN(0): M(11)=100*IN(CO)/IN(0): M(12)=100*WA(CO)/WA(0)
+5240 M(13)=100*PW(CO)/PW(0): M(14)=100*KO(CO)/KO(0): M(15)=100*UR(CO)/UR(0)
+5250 M(16)=100*SA(CO)/SA(0): M(17)=100*BM(CO)/BM(0)
 5260 MA(CO)=0
 
 5270 FORI=1TO17
@@ -862,7 +932,7 @@
 7260 SP(0)=SP(0)+1:PRINT"{right*8}{down*8}Spielsalons:"TAB(20)SP(0):SP(0)=SP(0)-1
 7265 VM(CO)=VM(CO)+150000:GOTO7170
 7270 IFPU(CO)=0THEN7290
-7280 PU(0)=PU(0)+1:PRINT"{right*7}{down*9}"'TABLISSEMENTS':"tab(20)pu(0)
+7280 PU(0)=PU(0)+1:PRINT"{right*7}{down*9}"'TABLISSEMENTS':"tab(20)pu(0)"
 7285 PU(CO)=PU(CO)-1:VM(CO)=VM(CO)+500000:GOTO7170
 7290 IFGH(CO)=0THEN7310
 7300 GH(0)=GH(0)+1:PRINT"{right*8}{down*10}Hotels:"TAB(20)GH(0)

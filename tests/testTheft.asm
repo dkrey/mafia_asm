@@ -7,7 +7,7 @@ main:
     sta currentPlayerNumber
     jsr calcPlayerOffsets
 
-    // Raub Testen
+    // Kleine Gaunerei testen
     jsr smallTheft
 
 continueMain:

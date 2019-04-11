@@ -85,7 +85,7 @@ strSmallTheftMenu1:
     .byte PET_CR, PET_CR
     .text "   Eine Bar *berfallen ........... 3"
     .byte PET_CR, PET_CR
-    .text "   Ein Auto klauen und verkaufen . 4"
+    .text "   Auf dem Strich missionieren ... 4"
     .byte PET_CR, PET_CR
     .byte 0
 strSmallTheftMenu2:
@@ -150,8 +150,9 @@ strTheftMisfortune8_1:
     .text " Die Mutter von "
     .byte 0
 strTheftMisfortune8_2:
+    .text " hat sie"
     .byte PET_CR
-    .text " hat sie verpfiffen. "
+    .text " verpfiffen. "
     .byte PET_CR, PET_CR
     .byte 0
 
@@ -166,7 +167,7 @@ strTheftJail1:
     .text " und erhielten "
     .byte 0
 strTheftJail2:
-    .text " Runden Gef@ngnis"
+    .text " Runde(n) Gef@ngnis"
     .byte PET_CR
     .byte 0
 
@@ -179,4 +180,12 @@ strTheftBankSuccess:
     .text " Ihr Bankraub war erfolgreich."
     .byte PET_CR
     .text " Sie erbeuteten "
+    .byte 0
+
+strTheftSlotMachineOwner:
+    .text " Der Automat geh&rte "
+    .byte 0
+
+strTheftSlotMachineSuccess:
+    .text " Der Automat enthielt "
     .byte 0
