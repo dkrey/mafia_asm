@@ -27,9 +27,19 @@ gameJailBusted:
     mov16 #strTheftJail1 : TextPtr  // Text: Sie erhielten
     jsr Print_text
 
-    print_int8 jailRounds   // Gefängnisrunden
+    print_int8 jailRounds       // Gefängnisrunden
+    lda jailRounds
 
-    mov16 #strTheftJail2 : TextPtr  // Text : Runden Knast
+    cmp #01
+    bne !showPlural+
+    mov16 #strRound : TextPtr   // Text: RundE
+    jsr Print_text
+    jmp !strJail+
+!showPlural:
+    mov16 #strRounds : TextPtr  // Text: RundeN
+    jsr Print_text
+!strJail:
+    mov16 #strTheftJail2 : TextPtr  // Text : Knast
     jsr Print_text
 
     // Gefängnisrunden setzen

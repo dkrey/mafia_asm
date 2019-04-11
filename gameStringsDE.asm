@@ -110,7 +110,12 @@ strPressKey:
     .byte PET_CR
     .text "(Weiter mit beliebiger Taste)"
     .byte 0
-
+strRound:
+    .text " Runde"
+    .byte 0
+strRounds:
+    .text " Runden"
+    .byte 0
 //===============================================================================
 // TheftMisfortune
 // Pech beim Diebstal
@@ -167,7 +172,7 @@ strTheftJail1:
     .text " und erhielten "
     .byte 0
 strTheftJail2:
-    .text " Runde(n) Gef@ngnis"
+    .text " Gef@ngnis."
     .byte PET_CR
     .byte 0
 

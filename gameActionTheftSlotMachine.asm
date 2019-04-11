@@ -29,8 +29,7 @@ smallTheftSlotMachineSuccess:
     getRandomRange8 #01 : #80
 
     lda rnd8_result
-    cmp #255    // DEBUG immer Mitspieler
-    //cmp smallTheftRndFactor         // Ist es ein Automat eines Mitspielers?
+    cmp smallTheftRndFactor         // Ist es ein Automat eines Mitspielers?
     bcs smallTheftSlotMachineContinue
 
 
@@ -94,6 +93,7 @@ smallTheftSlotMachineFail:
 
     cmp #10                    // 90 % Entkommenswahrscheinlichkeit
     bcs smallTheftSlotMachineNoJail
+
     jmp gameJailBusted
 
 smallTheftSlotMachineNoJail:
