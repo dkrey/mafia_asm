@@ -264,9 +264,9 @@ strTheftKerbSuccess2:
     .byte 0
 
 strTheftKerbFail:
-    .text " Aus Mitleid liess man Sie"
+    .text " Aus Mitleid hat man Sie"
     .byte PET_CR
-    .text " laufen. "
+    .text " laufen gelassen."
     .byte PET_CR, PET_CR , 0
 
 // Passant
