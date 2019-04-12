@@ -18,7 +18,7 @@ playerNames:
 
 // Anzahl der Mitspieler
 playerCount:
-    .byte 3
+    .byte 08
 
 // Spieler, der an der Reihe ist 0-7(max)
 currentPlayerNumber:
@@ -94,14 +94,14 @@ currentPlayerDebtFlags:
 
 // Vermögen: 4 Byte pro Spieler
 playerMoney:
-    .dword $00000001
-    .dword $00000002
-    .dword $00000003
-    .dword $00000004
-    .dword $00000005
-    .dword $00000006
-    .dword $00000007
-    .dword $00000008
+    .dword $00000a01
+    .dword $00000a02
+    .dword $00000a03
+    .dword $00000a04
+    .dword $00000a05
+    .dword $00000a06
+    .dword $00000a07
+    .dword $00000a08
 
 // Vermögen in Dezimal: 10 Byte pro Spieler + 6 Byte Luft für einfaches Multiplizieren
 playerMoneyDec:

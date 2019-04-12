@@ -32,7 +32,6 @@ smallTheftPedestrianSuccess:
     jmp smallTheftPedestrianContinue
 
 smallTheftPedestrianPlayer:
-
     getRandomRange8 #0 : playerCount
     cmp currentPlayerNumber                 // Spielernummer darf nicht gleich sein
     beq smallTheftPedestrianPlayer
@@ -53,11 +52,10 @@ smallTheftPedestrianPlayer2:
     getRandomRange32 #$00000000 : playerMoney,x
 
     mov32 rnd32_result :smallTheftJackpot
-    print_int32 smallTheftJackpot
-    // Betrag vom Opfer abziehen
-    //sub32 playerMoney,x : smallTheftJackpot
 
-    /*
+    // Betrag vom Opfer abziehen
+    sub32 playerMoney, x : smallTheftJackpot : playerMoney, x
+
     mov16 #strTheftPedestrianPlayer1 : TextPtr   // Text: Der Passant war
     jsr Print_text
     mov16 #playerNames : TextPtr
@@ -81,7 +79,7 @@ smallTheftPedestrianPlayer2:
     // Gewinn zuweisen
     ldy currentPlayerOffset_4
     add32 playerMoney,y : smallTheftJackpot : playerMoney,y
-*/
+
     mov16 #strPressKey : TextPtr // Text: Weiter
     jsr Print_text
     jsr Wait_for_key
@@ -106,6 +104,14 @@ smallTheftPedestrianContinue:
 
     // Gewinn zuweisen
     add32 playerMoney,y : smallTheftJackpot : playerMoney,y
+
+    lda #PET_CR
+    jsr BSOUT
+    jsr BSOUT
+    mov16 #strPressKey : TextPtr // Text: Weiter
+    jsr Print_text
+    jsr Wait_for_key
+    jmp !exit+
 
 smallTheftPedestrianFail:
     jsr showMisfortune
