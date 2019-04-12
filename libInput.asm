@@ -158,10 +158,10 @@ delete_ok:
 //=================================================
 
 //IPADDRESS
-//  .text "1234567890."
+//  .text "234567890."
 //  .byte 0
 filter_num_players:
-    .text "12345678"
+    .text "2345678"
     .byte 0
 
 filter_alphanumeric:

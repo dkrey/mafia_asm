@@ -12,4 +12,6 @@ main:
     print_hex8 sqrt8_result
     jsr Wait_for_key
     rts
+
 mainNextPlayerLoop:
+mainContinue:

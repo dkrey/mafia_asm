@@ -26,3 +26,5 @@ result:
 .pseudocommand print_score score {
   :int16_to_hex_str score : SCREEN + 40*12 + 17
 }
+mainNextPlayerLoop:
+mainContinue:

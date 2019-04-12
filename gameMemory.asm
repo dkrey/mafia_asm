@@ -26,7 +26,7 @@ minMoneyForMenu:
 // Platzhalter für Zufälligkeit
 .pc = * "Player Random"
 randomFactor:
-    .byte 00
+    .word 0000
 
 // Spielervariablen
     // Name
@@ -353,7 +353,7 @@ resetGame:
 !loop_x:
     sta playerNames,x
     inx
-    cpx #(playerNames * playerNameLength)
+    cpx #(8 * playerNameLength)
     bne !loop_x-
 
     // Schuldenflag löschen

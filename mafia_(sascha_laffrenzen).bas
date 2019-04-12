@@ -255,7 +255,7 @@
 1450 PRINT:PRINTZ$
 1460 FORI=1TO800:NEXTI
 1470 ZU=INT(RND(1)*100)
-1480 IFZU<60THEN1840
+1480 IFZU<60THEN1840    !- Knast
 1490 PRINT:PRINT" Sie sind entwischt,mussten aber die "
 1491 PRINT"{down}{right}Beute zuruecklassen!"
 1500 GOTO1940

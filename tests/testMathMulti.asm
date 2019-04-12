@@ -17,3 +17,5 @@ multi1:
     .byte $ff
 multi2:
     .byte 02
+mainNextPlayerLoop:
+mainContinue:

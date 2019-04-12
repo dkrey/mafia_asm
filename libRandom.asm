@@ -70,20 +70,21 @@ rnd8_result:
 //===============================================================================
 getRandom16:
     sub16 rnd16_high : rnd16_low : rnd16_diff
+
     jsr rndSid              // Seed aus dem SID holen
-    jsr rndTimer            // Zufallszahl aus dem CIA Timer generieren
-    sta rnd16_result
 
-    jsr rndTimer            // Zufallszahl aus dem CIA Timer generieren
+    lda rnd16_diff + 1      // Ist das Byte überhaupt gesetzt?
+    cmp #00
+    beq !skip+
+
+!again:
+    jsr rndTimer            // HighByte generieren
     sta rnd16_result +1
-
     cmp rnd16_diff + 1
-    bcs getRandom16         // Wenn der Wert darüber liegt, neu berechnen
-
-    lda rnd16_result        // Wenn der Wert darüber liegt, neu berechnen, zweites Bit
-    cmp rnd16_diff
-    bcs getRandom16
-
+    bcs !again-             // Wenn der Wert darüber liegt, neu berechnen
+!skip:
+    jsr rndTimer            // lowbyte generieren
+    sta rnd16_result
     add16 rnd16_result : rnd16_low : rnd16_result // Untergrenze hinzuaddieren
     rts
 
@@ -97,6 +98,11 @@ rnd16_result:
     .word 0000
 
 .pseudocommand getRandomRange16 low_val16 : high_val16 {
+  clear16 rnd16_result
+  clear16 rnd16_diff
+  clear16 rnd16_low
+  clear16 rnd16_high
+
   lda extract_byte_argument(low_val16, 0)
   sta rnd16_low
   lda extract_byte_argument(low_val16, 1)
@@ -108,4 +114,67 @@ rnd16_result:
   sta rnd16_high + 1
 
   jsr getRandom16
+}
+
+//===============================================================================
+// getRandom32
+//
+// Berechnet einen 32 Bit Zufallswert in den Grenzen von rnd32_low und rnd32_high
+//===============================================================================
+getRandom32:
+    sub32 rnd32_high : rnd32_low : rnd32_diff
+    jsr rndSid              // Seed aus dem SID holen
+
+    lda rnd32_diff + 3      // Ist das Byte überhaupt gesetzt?
+    cmp #00
+    beq !skip2+
+
+!skip3:
+    jsr rndTimer            // Zufallswert setzen Byte3
+    sta rnd32_result +3
+    cmp rnd32_diff + 3      // Ist der Wert zu groß?
+    bcs !skip3-
+
+!skip2:
+    lda rnd32_diff + 2
+    cmp #00
+    beq !skip1+
+
+    jsr rndTimer
+    sta rnd32_result +2
+    cmp rnd32_diff + 2
+    bcs !skip2-
+
+ !skip1:
+    lda rnd32_diff + 1
+    cmp #00
+    beq !skip0+
+    jsr rndTimer
+    sta rnd32_result + 1
+    cmp rnd32_diff + 1
+    bcs !skip1-
+!skip0:
+    jsr rndTimer
+    sta rnd32_result
+    add32 rnd32_result : rnd32_low : rnd32_result // Untergrenze hinzuaddieren
+    rts
+
+rnd32_low:
+    .dword 00000000
+rnd32_high:
+    .dword 00000000
+rnd32_diff:
+    .dword 00000000
+rnd32_result:
+    .dword 00000000
+
+.pseudocommand getRandomRange32 low_val32 : high_val32 {
+  clear32 rnd32_result
+  clear32 rnd32_diff
+  clear32 rnd32_low
+  clear32 rnd32_high
+
+  mov32 low_val32 : rnd32_low
+  mov32 high_val32 : rnd32_high
+  jsr getRandom32
 }

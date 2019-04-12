@@ -175,3 +175,65 @@ sqrt8_result:
     jsr sqrt16
     sty sqrt8_result
 }
+
+//===============================================================================
+// compare16
+// compares two 16 bit values
+//===============================================================================
+compare16:
+    clc // Carry löschen
+
+    lda cmp16_val1 + 1
+    cmp cmp16_val2 + 1
+    bcc !skip+
+
+    lda cmp16_val1
+    cmp cmp16_val2
+    bcc !skip+
+!skip:
+    rts
+cmp16_val1:
+    .word $0000
+cmp16_val2:
+    .word $0000
+
+.pseudocommand compare16 val1 : val2 {
+    mov16 val1 : cmp16_val1
+    mov16 val2 : cmp16_val2
+    jsr compare16
+}
+
+//===============================================================================
+// compare32
+// compares two 32 bit values
+//===============================================================================
+compare32:
+    clc // Carry löschen
+
+    lda cmp32_val1 + 3
+    cmp cmp32_val2 + 3
+    bcc !skip+
+
+    lda cmp32_val1 + 2
+    cmp cmp32_val2 + 2
+    bcc !skip+
+
+    lda cmp32_val1 + 1
+    cmp cmp32_val2 + 1
+    bcc !skip+
+
+    lda cmp32_val1
+    cmp cmp32_val2
+    bcc !skip+
+!skip:
+    rts
+cmp32_val1:
+    .dword $00000000
+cmp32_val2:
+    .dword $00000000
+
+.pseudocommand compare32 val1 : val2 {
+    mov32 val1 : cmp32_val1
+    mov32 val2 : cmp32_val2
+    jsr compare32
+}

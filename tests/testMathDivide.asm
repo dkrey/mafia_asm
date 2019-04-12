@@ -25,3 +25,6 @@ dividend:
     .word $00a0
 divisor:
     .word $0004
+
+mainNextPlayerLoop:
+mainContinue:

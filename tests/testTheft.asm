@@ -2,6 +2,7 @@
 #import "../gameActionTheft.asm"
 
 main:
+mainNextPlayerLoop:
     // Spieler 1 Bertram sein
     lda #01
     sta currentPlayerNumber
@@ -10,5 +11,5 @@ main:
     // Kleine Gaunerei testen
     jsr smallTheft
 
-continueMain:
+mainContinue:
     jsr main

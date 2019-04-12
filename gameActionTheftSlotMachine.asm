@@ -24,12 +24,14 @@ smallTheftSlotMachineSuccess:
     // Ausrechnen, ob es einen Automaten eines Mitspielers betrifft
     // 160 / Spieleranzahl * 2, entspricht der Originalformel
     divide8 #160 : randomFactor
-    mov16 divResult : randomFactor
+
+    mov divResult : randomFactor
 
     getRandomRange8 #01 : #80
 
     lda rnd8_result
-    cmp randomFactor         // Ist es ein Automat eines Mitspielers?
+    cmp randomFactor                        // Ist es ein Automat eines Mitspielers?
+
     bcs smallTheftSlotMachineContinue
 
 
@@ -67,7 +69,7 @@ smallTheftSlotMachineOwner:
 
 // Gewinn berechnen und anzeigen
 smallTheftSlotMachineContinue:
-    getRandomRange16 theftBaseSlotMachine : theftRndSlotMachine    // Gewinn berechnen
+    getRandomRange16 #02 : #$02bc    // Gewinn berechnen 2- 700 $
     mov16 rnd16_result :smallTheftJackpot
 
     mov16 #strTheftSlotMachineSuccess : TextPtr // Text: "Sie erbeuteten"

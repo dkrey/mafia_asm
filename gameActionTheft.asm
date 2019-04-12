@@ -81,24 +81,54 @@ smallTheftChoice:
     cmp #2
     beq branchSmallTheftSlotMachine
 
+    // Auswahl 3: Bar ausrauben
+    cmp #3
+    beq branchSmallTheftBar
+
+    // Auswahl 4: Prostituierte bekehren
+    cmp #4
+    beq branchSmallTheftKerb
+
+    // Auswahl 5: Passanten ausnehmen
+    cmp #5
+    beq branchSmallTheftPedestrian
+
     jmp mainContinue
 
 branchSmallTheftBank:
     jmp smallTheftBank
 branchSmallTheftSlotMachine:
     jmp smallTheftSlotMachine
-
+branchSmallTheftBar:
+    jmp smallTheftBar
+branchSmallTheftKerb:
+    jmp smallTheftKerb
+branchSmallTheftPedestrian:
+    jmp smallTheftPedestrian
 // Bankraub
 smallTheftBank:
     #import "gameActionTheftBank.asm"
     jmp mainContinue
-
 
 // Automaten knacken
 smallTheftSlotMachine:
     #import "gameActionTheftSlotMachine.asm"
     jmp mainContinue
 
+// Bar ausrauben
+smallTheftBar:
+    #import "gameActionTheftBar.asm"
+    jmp mainContinue
+
+// Auswahl 4: Prostituierte bekehren
+smallTheftKerb:
+    #import "gameActionTheftKerb.asm"
+    jmp mainContinue
+
+// Auswahl 5: Passanten ausnehmen
+smallTheftPedestrian:
+    #import "gameActionTheftPedestrian.asm"
+    jmp mainContinue
 //===============================================================================
 // showMisfortune
 //
@@ -154,18 +184,5 @@ missfortune_table_high:
     .byte >strTheftMisfortune5, >strTheftMisfortune6, >strTheftMisfortune7, >strTheftMisfortune8_1
 
 
-smallTheftJackpot:      // So viel Geld liegt in der Bank
+smallTheftJackpot:      // So viel Geld bringt der Raub
     .dword $00000000
-
-// Rahmenwerte für Diebstähle
-theftBaseBank:
-    .word $c350 // Min 50000
-
-theftRndBank:
-    .word $c350 // max 50000 oben drauf
-
-theftBaseSlotMachine:
-    .word $0002 // Mindestens 2 $
-
-theftRndSlotMachine:
-    .word $02bc // 700 $ drauf

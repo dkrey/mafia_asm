@@ -41,7 +41,7 @@ minMoneyForMenu:
 // Platzhalter für Zufälligkeit
 .pc = * "Player Random"
 randomFactor:
-    .byte 00
+    .word 0000
 // Spielervariablen
     // Name
     // Schulden j/n
@@ -153,14 +153,14 @@ playerProstitutes:
     .word $0001
     .word $0001
 playerBars:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .word $0001
+    .word $0001
+    .word $0001
+    .word $0001
+    .word $0001
+    .word $0001
+    .word $0001
+    .word $0001
 playerGambling:
     .word $0000
     .word $0000

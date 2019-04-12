@@ -13,8 +13,8 @@
 
 smallTheftBankSuccess:
     // Jackpot berechnen
-    add16To32 theftBaseBank : smallTheftJackpot : smallTheftJackpot // Grundwert
-    getRandomRange16 #0 : theftRndBank                              // Plus Bonus
+    add16To32 #$c350 : smallTheftJackpot : smallTheftJackpot  // Grundwert 50.000
+    getRandomRange16 #0 : #$c350                              // Plus Bonus 50.000
     add16To32 rnd16_result : smallTheftJackpot : smallTheftJackpot
 
     mov16 #strTheftBankSuccess : TextPtr // Text: "Sie erbeuteten"

@@ -28,7 +28,7 @@ strTitleScreen:
 
     .byte PET_RED
     .fill 5, PET_CR
-    .text "(c) 2019 Positronisches Institut"
+    .text "(c) 2019 Pathetisches Institut"
     .byte PET_CR
     .text "    f*r abgewandte Informatik"
     .byte PET_BLACK, 0
@@ -41,7 +41,7 @@ strTitleScreen:
 strHowManyScreen:
     .byte PET_CLEAR_SCREEN
     .byte PET_YELLOW
-    .text "Wie viele Mitspieler? "
+    .text "Wie viele Mitspieler (2-8) ? "
     .byte 0
 
 strEnterName:
@@ -215,16 +215,75 @@ strTheftJail2:
 // Kleine Diebstähle
 //
 //===============================================================================
+// Bank
 strTheftBankSuccess:
     .text " Ihr Bankraub war erfolgreich."
     .byte PET_CR
     .text " Sie erbeuteten "
     .byte 0
 
+// Automaten
 strTheftSlotMachineOwner:
     .text " Der Automat geh&rte "
     .byte 0
 
 strTheftSlotMachineSuccess:
     .text " Der Automat enthielt "
+    .byte 0
+
+// Bar
+strTheftBarOwner:
+    .text " Die Bar geh&rte "
+    .byte 0
+strTheftBarSuccess:
+    .text " Der Ueberfall brachte "
+    .byte 0
+strTheftBarFail:
+    .text " Sie sind entwischt, mussten aber die"
+    .byte PET_CR
+    .text " Beute zur*cklassen. "
+    .byte PET_CR, PET_CR , 0
+
+// Strich
+strTheftKerbOwner:
+    .text " Die Prostituierte geh&rte zu "
+    .byte 0
+strTheftKerbSuccess1:
+    .text " Sie waren sehr beeindruckend."
+    .byte PET_CR, PET_CR
+    .text " Die Prostituierte hat sich einen"
+    .byte PET_CR
+    .text " neuen Job gesucht."
+    .byte PET_CR, PET_CR
+    .text " Die Tageseinnahmen von "
+    .byte 0
+strTheftKerbSuccess2:
+    .byte PET_CR
+    .text " d*rfen sie behalten."
+    .byte PET_CR
+    .byte 0
+
+strTheftKerbFail:
+    .text " Aus Mitleid liess man Sie"
+    .byte PET_CR
+    .text " laufen. "
+    .byte PET_CR, PET_CR , 0
+
+// Passant
+strTheftPedestrianPlayer1:
+    .text " Der Passant war"
+    .byte 0
+strTheftPedestrianPlayer2:
+    .byte PET_CR
+    .text " und hatte "
+    .byte 0
+strTheftPedestrianPlayer3:
+    .text " bei sich."
+    .byte 0
+
+strTheftPedestrianSuccess1:
+    .text " Der Passant hatte "
+    .byte 0
+strTheftPedestrianSuccess2:
+    .text " bei sich."
     .byte 0
