@@ -85,6 +85,8 @@ getRandom16:
 !skip:
     jsr rndTimer            // lowbyte generieren
     sta rnd16_result
+    cmp rnd16_diff
+    bcs !skip-              // Wenn zu hoch, dann nochmal
     add16 rnd16_result : rnd16_low : rnd16_result // Untergrenze hinzuaddieren
     rts
 
@@ -156,6 +158,8 @@ getRandom32:
 !skip0:
     jsr rndTimer
     sta rnd32_result
+    cmp rnd32_diff
+    bcs !skip0-
     add32 rnd32_result : rnd32_low : rnd32_result // Untergrenze hinzuaddieren
     rts
 

@@ -94,14 +94,14 @@ currentPlayerDebtFlags:
 
 // Vermögen: 4 Byte pro Spieler
 playerMoney:
-    .dword $00000a01
-    .dword $00000a02
-    .dword $00000a03
-    .dword $00000a04
-    .dword $00000a05
-    .dword $00000a06
-    .dword $00000a07
-    .dword $00000a08
+    .dword $00000064
+    .dword $00000064
+    .dword $00000064
+    .dword $00000064
+    .dword $00000064
+    .dword $00000064
+    .dword $00000064
+    .dword $00000064
 
 // Vermögen in Dezimal: 10 Byte pro Spieler + 6 Byte Luft für einfaches Multiplizieren
 playerMoneyDec:

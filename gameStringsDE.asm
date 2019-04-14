@@ -271,7 +271,7 @@ strTheftKerbFail:
 
 // Passant
 strTheftPedestrianPlayer1:
-    .text " Der Passant war"
+    .text " Der Passant war "
     .byte 0
 strTheftPedestrianPlayer2:
     .byte PET_CR
@@ -279,6 +279,7 @@ strTheftPedestrianPlayer2:
     .byte 0
 strTheftPedestrianPlayer3:
     .text " bei sich."
+    .byte PET_CR
     .byte 0
 
 strTheftPedestrianSuccess1:
@@ -286,4 +287,5 @@ strTheftPedestrianSuccess1:
     .byte 0
 strTheftPedestrianSuccess2:
     .text " bei sich."
+    .byte PET_CR
     .byte 0

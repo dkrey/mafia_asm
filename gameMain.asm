@@ -75,22 +75,8 @@ mainNextPlayerLoop:
     // Wenn Vermögen < 20.000 $ bzw 00004e20h dann nur kleine Diebstähle
     ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte
 
-    lda playerMoney + 3, y          // Byte 0 vergleichen, weil little Endian
-    cmp minMoneyForMenu + 3
+    compare32 playerMoney,y : minMoneyForMenu
     bcc mainNoMoney
-
-    lda playerMoney + 2, y          // Byte 1 vergleichen, weil little Endian
-    cmp minMoneyForMenu + 2
-    bcc mainNoMoney
-
-    lda playerMoney + 1, y          // Byte 2 vergleichen, weil little Endian
-    cmp minMoneyForMenu + 1
-    bcc mainNoMoney
-
-    lda playerMoney, y              // Byte 3 vergleichen, weil little Endian
-    cmp minMoneyForMenu
-    bcc mainNoMoney
-
     jmp mainMenu                    // Geld ist vorhanden, ab ins Hauptmenü
 
 mainGotoJail:

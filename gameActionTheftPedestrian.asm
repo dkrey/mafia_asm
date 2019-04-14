@@ -1,6 +1,7 @@
 #importonce
     // TODO Leibwächter
-    mov #02 : jailRounds     // 3 Runden Gefängnis
+
+    mov #02 : jailRounds     // 2 Runden Gefängnis
 
     // Bildschirm leeren und Zeilenumbruch
     jsr CLEAR
@@ -28,6 +29,7 @@ smallTheftPedestrianSuccess:
 
     lda rnd8_result
     cmp randomFactor                        // Trifft es einen Mitspieler
+
     bcc smallTheftPedestrianPlayer
     jmp smallTheftPedestrianContinue
 
@@ -42,14 +44,14 @@ smallTheftPedestrianPlayer:
     tax
 
     lda playerMoney,x                   // Pos im Speicher
-    compare32 playerMoney,x : $00000001
+    compare32 playerMoney,x : #$00000064 // Bei weniger als 100 $ kein Diebstahl
 
     bcs smallTheftPedestrianPlayer2
     jmp smallTheftPedestrianContinue    // hat kein Geld
 
 smallTheftPedestrianPlayer2:
     // Betrag zum Abzug festellen:
-    getRandomRange32 #$00000000 : playerMoney,x
+    getRandomRange32 #$00000001 : playerMoney,x
 
     mov32 rnd32_result :smallTheftJackpot
 
@@ -80,6 +82,8 @@ smallTheftPedestrianPlayer2:
     ldy currentPlayerOffset_4
     add32 playerMoney,y : smallTheftJackpot : playerMoney,y
 
+    lda #PET_CR
+    jsr BSOUT
     mov16 #strPressKey : TextPtr // Text: Weiter
     jsr Print_text
     jsr Wait_for_key

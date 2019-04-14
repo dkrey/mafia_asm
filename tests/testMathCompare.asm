@@ -2,7 +2,7 @@
 
 main:
 
-    compare32 #$00000001 : #$00000001
+    compare32 #$00000a05 : #$00000001
     //compare16  #$00ff : #$00fe
 
     bcs is_bigger //or equal
