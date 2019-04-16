@@ -1,6 +1,4 @@
 #importonce
-    // TODO Leibwächter
-
     mov #02 : jailRounds     // 2 Runden Gefängnis
 
     // Bildschirm leeren und Zeilenumbruch
@@ -30,6 +28,7 @@ smallTheftPedestrianSuccess:
     lda rnd8_result
     cmp randomFactor                        // Trifft es einen Mitspieler
 
+    jmp smallTheftPedestrianPlayer          // Debug: Es betrifft immer
     bcc smallTheftPedestrianPlayer
     jmp smallTheftPedestrianContinue
 
@@ -38,9 +37,58 @@ smallTheftPedestrianPlayer:
     cmp currentPlayerNumber                 // Spielernummer darf nicht gleich sein
     beq smallTheftPedestrianPlayer
 
-    // Hat der Spieler überhaupt Geld?
-    asl                 // Offset für .dword 32bit
+    // Hat der Spieler Leibwächter?
+    asl                     // Shift auf 16 bit
+    tax                     // Akku nach X
+    pha                     // Akku auch nochmal sichern
+    lda playerBodyguards,x
+    cmp #0
+    bne smallTheftPedestrianBodyguard  // Sind Leibwächter beschäftigt?
+    jmp smallTheftPedestrianNoBodyguard
+
+smallTheftPedestrianBodyguard:
+    adc #01 // Ein Extra-Leibwächter als Basis
+    sta randomFactor
+    sqrt16 randomFactor
+    sty randomFactor
+    divide8 #90 : randomFactor
+    lda divResult
+    sta randomFactor
+    getRandomRange8 #0 : #100   // neuer Zufall
+
+    lda rnd8_result
+    cmp randomFactor
+    bcc smallTheftPedestrianNoBodyguard // Bodyguard hat nichts genützt
+
+smallTheftPedestrianBodyguardSuccess:
+    mov16 #strTheftPedestrianPlayer1 : TextPtr   // Text: Der Passant war
+    jsr Print_text
+    mov16 #playerNames : TextPtr
+    // noch 3 mal weiterschieben für 16 bit: Namensoffset
+    pla
     asl
+    asl
+    asl
+    tay
+    jsr Print_text_offset   // Text:  <Spielername> CR CR
+    lda #'.'
+    jsr BSOUT
+    lda #PET_CR
+    jsr BSOUT
+
+    mov16 #strTheftPedestrianBodyguard : TextPtr
+    jsr Print_text
+    lda #PET_CR
+    jsr BSOUT
+    mov16 #strPressKey : TextPtr // Text: Weiter
+    jsr Print_text
+    jsr Wait_for_key
+    jmp !exit+
+
+smallTheftPedestrianNoBodyguard:
+    pla                 // Spielernummer wieder vom Stack holen
+    // Hat der Spieler überhaupt Geld?
+    asl                 // weiterer Shift auf .dword 32bit
     tax
 
     lda playerMoney,x                   // Pos im Speicher

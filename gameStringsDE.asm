@@ -289,3 +289,9 @@ strTheftPedestrianSuccess2:
     .text " bei sich."
     .byte PET_CR
     .byte 0
+strTheftPedestrianBodyguard:
+    .text " Ein Leibw@chter konnte den *berfall"
+    .byte PET_CR
+    .text " verhindern."
+    .byte PET_CR
+    .byte 0

@@ -210,7 +210,7 @@ playerGunfighters:
     .word $0000
 
 playerBodyguards:
-    .word $0000
+    .word $000f
     .word $0000
     .word $0000
     .word $0000
