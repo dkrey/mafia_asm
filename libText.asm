@@ -14,7 +14,7 @@
 
 // PET Extra
 .const PET_CLEAR_SCREEN = $93
-.const PET_LINE         = $b8
+.const PET_LINE         = $b7
 
 // PET Farben
 .const PET_BLACK = $90
