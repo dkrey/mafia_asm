@@ -102,6 +102,7 @@ gameJailNoProtitutes:
     bne gameJailAttorney  // Sind Anwälte beschäftigt?
     jmp gameJailNoAttorney
 
+    // 90 / sqrt(1+Anwälte)
     gameJailAttorney:
     adc #01 // Ein Extra-Anwalt als Basis
     sta randomFactor

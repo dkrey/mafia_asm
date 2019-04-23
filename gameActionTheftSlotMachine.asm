@@ -29,7 +29,6 @@ smallTheftSlotMachineSuccess:
 
     getRandomRange8 #01 : #80
 
-    lda rnd8_result
     cmp randomFactor                        // Ist es ein Automat eines Mitspielers?
 
     bcs smallTheftSlotMachineContinue

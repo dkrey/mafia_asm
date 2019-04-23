@@ -106,29 +106,29 @@ Print_text_offset:
 // x und y Register werden überschrieben
 //===============================================================================
 Print_hex32_dec:
-  jsr hex2dec
+  jsr hex32dec
   ldx #09
 
 !loop1:
-    lda hex2dec_result,x
+    lda hex32dec_result,x
     bne !loop2+
     dex
     bne !loop1-
 
 !loop2:
-    lda hex2dec_result, x
+    lda hex32dec_result, x
     ora #$30
     jsr kernal_chrout
     dex
     bpl !loop2-
     rts
 
-hex2dec:
+hex32dec:
     ldx #0
 
 !loop3:
     jsr !div10+
-    sta hex2dec_result,x
+    sta hex32dec_result,x
     inx
     cpx #10
     bne !loop3-
@@ -145,15 +145,73 @@ hex2dec:
     sbc #10
 
 !skip:
-    rol hex2dec_value
-    rol hex2dec_value + 1
-    rol hex2dec_value + 2
-    rol hex2dec_value + 3
+    rol hex32dec_value
+    rol hex32dec_value + 1
+    rol hex32dec_value + 2
+    rol hex32dec_value + 3
     dey
     bpl !loop4-
     rts
 
-hex2dec_value:
-    .byte $FF,$FF,$FF,$FF
-hex2dec_result:
+hex32dec_value:
+    .dword $ffffffff
+hex32dec_result:
     .byte 0,0,0,0,0,0,0,0,0,0
+
+//===============================================================================
+// Print_hex32_dec
+//
+// Gibt den Hex-Wert hex16dec_value
+// als Dezimalzahl aus
+// x und y Register werden überschrieben
+//===============================================================================
+Print_hex16_dec:
+  jsr hex16dec
+  ldx #05
+
+!loop1:
+    lda hex16dec_result,x
+    bne !loop2+
+    dex
+    bne !loop1-
+
+!loop2:
+    lda hex16dec_result, x
+    ora #$30
+    jsr kernal_chrout
+    dex
+    bpl !loop2-
+    rts
+
+hex16dec:
+    ldx #0
+
+!loop3:
+    jsr !div10+
+    sta hex16dec_result,x
+    inx
+    cpx #05
+    bne !loop3-
+    rts
+
+!div10:
+    ldy #16
+    lda #0
+    clc
+!loop4:
+    rol
+    cmp #10
+    bcc !skip+
+    sbc #10
+
+!skip:
+    rol hex16dec_value
+    rol hex16dec_value + 1
+    dey
+    bpl !loop4-
+    rts
+
+hex16dec_value:
+    .word $ffff
+hex16dec_result:
+    .byte 0,0,0,0,0,0

@@ -65,9 +65,14 @@ main:
 mainNextPlayerLoop:
     stx currentPlayerNumber         // Aktuelle Spielernummer sichern
 
-    jsr calcPlayerOffsets
+    jsr calcPlayerOffsets           // Offsets für den Speicher berechnen
+
+    // Einnahmen berechnen
+
+    // Ausgaben berechnen
 
     // Spieler im Gefängnis?
+    ldx currentPlayerNumber         // Aktuelle Spielernummer wiederherstellen
     lda playerJailTotal, x
     cmp #0
     bne mainGotoJail

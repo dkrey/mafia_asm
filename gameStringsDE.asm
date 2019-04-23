@@ -28,7 +28,7 @@ strTitleScreen:
 
     .byte PET_RED
     .fill 5, PET_CR
-    .text "(c) 2019 Pathetisches Institut"
+    .text "(c) 2019 Blasiertes Institut"
     .byte PET_CR
     .text "    f*r abgewandte Informatik"
     .byte PET_BLACK, 0
@@ -295,3 +295,74 @@ strTheftPedestrianBodyguard:
     .text " verhindern."
     .byte PET_CR
     .byte 0
+
+//===============================================================================
+// Finanzen
+//
+//===============================================================================
+strFinancesTitle:
+    .fill 14, PET_SPACE
+    .text "Finanzen"
+    .byte PET_CR
+    .fill 14, PET_SPACE
+    .fill 8,PET_LINE
+    .byte PET_CR, PET_CR, 0
+
+strFinancesIncome:
+    .text " Ihre Einnahmen sind:"
+    .byte PET_CR, PET_CR, 0
+
+// Income Temp Vars
+strFinancesSlotMachines:
+    .text " Spielautomaten"
+    .byte PET_CR, 0
+strFinancesProstitutes:
+    .text " Prostituierte"
+    .byte PET_CR, 0
+strFinancesBars:
+    .text " Bars"
+    .byte PET_CR, 0
+strFinancesGambling:
+    .text " Wettb*ros"
+    .byte PET_CR, 0
+strFinancesBetting:
+    .text " Spielsalons"
+    .byte PET_CR, 0
+strFinancesBrothels:
+    .text " Bordelle"
+    .byte PET_CR, 0
+strFinancesHotels:
+    .text " Hotels"
+    .byte PET_CR, 0
+
+// Costs Temp Vars
+strFinancesGunfighters:
+    .text " Revolverhelden"
+    .byte PET_CR, 0
+strFinancesBodyguards:
+    .text " Leibw@chter"
+    .byte PET_CR, 0
+strFinancesGuards:
+    .text " Nachtw@chter"
+    .byte PET_CR, 0
+strFinancesInformants:
+    .text " Informanten"
+    .byte PET_CR, 0
+strFinancesAttorneys:
+    .text " Anw@lte"
+    .byte PET_CR, 0
+strFinancesPolice:
+    .text " Wachtmeister"
+    .byte PET_CR, 0
+strFinancesInspectors:
+    .text " Kommissare"
+    .byte PET_CR, 0
+strFinancesJudges:
+    .text " Richter"
+    .byte PET_CR, 0
+strFinancesStateAttorneys:
+    .text " Staatsanwälte"
+    .byte PET_CR, 0
+strFinancesMajors:
+    .text " B*rgermeister"
+    .byte PET_CR, 0

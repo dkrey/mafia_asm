@@ -9,6 +9,12 @@
 
 main:
   jsr CLEAR
+  mov16 #$f0fa : hex16dec_value
+  jsr Print_hex16_dec
+  jsr Wait_for_key
+  rts
+mainNextPlayerLoop:
+mainContinue:
   //getRandomRange16 #$00ff : #$03e8 // Werte zwischen 255 und 1000
   //print_int16 rnd16_result
 /*
@@ -16,6 +22,7 @@ main:
 +0x086A1   34465
 =0x30D40  200000
  */
+/*
   lda theftBaseBank +1
   sta rnd16_result +1
   lda #$A1
@@ -38,7 +45,7 @@ main:
 
   jsr Wait_for_key
   jmp main
-
+*/
 /*
   sei
 loop:

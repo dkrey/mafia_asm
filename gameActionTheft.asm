@@ -37,7 +37,7 @@ smallTheft:
     ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte
 
     // Vermögen mit Offset in Dez anzeigen lassen
-    mov32 playerMoney,y : hex2dec_value
+    mov32 playerMoney,y : hex32dec_value
     jsr Print_hex32_dec
 
     // mit Einheit $

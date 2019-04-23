@@ -136,7 +136,7 @@ playerEstates:
 // Besitz: 2 Byte pro Position, 14 Byte pro Spieler
 playerSlotMachines:
     .word $0001
-    .word $0001
+    .word $00fa
     .word $0001
     .word $0001
     .word $0001
