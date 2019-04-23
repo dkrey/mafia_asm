@@ -127,173 +127,173 @@ playerEstates:
     .byte 00
     .byte 00
 
-// Besitz: 2 Byte pro Position, 14 Byte pro Spieler
+// Besitz:
 playerSlotMachines:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 playerProstitutes:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 playerBars:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 playerGambling:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 playerBetting:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 playerBrothels:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 playerHotels:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 
 // Personal: 10 Byte pro Spieler
 playerGunfighters:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 
 playerBodyguards:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 
 playerGuards:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 
 playerInformants:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 
 playerAttorneys:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 
-//Bestechungen: 10 Byte pro Spieler
+//Bestechungen:
 playerPolice:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 
 playerInspectors:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 
 playerJudges:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 
 playerStateAttorneys:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 
 playerMajors:
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
-    .word $0000
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
 
 // Gefängnisrunden      1 Byte
 playerJailTotal:
@@ -384,24 +384,9 @@ resetGame:
 !loop_x:
     sta playerEstates,x
     inx
-    cpx #120
+    cpx #168
     bne !loop_x-
     rts
-
-    // Personal, Bestechungen Knastrunden etc löschen
-    tax
-!loop_x:
-    sta playerGunfighters,x
-    inx
-    cpx #160
-    bne !loop_x-
-
-    tax
-!loop_x:
-    sta playerGunfighters,x
-    inx
-    cpx #184
-    bne !loop_x-
 
     // Geiselnamen löschen
     tax

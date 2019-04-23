@@ -9,7 +9,7 @@ mainNextPlayerLoop:
     jsr calcPlayerOffsets
 
     // Einkommen berechnen und anzeigen
-    jsr gameFinancesIncome
+    jsr gameFinancesShowIncome
 
 mainContinue:
-    jsr main
+    jmp main

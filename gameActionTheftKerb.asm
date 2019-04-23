@@ -36,10 +36,8 @@ smallTheftKerbOwner:
     cmp currentPlayerNumber                 // Spielernummer darf nicht gleich sein
     beq smallTheftKerbOwner
 
-    // Hat der Spieler überhaupt Automaten?
-    asl                 // Offset für .word 16bit
+    // Hat der Spieler überhaupt Prostituierte?
     tax
-
     lda playerProstitutes,x             // Pos im Speicher
     cmp #01
     bcc smallTheftKerbContinue           // hat keine Prostituierte
@@ -50,8 +48,9 @@ smallTheftKerbOwner:
 
     mov16 #playerNames : TextPtr
 
-    // noch 3 mal weiterschieben für 16 bit: Namensoffset
+    // 4 mal weiterschieben für 16 bit: Namensoffset
     txa
+    asl
     asl
     asl
     asl
@@ -68,14 +67,18 @@ smallTheftKerbContinue:
     getRandomRange16 #$03e8 : #$0bb8    // Beute 1000 - 3000
     mov16 rnd16_result :smallTheftJackpot
 
-    mov16 #strTheftKerbSuccess1 : TextPtr // Text: "Die Tageseinnahmen"
+    mov16 #strTheftKerbSuccess1 : TextPtr // Text: "Sie waren sehr beeindruckend"
+    jsr Print_text
+    jsr addDelay
+
+    mov16 #strTheftKerbSuccess2 : TextPtr // Text: "Sie waren sehr beeindruckend"
     jsr Print_text
 
     print_int32 smallTheftJackpot
     lda #'$'
     jsr BSOUT
 
-    mov16 #strTheftKerbSuccess2 : TextPtr // Text: "dürfen sie behalten"
+    mov16 #strTheftKerbSuccess3 : TextPtr // Text: "dürfen sie behalten"
     jsr Print_text
 
     ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte

@@ -40,7 +40,6 @@ smallTheftSlotMachineOwner:
     beq smallTheftSlotMachineOwner
 
     // Hat der Spieler überhaupt Automaten?
-    asl                 // Offset für .word 16bit
     tax
 
     lda playerSlotMachines,x            // Automatenposition im Speicher
@@ -52,8 +51,9 @@ smallTheftSlotMachineOwner:
 
     mov16 #playerNames : TextPtr
 
-    // noch 3 mal weiterschieben für 16 bit: Namensoffset
+    // 4 mal weiterschieben für 16 bit: Namensoffset
     txa
+    asl
     asl
     asl
     asl

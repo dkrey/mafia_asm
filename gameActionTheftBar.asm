@@ -37,10 +37,8 @@ smallTheftBarOwner:
     cmp currentPlayerNumber                 // Spielernummer darf nicht gleich sein
     beq smallTheftBarOwner
 
-    // Hat der Spieler überhaupt Automaten?
-    asl                 // Offset für .word 16bit
+    // Hat der Spieler überhaupt Bars?
     tax
-
     lda playerBars,x            // Automatenposition im Speicher
     cmp #01
     bcc smallTheftBarContinue           // hat keine Bar
@@ -50,8 +48,9 @@ smallTheftBarOwner:
 
     mov16 #playerNames : TextPtr
 
-    // noch 3 mal weiterschieben für 16 bit: Namensoffset
+    // 4 mal weiterschieben für 16 bit: Namensoffset
     txa
+    asl
     asl
     asl
     asl

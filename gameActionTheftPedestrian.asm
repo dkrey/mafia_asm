@@ -28,7 +28,6 @@ smallTheftPedestrianSuccess:
     lda rnd8_result
     cmp randomFactor                        // Trifft es einen Mitspieler
 
-    jmp smallTheftPedestrianPlayer          // Debug: Es betrifft immer
     bcc smallTheftPedestrianPlayer
     jmp smallTheftPedestrianContinue
 
@@ -38,7 +37,6 @@ smallTheftPedestrianPlayer:
     beq smallTheftPedestrianPlayer
 
     // Hat der Spieler Leibwächter?
-    asl                     // Shift auf 16 bit
     tax                     // Akku nach X
     pha                     // Akku auch nochmal sichern
     lda playerBodyguards,x
@@ -64,8 +62,9 @@ smallTheftPedestrianBodyguardSuccess:
     mov16 #strTheftPedestrianPlayer1 : TextPtr   // Text: Der Passant war
     jsr Print_text
     mov16 #playerNames : TextPtr
-    // noch 3 mal weiterschieben für 16 bit: Namensoffset
+    // 4 mal weiterschieben für 16 bit: Namensoffset
     pla
+    asl
     asl
     asl
     asl
@@ -88,6 +87,7 @@ smallTheftPedestrianBodyguardSuccess:
 smallTheftPedestrianNoBodyguard:
     pla                 // Spielernummer wieder vom Stack holen
     // Hat der Spieler überhaupt Geld?
+    asl
     asl                 // weiterer Shift auf .dword 32bit
     tax
 

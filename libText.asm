@@ -159,7 +159,7 @@ hex32dec_result:
     .byte 0,0,0,0,0,0,0,0,0,0
 
 //===============================================================================
-// Print_hex32_dec
+// Print_hex16_dec
 //
 // Gibt den Hex-Wert hex16dec_value
 // als Dezimalzahl aus
@@ -215,3 +215,41 @@ hex16dec_value:
     .word $ffff
 hex16dec_result:
     .byte 0,0,0,0,0,0
+
+//===============================================================================
+// Print_hex8_dec
+//
+// Gibt den Hex-Wert hex16dec_value
+// als Dezimalzahl aus
+// x und y Register werden überschrieben
+//===============================================================================
+Print_hex8_dec:  //lda int8
+  lda hex8dec_value
+  ldx #0
+!loop:
+  jsr !div10+
+  pha
+  inx
+  tya
+  bne !loop-
+
+!loop2:
+  pla
+  ora #$30
+  jsr kernal_chrout
+  dex
+  bne !loop2-
+  rts
+
+!div10:
+  sec
+  ldy #$ff
+!divlp:
+  iny
+  sbc #10
+  bcs !divlp-
+  adc #10
+  rts
+
+hex8dec_value:
+    .byte $ff

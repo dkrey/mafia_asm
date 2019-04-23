@@ -85,6 +85,14 @@ strRounds:
     .text " Runden"
     .byte 0
 
+strTotal:
+    .text "Gesamt"
+    .byte 0
+
+strLine40:
+    .fill 40,PET_LINE
+    .byte PET_CR,0
+
 //===============================================================================
 // Jail
 //
@@ -250,14 +258,17 @@ strTheftKerbOwner:
     .byte 0
 strTheftKerbSuccess1:
     .text " Sie waren sehr beeindruckend."
-    .byte PET_CR, PET_CR
+    .byte PET_CR, PET_CR,0
+
+strTheftKerbSuccess2:
     .text " Die Prostituierte hat sich einen"
     .byte PET_CR
     .text " neuen Job gesucht."
     .byte PET_CR, PET_CR
     .text " Die Tageseinnahmen von "
     .byte 0
-strTheftKerbSuccess2:
+
+strTheftKerbSuccess3:
     .byte PET_CR
     .text " d*rfen sie behalten."
     .byte PET_CR
@@ -322,10 +333,10 @@ strFinancesProstitutes:
 strFinancesBars:
     .text " Bars"
     .byte PET_CR, 0
-strFinancesGambling:
+strFinancesBetting:
     .text " Wettb*ros"
     .byte PET_CR, 0
-strFinancesBetting:
+strFinancesGambling:
     .text " Spielsalons"
     .byte PET_CR, 0
 strFinancesBrothels:

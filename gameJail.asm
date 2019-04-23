@@ -93,8 +93,8 @@ gameJailProstitutesMax:
     mov16 #strJailProstitute : TextPtr
     jsr Print_text
 
-gameJailNoProtitutes:
 
+gameJailNoProtitutes:
     // Anwalt könnte Spieler rausholen
     ldx currentPlayerNumber
     lda playerAttorneys,x
