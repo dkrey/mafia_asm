@@ -21,11 +21,11 @@ BasicUpstart2(init)
 #import "gameStringsDE.asm"
 #import "gameActionTheft.asm"
 #import "gameJail.asm"
+#import "gameFinances.asm"
 
 //===============================================================================
 // Spiel initialisieren
 //===============================================================================
-
 
 init:
 
@@ -67,15 +67,13 @@ mainNextPlayerLoop:
 
     jsr calcPlayerOffsets           // Offsets für den Speicher berechnen
 
-    // Einnahmen berechnen
-
-    // Ausgaben berechnen
+    jsr gameFinancesOverview        // Eingaben und Ausgaben
 
     // Spieler im Gefängnis?
     ldx currentPlayerNumber         // Aktuelle Spielernummer wiederherstellen
     lda playerJailTotal, x
     cmp #0
-    bne mainGotoJail
+    //bne mainGotoJail
 
     // Wenn Vermögen < 20.000 $ bzw 00004e20h dann nur kleine Diebstähle
     ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte

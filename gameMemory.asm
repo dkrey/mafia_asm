@@ -76,7 +76,7 @@ playerNames:
     .fill playerNameLength,0
 
 // Schulden in bit 7    1 Byte
-currentPlayerDebtFlags:
+playerDebtFlags:
     .byte 00
     .byte 00
     .byte 00
@@ -359,7 +359,7 @@ resetGame:
     // Schuldenflag löschen
     tax
 !loop_x:
-    sta currentPlayerDebtFlags,x
+    sta playerDebtFlags,x
     inx
     cpx #8
     bne !loop_x-

@@ -2,8 +2,11 @@
 
 main:
     ldx #04
-    add32 money1,x : #$00000001 : result32
-    print_int32 result32
+    add32 money1,x : #$000000ff
+    sub32 money1,x : #$0000ffff : hex32dec_value
+    //mov32 #$0000ffff : hex32dec_value
+    jsr Print_hex32_dec_signed
+
     jsr Wait_for_key
     rts
 

@@ -236,7 +236,7 @@ Print_hex8_dec:  //lda int8
 !loop2:
   pla
   ora #$30
-  jsr kernal_chrout
+  jsr BSOUT
   dex
   bne !loop2-
   rts
@@ -253,3 +253,42 @@ Print_hex8_dec:  //lda int8
 
 hex8dec_value:
     .byte $ff
+
+
+//===============================================================================
+// Print_hex32_dec_signed
+//
+// Gibt den Hex-Wert hex32dec_value
+// als Dezimalzahl aus. Das hächste Bit bestimmt das Vorzeichen
+// x und y Register werden überschrieben
+//===============================================================================
+Print_hex32_dec_signed:
+    lda hex32dec_value + 3
+    and #$80
+    bpl !continue+
+    // Zweierkomplement +1 bilden, wenn negativ
+!negative:
+    lda #'-'
+    jsr BSOUT
+
+    lda hex32dec_value + 3
+    eor #$ff
+    sta hex32dec_value + 3
+
+    lda hex32dec_value + 2
+    eor #$ff
+    sta hex32dec_value + 2
+
+    lda hex32dec_value + 1
+    eor #$ff
+    sta hex32dec_value + 1
+
+    lda hex32dec_value
+    eor #$ff
+    sta hex32dec_value
+    // +1
+    add8To32 #1 : hex32dec_value : hex32dec_value
+
+!continue:
+    jsr Print_hex32_dec
+    rts

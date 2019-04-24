@@ -1,3 +1,59 @@
+# Income and Costs
+## Income
+### Slot Machines
+1.000 - 1.100
+
+### Prostitutes
+800 - 2.800
+
+### Bars
+10.000 - 20.000
+
+### Betting
+10.000 - 35.000
+
+### Gambling
+15.000 - 45.000
+
+### Brothels
+20.000 - 65.000
+
+### Hotels
+35.000 - 65.000
+
+## Costs
+
+### Gunfighters
+6.000
+
+### Bodyguards
+4.000
+
+### Guards
+3.000
+
+### Informants
+2.000 - 10.000
+
+### Attourney
+8.000
+
+### Police
+3.000
+
+### Policeinspector
+12.000
+
+### Judge
+30.000
+
+### Stateattourney
+70.000
+
+### Major
+100.000
+
+
 # Random event formulas
 ## Small Theft
 

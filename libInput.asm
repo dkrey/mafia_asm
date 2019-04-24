@@ -186,7 +186,6 @@ lastchar:
 input_y:
     .byte $00
 
-.pc = * "GotInput"
 got_input:
     .fill 128,0
 

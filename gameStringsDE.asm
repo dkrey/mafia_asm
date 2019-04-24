@@ -28,7 +28,7 @@ strTitleScreen:
 
     .byte PET_RED
     .fill 5, PET_CR
-    .text "(c) 2019 Blasiertes Institut"
+    .text "(c) 2019 Proktologisches Institut"
     .byte PET_CR
     .text "    f*r abgewandte Informatik"
     .byte PET_BLACK, 0
@@ -56,7 +56,7 @@ strCheckAllNames:
     .byte PET_CR, PET_CR
     .byte 0
 strIsThatCorrect:
-    .text "Ist das richtig (j/n)? "
+    .text "Ist das richtig (J/N)? "
     .byte 0
 strGoodLuck:
     .byte PET_CR,PET_CR
@@ -91,6 +91,10 @@ strTotal:
 
 strLine40:
     .fill 40,PET_LINE
+    .byte PET_CR,0
+
+strLine14:
+    .fill 14,PET_LINE
     .byte PET_CR,0
 
 //===============================================================================
@@ -322,8 +326,16 @@ strFinancesTitle:
 strFinancesIncome:
     .text " Ihre Einnahmen sind:"
     .byte PET_CR, PET_CR, 0
+strFinancesCosts:
+    .text "Ihre Ausgaben:"
+    .byte PET_CR, PET_CR, 0
 
-// Income Temp Vars
+strFinancesFinal:
+    .byte PET_CR
+    .text "Damit betr@gt ihr Verm&gen"
+    .byte PET_CR, PET_CR, 0
+
+// Einkommenspositionen
 strFinancesSlotMachines:
     .text " Spielautomaten"
     .byte PET_CR, 0
@@ -346,7 +358,7 @@ strFinancesHotels:
     .text " Hotels"
     .byte PET_CR, 0
 
-// Costs Temp Vars
+// Ausgaben
 strFinancesGunfighters:
     .text " Revolverhelden"
     .byte PET_CR, 0
@@ -372,7 +384,7 @@ strFinancesJudges:
     .text " Richter"
     .byte PET_CR, 0
 strFinancesStateAttorneys:
-    .text " Staatsanwälte"
+    .text " Staatsanw@lte"
     .byte PET_CR, 0
 strFinancesMajors:
     .text " B*rgermeister"

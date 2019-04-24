@@ -38,7 +38,7 @@ smallTheft:
 
     // Vermögen mit Offset in Dez anzeigen lassen
     mov32 playerMoney,y : hex32dec_value
-    jsr Print_hex32_dec
+    jsr Print_hex32_dec_signed
 
     // mit Einheit $
     lda #' '
