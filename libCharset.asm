@@ -1,38 +1,40 @@
 #importonce
 // Charset editieren nach Jörn:
 // https://www.retro-programming.de/programming/nachschlagewerk/vic-ii/vic-ii-eigener-zeichensatz/
-//
-//  VIC-II Speicher-Konstanten
-.const VICBANKNO               = 0                             //Nr. (0 - 3) der 16KB Bank                              | Standard: 0
-.const VICSCREENBLOCKNO        = 1                             //Nr. (0 -15) des 1KB-Blocks für den Textbildschirm      | Standard: 1
-.const VICCHARSETBLOCKNO       = 7                             //Nr. (0 - 7) des 2KB-Blocks für den Zeichensatz         | Standard: 2
-.const VICBITMAPBBLOCKNO       = 0                             //Nr. (0 - 1) des 8KB-Blocks für die BITMAP-Grafik       | Standard: 0
-.const VICBASEADR              = VICBANKNO*16384               //Startadresse der gewählten VIC-Bank                    | Standard: $0000
-.const VICCHARSETADR           = VICCHARSETBLOCKNO * 2048 + VICBASEADR //Adresse des Zeichensatzes                      | Standard: $1000 ($d000)
 
+.const VICCHARSETADR           = $d000
 .const CHARROMADR              = $d800
-.const ZP_HELPADR1             = $fb
-.const ZP_HELPADR2             = $fd
 
-//BasicUpstart2(main)
+
 charsetAddUmlaut:
-//*** Start des Zeichensatzes festlegen
-    lda #VICSCREENBLOCKNO * 16 + VICCHARSETBLOCKNO * 2
-    sta $d018                          //Adresse für Bildschirm und Zeichensatz festlegen
+    lda #%00000011                     //Datenrichtung für Bit 0 & 1 des Port-A
+    sta $dd02                          //zum Schreiben freigeben
+
+    lda $dd00                          // Bank 3 aktivieren
+    and #%11111100
+    ora #%00000000
+    sta $dd00
+
+    // Bildschirm = c000
+    lda $d018                          //VIC-II Register 24 in den Akku holen
+    and #%00001111                     //Über Bits 7-4
+    ora #%00000000                     //den Beginn des
+    sta $d018                          //Bildschirmspeichers festlegen
+
+    // Character = d000
+    lda $d018                          //VIC-II Register 24 in den Akku holen
+    and #%11110001                     //Über Bits 3-1
+    ora #%00000100                     //den Beginn des
+    sta $d018                          //Zeichensatzes festlegen
     sei                                //IRQs sperren
 
+    // Char ROM kopieren
     lda $01                            //ROM-'Konfig' in den Akku
     pha                                //auf dem Stack merken
     and #%11111011                     //BIT-2 (E/A-Bereich) ausblenden
     sta $01                            //und zurückschreiben
 
     jsr copyCharROM                    //Zeichensatz kopieren
-
-    pla                                //ROM-Einstellung vom Stack holen
-    sta $01                            //wiederherstellen
-
-    cli                                //Interrupts freigeben
-
     mov32 a_umlaut : charToChange
     mov32 a_umlaut + 4 : charToChange + 4
     ldx #'@'                           // @ wird zu ä
@@ -47,31 +49,37 @@ charsetAddUmlaut:
     mov32 u_umlaut + 4 : charToChange + 4
     ldx #'*'                           // * wird zu ü
     jsr replaceChar
+    pla                                //ROM-Einstellung vom Stack holen
+    sta $01                            //wiederherstellen
 
-    rts                                //zurück zum BASIC
+    cli                                //Interrupts freigeben
+
+    lda #$c0                            // Den Kernalroutinen sagen
+    sta $0288                           // dass der BS Speicher jetzt in C000 liegt
+    rts
 
 
 copyCharROM:
     lda #<CHARROMADR                   //Quelle (CharROM) auf die Zero-Page
-    sta ZP_HELPADR1
+    sta ZeroPageLow
     lda #>CHARROMADR
-    sta ZP_HELPADR1+1
+    sta ZeroPageHigh
 
     lda #<VICCHARSETADR                //Ziel (RAM-Adr. Zeichensatz) in die Zero-Page
-    sta ZP_HELPADR2
+    sta ZeroPageLow2
     lda #>VICCHARSETADR
-    sta ZP_HELPADR2+1
+    sta ZeroPageHigh2
 
     ldx #$08                           //wir wollen 8*256 = 2KB kopieren
 loopPage:
     ldy #$00                           //Schleifenzähler für je 256 Bytes
 loopChar:
-    lda (ZP_HELPADR1),Y                //Zeichenzeile (Byte) aus dem CharROM holen
-    sta (ZP_HELPADR2),Y                //und in unseren gewählten Speicherbereich kopieren
+    lda (ZeroPageLow),Y                //Zeichenzeile (Byte) aus dem CharROM holen
+    sta (ZeroPageLow2),Y                //und in unseren gewählten Speicherbereich kopieren
     dey                                //Blockzähler (256 Bytes) verringern
     bne loopChar                       //solangen ungleich 0 nach loopChar springen
-    inc ZP_HELPADR1+1                  //Sonst das MSB der Adressen auf der Zeropage
-    inc ZP_HELPADR2+1                  //um eine 'Seite' (256 Bytes) erhöhen
+    inc ZeroPageHigh                 //Sonst das MSB der Adressen auf der Zeropage
+    inc ZeroPageHigh2                  //um eine 'Seite' (256 Bytes) erhöhen
     dex                                //'Seiten'-Zähler (acht Seiten zu 256 Bytes) verringern
     bne loopPage                       //solange ungleich 0 nach loopPage springen
 
@@ -86,7 +94,7 @@ replaceChar:
  asl
  clc
  adc #<VICCHARSETADR            //LSB fürs Ziel (RAM-Adr. Zeichensatz) in die Zero-Page
- sta ZP_HELPADR2
+ sta ZeroPageLow2
 
  txa                            //Screencode in den Akku
  lsr                            //die oberen drei BYTEs für die Ermittlung
@@ -96,12 +104,12 @@ replaceChar:
  lsr
  clc
  adc #>VICCHARSETADR            //einfach aufs MSB der Ziel-Adresse addieren
- sta ZP_HELPADR2+1
+ sta ZeroPageHigh2
 
  ldy #$07
 !loop:
  lda charToChange,Y
- sta (ZP_HELPADR2),Y
+ sta (ZeroPageLow2),Y
  dey
  bpl !loop-
 
