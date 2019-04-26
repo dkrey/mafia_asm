@@ -2,7 +2,7 @@
 
 main:
 
-    compare32 #$00003a96 : #$00003a95
+    compare32 #$00002a21 : #$00003a21
     //compare16  #$00ff : #$00fe
     //
     beq is_equal

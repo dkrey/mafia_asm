@@ -158,6 +158,10 @@ hex32dec_value:
 hex32dec_result:
     .byte 0,0,0,0,0,0,0,0,0,0
 
+.pseudocommand Print_hex32_dec int32_val {
+  mov32 int32_val : hex32dec_value
+  jsr Print_hex32_dec
+}
 //===============================================================================
 // Print_hex16_dec
 //
@@ -216,6 +220,10 @@ hex16dec_value:
 hex16dec_result:
     .byte 0,0,0,0,0,0
 
+.pseudocommand Print_hex16_dec int16_val {
+  mov16 int16_val : hex16dec_value
+  jsr Print_hex16_dec
+}
 //===============================================================================
 // Print_hex8_dec
 //
@@ -254,7 +262,10 @@ Print_hex8_dec:  //lda int8
 hex8dec_value:
     .byte $ff
 
-
+.pseudocommand Print_hex8_dec int8_val {
+  mov int8_val : hex8dec_value
+  jsr Print_hex8_dec
+}
 //===============================================================================
 // Print_hex32_dec_signed
 //

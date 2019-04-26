@@ -95,7 +95,7 @@ playerDebtFlag:
 // Vermögen: 4 Byte pro Spieler
 playerMoney:
     .dword $00000064
-    .dword $00004e21
+    .dword $00013880
     .dword $00000064
     .dword $00000064
     .dword $00000064
@@ -161,7 +161,7 @@ playerBars:
     .byte $0a
     .byte $0a
     .byte $0a
-playerGambling:
+playerBetting:
     .byte $00
     .byte $01
     .byte $00
@@ -170,7 +170,7 @@ playerGambling:
     .byte $00
     .byte $00
     .byte $00
-playerBetting:
+playerGambling:
     .byte $00
     .byte $01
     .byte $00

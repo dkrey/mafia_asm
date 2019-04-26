@@ -185,7 +185,7 @@ compare16:
 
     lda cmp16_val1 + 1
     cmp cmp16_val2 + 1
-    bcc !skip+
+    bne !skip+
     lda cmp16_val1
     cmp cmp16_val2
 !skip:
@@ -210,15 +210,15 @@ compare32:
     clc // Carry löschen
     lda cmp32_val1 + 3
     cmp cmp32_val2 + 3
-    bcc !skip+
+    bne !skip+
 
     lda cmp32_val1 + 2
     cmp cmp32_val2 + 2
-    bcc !skip+
+    bne !skip+
 
     lda cmp32_val1 + 1
     cmp cmp32_val2 + 1
-    bcc !skip+
+    bne !skip+
 
     lda cmp32_val1
     cmp cmp32_val2

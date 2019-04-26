@@ -92,6 +92,11 @@ strChoice:
     .text " Ihre Wahl ? "
     .byte 0
 
+strSelectNothing:
+    .byte PET_CR
+    .text " 0. Nichts"
+    .byte PET_CR,PET_CR,0
+
 strLine40:
     .fill 40,PET_LINE
     .byte PET_CR,0
@@ -405,26 +410,23 @@ strShopTitle:
     .fill 40,PET_LINE
     .byte PET_CR,0
 strShopSlotMachines:
-    .text " 1. Spielautomaten (drei) ..... 15000 $"
-    .byte PET_CR,0
+    .text " 1. Spielautomaten (drei) ..... "
+    .byte 0
 strShopProstitutes:
-    .text " 2. Prostituierte (eine) ...... 20000 $"
-    .byte PET_CR,0
+    .text " 2. Prostituierte (eine) ...... "
+    .byte 0
 strShopBars:
-    .text " 3. Bar ....................... 80000 $"
-    .byte PET_CR,0
+    .text " 3. Bar ....................... "
+    .byte 0
 strShopBetting:
-    .text " 4. Wettb&ro ................. 160000 $"
-    .byte PET_CR,0
+    .text " 4. Wettb*ro ................. "
+    .byte 0
 strShopGambling:
-    .text " 5. Spielsalon ............... 300000 $"
-    .byte PET_CR,0
+    .text " 5. Spielsalon ............... "
+    .byte 0
 strShopBrothels:
-    .text " 6. Nobelbordell ............ 1000000 $"
-    .byte PET_CR,0
+    .text " 6. Nobelbordell ............ "
+    .byte 0
 strShopHotels:
-    .text " 7. Grandhotel ............. 10000000 $"
-    .byte PET_CR,0
-strShopExit:
-    .text " 0. Nichts"
-    .byte PET_CR,PET_CR,0
+    .text " 7. Grandhotel ............. "
+    .byte 0
