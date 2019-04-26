@@ -52,7 +52,8 @@ smallTheft:
     jsr Print_text
     mov16 #strSmallTheftMenu2 : TextPtr
     jsr Print_text
-
+    mov16 #strChoice : TextPtr
+    jsr Print_text
 //===============================================================================
 // smallTheftChoice
 //
@@ -108,27 +109,39 @@ branchSmallTheftPedestrian:
 // Bankraub
 smallTheftBank:
     #import "gameActionTheftBank.asm"
-    jmp mainContinue
+    jmp smallTheftContinue
 
 // Automaten knacken
 smallTheftSlotMachine:
     #import "gameActionTheftSlotMachine.asm"
-    jmp mainContinue
+    jmp smallTheftContinue
 
 // Bar ausrauben
 smallTheftBar:
     #import "gameActionTheftBar.asm"
-    jmp mainContinue
+    jmp smallTheftContinue
 
 // Auswahl 4: Prostituierte bekehren
 smallTheftKerb:
     #import "gameActionTheftKerb.asm"
-    jmp mainContinue
+    jmp smallTheftContinue
 
 // Auswahl 5: Passanten ausnehmen
 smallTheftPedestrian:
     #import "gameActionTheftPedestrian.asm"
+    jmp smallTheftContinue
+
+// Wenn das Vermögen jetzt über 20.000 $ liegt: einkaufen!
+smallTheftContinue:
+    // Wenn Vermögen < 20.000 $ bzw 00004e20h dann nur kleine Diebstähle
+    ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte
+
+    compare32 playerMoney,y : minMoneyForMenu
+    bcc !end+
+    jsr gameActionShopping
+!end:
     jmp mainContinue
+
 //===============================================================================
 // showMisfortune
 //

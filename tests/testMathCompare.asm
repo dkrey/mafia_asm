@@ -2,11 +2,11 @@
 
 main:
 
-    compare32 #$00000a05 : #$00000001
+    compare32 #$00003a96 : #$00003a95
     //compare16  #$00ff : #$00fe
-
-    bcs is_bigger //or equal
+    //
     beq is_equal
+    bcs is_bigger //or equal
     bcc is_smaller
 is_smaller:
     print_hex8 #$01

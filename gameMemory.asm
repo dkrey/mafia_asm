@@ -76,7 +76,7 @@ playerNames:
     .fill playerNameLength,0
 
 // Schulden in bit 7    1 Byte
-playerDebtFlags:
+playerDebtFlag:
     .byte 00
     .byte 00
     .byte 00
@@ -155,16 +155,16 @@ playerBars:
     .byte $00
     .byte $00
     .byte $00
-playerGambling:
-    .byte $00
-    .byte $00
-    .byte $00
-    .byte $00
-    .byte $00
-    .byte $00
-    .byte $00
-    .byte $00
 playerBetting:
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+playerGambling:
     .byte $00
     .byte $00
     .byte $00

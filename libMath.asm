@@ -186,12 +186,11 @@ compare16:
     lda cmp16_val1 + 1
     cmp cmp16_val2 + 1
     bcc !skip+
-
     lda cmp16_val1
     cmp cmp16_val2
-    bcc !skip+
 !skip:
     rts
+
 cmp16_val1:
     .word $0000
 cmp16_val2:
@@ -209,7 +208,6 @@ cmp16_val2:
 //===============================================================================
 compare32:
     clc // Carry löschen
-
     lda cmp32_val1 + 3
     cmp cmp32_val2 + 3
     bcc !skip+
@@ -224,15 +222,17 @@ compare32:
 
     lda cmp32_val1
     cmp cmp32_val2
-    bcc !skip+
 !skip:
     rts
+
 cmp32_val1:
     .dword $00000000
 cmp32_val2:
     .dword $00000000
 
 .pseudocommand compare32 val1 : val2 {
+    clear32 cmp32_val1
+    clear32 cmp32_val2
     mov32 val1 : cmp32_val1
     mov32 val2 : cmp32_val2
     jsr compare32
