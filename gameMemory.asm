@@ -359,7 +359,7 @@ resetGame:
     // Schuldenflag löschen
     tax
 !loop_x:
-    sta playerDebtFlags,x
+    sta playerDebtFlag,x
     inx
     cpx #8
     bne !loop_x-

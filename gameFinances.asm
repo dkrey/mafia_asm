@@ -133,7 +133,7 @@ gameFinancesShow:
     mov #WHITE : BGCOL0             // Weißer Hintergrund
     mov #BLACK : TEXTCOL            // Schwarze Schrift
 
-    //jsr gameFinancesShowIncome      // Einkommen anzeigen
+    jsr gameFinancesShowIncome      // Einkommen anzeigen
     mov16 #strPressKey : TextPtr    // Text: Weiter
     jsr Print_text
     jsr Wait_for_key
@@ -150,12 +150,12 @@ gameFinancesShow:
     bpl !nodept+
     lda #$01
     ldy currentPlayerNumber
-    sta playerDebtFlags,y
+    sta playerDebtFlag,y
 
 !nodept:
     lda #$00
     ldy currentPlayerNumber
-    sta playerDebtFlags,y
+    sta playerDebtFlag,y
 
     mov16 #strPressKey : TextPtr    // Text: Weiter
     jsr Print_text

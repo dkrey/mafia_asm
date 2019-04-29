@@ -138,7 +138,7 @@ smallTheftContinue:
 
     compare32 playerMoney,y : minMoneyForMenu
     bcc !end+
-    jsr gameActionShopping
+    jsr gameShopMenu
 !end:
     jmp mainContinue
 

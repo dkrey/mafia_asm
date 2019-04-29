@@ -12,4 +12,4 @@ mainNextPlayerLoop:
     jsr gameShopMenu
 
 mainContinue:
-    jsr main
+    rts

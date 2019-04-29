@@ -84,7 +84,7 @@ randomFactor:
 // Schulden in bit 7    1 Byte
 playerDebtFlag:
     .byte 00
-    .byte 00
+    .byte 01
     .byte 00
     .byte 00
     .byte 00
@@ -95,7 +95,7 @@ playerDebtFlag:
 // Vermögen: 4 Byte pro Spieler
 playerMoney:
     .dword $00000064
-    .dword $00013880
+    .dword $ffffff98
     .dword $00000064
     .dword $00000064
     .dword $00000064

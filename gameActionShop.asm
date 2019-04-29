@@ -21,7 +21,13 @@ gameShopPriceHotels:
 gameShopCheckBudget:
     lda #0
     sta gameShopBuyingMask
-
+    // Schulden?
+    ldx currentPlayerNumber
+    lda playerDebtFlag, x
+    cmp #00
+    beq !skip+  // keine Schulden, also weiter
+    jmp !end+   // doch Schulden, also Ende
+!skip:
     // Gehalt holen und vergleichen
     ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte
 
@@ -128,74 +134,46 @@ gameShopMenu:
     jsr Print_text
 
     // Anzeige Automaten
-    lda gameShopBuyingMask
-    cmp #01
-    bcs !continue+
-    jmp !end+
-!continue:
+    mov #01 : gameShopPositionChoice
     mov16 #strShopSlotMachines : TextPtr
-    jsr Print_text
-    Print_hex32_dec gameShopPriceSlotMachines
-    lda #' '
-    jsr BSOUT
-    lda #'$'
-    jsr BSOUT
-    lda #PET_CR
-    jsr BSOUT
+    mov32 gameShopPriceSlotMachines : gameShopPositionPrice
+    jsr gameShopPrintOption
 
     // Anzeige Prostituierte
-    lda gameShopBuyingMask
-    cmp #02
-    bcs !continue+
-    jmp !end+
-!continue:
+    mov #02 : gameShopPositionChoice
     mov16 #strShopProstitutes : TextPtr
-    jsr Print_text
+    mov32 gameShopPriceProstitutes : gameShopPositionPrice
+    jsr gameShopPrintOption
 
     // Anzeige Bars
-    lda gameShopBuyingMask
-    cmp #03
-    bcs !continue+
-    jmp !end+
-!continue:
+    mov #03 : gameShopPositionChoice
     mov16 #strShopBars : TextPtr
-    jsr Print_text
+    mov32 gameShopPriceBars : gameShopPositionPrice
+    jsr gameShopPrintOption
 
     // Anzeige Wettbüro
-    lda gameShopBuyingMask
-    cmp #04
-    bcs !continue+
-    jmp !end+
-!continue:
+    mov #04 : gameShopPositionChoice
     mov16 #strShopBetting : TextPtr
-    jsr Print_text
+    mov32 gameShopPriceBetting : gameShopPositionPrice
+    jsr gameShopPrintOption
 
     // Anzeige Spielsalon
-    lda gameShopBuyingMask
-    cmp #05
-    bcs !continue+
-    jmp !end+
-!continue:
+    mov #05 : gameShopPositionChoice
     mov16 #strShopGambling : TextPtr
-    jsr Print_text
+    mov32 gameShopPriceGambling : gameShopPositionPrice
+    jsr gameShopPrintOption
 
     // Anzeige Bordell
-    lda gameShopBuyingMask
-    cmp #06
-    bcs !continue+
-    jmp !end+
-!continue:
+    mov #06 : gameShopPositionChoice
     mov16 #strShopBrothels : TextPtr
-    jsr Print_text
+    mov32 gameShopPriceBrothels : gameShopPositionPrice
+    jsr gameShopPrintOption
 
-    // Anzeige Grandhotel
-    lda gameShopBuyingMask
-    cmp #07
-    bcs !continue+
-    jmp !end+
-!continue:
+    // Anzeige Bordell
+    mov #07 : gameShopPositionChoice
     mov16 #strShopHotels : TextPtr
-    jsr Print_text
+    mov32 gameShopPriceHotels : gameShopPositionPrice
+    jsr gameShopPrintOption
 
 !end:
     // Text: Nichts
@@ -207,7 +185,7 @@ gameShopMenu:
 //===============================================================================
 // gameShop
 //
-// Auswahl dim Shop
+// Auswahl im Shop
 //===============================================================================
 gameShopChoice:
     // Abfrage, welche Position
@@ -270,28 +248,28 @@ gameShopChoice:
     beq branchShopHotels
 
 branchShopExit:
-    jmp !exit+
+    rts
 branchShopSlotMachines:
-    jmp shopSlotMachines
+    jmp shopBuySlotMachines
 branchShopProstitutes:
-    Print_hex8_dec #$02
+    jmp shopBuyProstitutes
 branchShopBars:
-    Print_hex8_dec #$03
+    jmp shopBuyBars
 branchShopBetting:
-    Print_hex8_dec #$04
+    jmp shopBuyBetting
 branchShopGambling:
-    Print_hex8_dec #$05
+    jmp shopBuyGambling
 branchShopBrothels:
-    Print_hex8_dec #$06
+    jmp shopBuyBrothels
 branchShopHotels:
-    Print_hex8_dec #$07
+    jmp shopBuyHotels
 
 // Automaten kaufen
 shopSlotMachines:
     // 3 Automaten hinzufügen
     ldx currentPlayerNumber
     lda playerSlotMachines,x
-    cmp #$ff // Überrollen verhindern
+    cmp #$fd // Überrollen verhindern
     bne !skip+
     jmp !exit+
 !skip:
@@ -301,7 +279,146 @@ shopSlotMachines:
 
     // Geld abzeiehen
     ldy currentPlayerOffset_4
-
+    sub32 playerMoney,y : gameShopPriceSlotMachines : playerMoney,y
 !exit:
-    jsr Wait_for_key
+    jmp gameShopMenu
+
+// Automaten kaufen
+shopBuySlotMachines:
+    // 3 Automaten hinzufügen
+    ldx currentPlayerNumber
+    lda playerSlotMachines,x
+    cmp #$fd // Überrollen verhindern
+    bne !skip+
+    jmp !exit+
+!skip:
+    inc playerSlotMachines,x
+    inc playerSlotMachines,x
+    inc playerSlotMachines,x
+
+    // Geld abzeiehen
+    ldy currentPlayerOffset_4
+    sub32 playerMoney,y : gameShopPriceSlotMachines : playerMoney,y
+!exit:
+    jmp gameShopMenu
+
+// Prostituierte anstellen
+shopBuyProstitutes:
+    ldx currentPlayerNumber
+    lda playerProstitutes,x
+    cmp #$ff // Überrollen verhindern
+    bne !skip+
+    jmp !exit+
+!skip:
+    inc playerProstitutes,x
+
+    // Geld abzeiehen
+    ldy currentPlayerOffset_4
+    sub32 playerMoney,y : gameShopPriceProstitutes : playerMoney,y
+!exit:
+    jmp gameShopMenu
+
+// Bars kaufen
+shopBuyBars:
+    ldx currentPlayerNumber
+    lda playerBars,x
+    cmp #$ff // Überrollen verhindern
+    bne !skip+
+    jmp !exit+
+!skip:
+    inc playerBars,x
+
+    // Geld abzeiehen
+    ldy currentPlayerOffset_4
+    sub32 playerMoney,y : gameShopPriceBars : playerMoney,y
+!exit:
+    jmp gameShopMenu
+
+
+// Wettbüros kaufen
+shopBuyBetting:
+    ldx currentPlayerNumber
+    lda playerBetting,x
+    cmp #$ff // Überrollen verhindern
+    bne !skip+
+    jmp !exit+
+!skip:
+    inc playerBetting,x
+
+    // Geld abzeiehen
+    ldy currentPlayerOffset_4
+    sub32 playerMoney,y : gameShopPriceBetting : playerMoney,y
+!exit:
+    jmp gameShopMenu
+
+// Spielsalon kaufen
+shopBuyGambling:
+    ldx currentPlayerNumber
+    lda playerGambling,x
+    cmp #$ff // Überrollen verhindern
+    bne !skip+
+    jmp !exit+
+!skip:
+    inc playerGambling,x
+
+    // Geld abzeiehen
+    ldy currentPlayerOffset_4
+    sub32 playerMoney,y : gameShopPriceGambling : playerMoney,y
+!exit:
+    jmp gameShopMenu
+
+
+// Bordell kaufen
+shopBuyBrothels:
+    ldx currentPlayerNumber
+    lda playerBrothels,x
+    cmp #$ff // Überrollen verhindern
+    bne !skip+
+    jmp !exit+
+!skip:
+    inc playerBrothels,x
+
+    // Geld abzeiehen
+    ldy currentPlayerOffset_4
+    sub32 playerMoney,y : gameShopPriceBrothels : playerMoney,y
+!exit:
+    jmp gameShopMenu
+
+// Hotel kaufen
+shopBuyHotels:
+    ldx currentPlayerNumber
+    lda playerHotels,x
+    cmp #$ff // Überrollen verhindern
+    bne !skip+
+    jmp !exit+
+!skip:
+    inc playerHotels,x
+
+    // Geld abzeiehen
+    ldy currentPlayerOffset_4
+    sub32 playerMoney,y : gameShopPriceHotels : playerMoney,y
+!exit:
+    jmp gameShopMenu
+
+// Anzeige Shop Position
+gameShopPrintOption:
+    lda gameShopBuyingMask
+    cmp gameShopPositionChoice
+    bcs !continue+
+    jmp !end+
+!continue:
+    jsr Print_text
+    Print_hex32_dec gameShopPositionPrice
+    lda #' '
+    jsr BSOUT
+    lda #'$'
+    jsr BSOUT
+    lda #PET_CR
+    jsr BSOUT
+!end:
     rts
+
+gameShopPositionChoice:
+    .byte 00
+gameShopPositionPrice:
+    .dword $00000000

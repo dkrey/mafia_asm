@@ -22,6 +22,7 @@ BasicUpstart2(init)
 #import "gameActionTheft.asm"
 #import "gameJail.asm"
 #import "gameFinances.asm"
+#import "gameActionShop.asm"
 
 //===============================================================================
 // Spiel initialisieren
@@ -56,12 +57,12 @@ showTitle:
     // Wie viele Spiele, welche Namen etc.
     #import "gameSetupPlayers.asm"
 
+    ldx #00 // Spieler 0 beginnt
 //===============================================================================
 // Hauptschleife
 //===============================================================================
-main:
-    ldx #00                         // Durch die Spieler mit X zählen
-                                    // Spieler 1 hat die 0
+
+// Durch die Spieler mit X zählen
 mainNextPlayerLoop:
     stx currentPlayerNumber         // Aktuelle Spielernummer sichern
 
@@ -95,16 +96,13 @@ mainNoMoney:
 mainDept:                           // TODO: Schulden implementieren
 
 mainMenu:
-    mov #GREEN : BGCOL0               // Debug
-    jsr Wait_for_key
+    jsr gameShopMenu
 
 mainContinue:
     ldx currentPlayerNumber         // Aktuelle Spielernummer wiederherstellen
     inx                             // nächster Spieler
-    cpx playerCount                 // Solange x< Spieleranzahl
-    bne mainNextPlayerLoop          // weiter mit Schleife, nächster Spieler
-    jmp main                        // ansonsten ist Spieler 1 wieder dran
-
-
-//===============================================================================
-
+    cpx playerCount                 // Solange x< Spieleranzahl weiter mit Schleife,
+    bne !skip+                      // ansonsten ist
+    ldx #00                         // Spieler 0 wieder dran
+!skip:
+    jmp mainNextPlayerLoop
