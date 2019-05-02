@@ -1,5 +1,7 @@
 #importonce
 
+gameOver:
+    .byte 0
 
 // Anzahl der Mitspieler
 playerCount:
@@ -22,6 +24,18 @@ currentPlayerOffset_16:
 // Mindestens 20.000 $ dez, um das Hauptmenu zu bekommen
 minMoneyForMenu:
     .dword $00004e20
+
+// Anteil der ganzen Gegend, die erreicht werden muss
+// abhängig von der Spieleranzahl
+winFactorEstatePercentage:
+    .byte $37   // 55 %
+    .byte $32   // 50 %
+    .byte $2d   // 45 %
+    .byte $28   // 40 %
+    .byte $23   // 35 %
+    .byte $1e   // 30 %
+    .byte $19   // 25 %
+    .byte $14   // 20 %
 
 // Platzhalter für Zufälligkeit
 .pc = * "Player Random"
@@ -348,6 +362,7 @@ resetGame:
     lda #00
     sta playerCount
     sta currentPlayerNumber
+    sta gameOver
     // Spielernamen löschen
     tax
 !loop_x:

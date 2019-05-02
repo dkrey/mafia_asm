@@ -23,6 +23,7 @@ BasicUpstart2(init)
 #import "gameJail.asm"
 #import "gameFinances.asm"
 #import "gameActionShop.asm"
+#import "gameProperty.asm"
 
 //===============================================================================
 // Spiel initialisieren
@@ -37,13 +38,13 @@ init:
     mov #$80 : $0291
 
     jsr charsetAddUmlaut
-    // clear the screen
-    jsr CLEAR
 
 //===============================================================================
 // Titel anzeigen
 //===============================================================================
 showTitle:
+    // clear the screen
+    jsr CLEAR
     mov #RED:EXTCOL                 // Roter Overscan
     mov #YELLOW: BGCOL0             // Gelber Hintergrund
 
@@ -70,6 +71,17 @@ mainNextPlayerLoop:
 
     jsr gameFinancesOverview        // Eingaben und Ausgaben
 
+    // Besitzverhältnisse ausrechnen und prüfen ob gewonnen
+    jsr gamePropertyShow
+
+    // Spiel vorbei, wieder von vorn
+    lda gameOver
+    cmp #00
+    beq !skip+
+    jsr resetGame
+    jmp showTitle
+!skip:
+
     // Spieler im Gefängnis?
     ldx currentPlayerNumber         // Aktuelle Spielernummer wiederherstellen
     lda playerJailTotal, x
@@ -80,6 +92,7 @@ mainNextPlayerLoop:
     lda playerDebtFlag, x
     cmp #0
     bne mainDept
+
     // Wenn Vermögen < 20.000 $ bzw 00004e20h dann nur kleine Diebstähle
     ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte
 

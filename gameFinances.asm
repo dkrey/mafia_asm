@@ -151,12 +151,12 @@ gameFinancesShow:
     lda #$01
     ldy currentPlayerNumber
     sta playerDebtFlag,y
-
+    jmp !skip+
 !nodept:
     lda #$00
     ldy currentPlayerNumber
     sta playerDebtFlag,y
-
+!skip:
     mov16 #strPressKey : TextPtr    // Text: Weiter
     jsr Print_text
     jsr Wait_for_key

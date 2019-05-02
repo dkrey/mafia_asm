@@ -145,6 +145,18 @@
   sta extract_byte_argument(result, 3)
 }
 
+.pseudocommand add8To16 val8 : val16 : result {
+  clc
+  lda extract_byte_argument(val16, 0)
+  adc extract_byte_argument(val8, 0)
+  sta extract_byte_argument(result, 0)
+
+  lda extract_byte_argument(val16, 1)
+  adc #00
+  sta extract_byte_argument(result, 1)
+}
+
+
 .pseudocommand add16To32 val16 : val32 : result {
   clc
   lda extract_byte_argument(val32, 0)

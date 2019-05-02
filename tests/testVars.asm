@@ -38,6 +38,18 @@ currentPlayerOffset_16:
 minMoneyForMenu:
     .dword $00004e20
 
+// Anteil der ganzen Gegend, die erreicht werden muss
+// abhängig von der Spieleranzahl
+winFactorEstatePercentage:
+    .byte $37   // 55 %
+    .byte $32   // 50 %
+    .byte $2d   // 45 %
+    .byte $28   // 40 %
+    .byte $23   // 35 %
+    .byte $1e   // 30 %
+    .byte $19   // 25 %
+    .byte $14   // 20 %
+
 // Platzhalter für Zufälligkeit
 .pc = * "Player Random"
 randomFactor:
@@ -84,7 +96,7 @@ randomFactor:
 // Schulden in bit 7    1 Byte
 playerDebtFlag:
     .byte 00
-    .byte 01
+    .byte 00
     .byte 00
     .byte 00
     .byte 00
@@ -95,7 +107,7 @@ playerDebtFlag:
 // Vermögen: 4 Byte pro Spieler
 playerMoney:
     .dword $00000064
-    .dword $ffffff98
+    .dword $00000065
     .dword $00000064
     .dword $00000064
     .dword $00000064
@@ -135,8 +147,8 @@ playerEstates:
 
 // Besitz:
 playerSlotMachines:
-    .byte $00
-    .byte $0f
+    .byte $01
+    .byte $01
     .byte $01
     .byte $01
     .byte $01
@@ -221,7 +233,7 @@ playerBodyguards:
 
 playerGuards:
     .byte $00
-    .byte $a1
+    .byte $01
     .byte $00
     .byte $00
     .byte $00

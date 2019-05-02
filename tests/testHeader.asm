@@ -24,5 +24,5 @@ BasicUpstart2(init)
 
 
 init:
-    jsr charsetAddUmlaut
+    //jsr charsetAddUmlaut
 jmp main

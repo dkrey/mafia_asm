@@ -430,3 +430,29 @@ strShopBrothels:
 strShopHotels:
     .text " 7. Grandhotel ............. "
     .byte 0
+
+//===============================================================================
+// strPropertyOverview
+//
+// Sie beherrschen die Gegend
+//===============================================================================
+strPropertyOverview1:
+    .text " Prozent gilt es zu beherrschen."
+    .byte PET_CR, PET_CR, 0
+
+strPropertyOverview2:
+    .byte PET_CR
+    .text " Sie beherrschen nun "
+    .byte 0
+
+strPropertyOverview3:
+    .text " Prozent"
+    .byte PET_CR
+    .text " der ganzen Gegend."
+    .byte PET_CR,0
+
+strPropertyWin:
+    .byte PET_CR
+    .text " Damit haben sie gewonnen!!!"
+    .byte PET_CR, PET_CR
+    .byte 0

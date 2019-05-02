@@ -680,6 +680,7 @@
 5100 LW(0)=1:RH(0)=1:AN(0)=1:IN(0)=1:WA(0)=1
 5110 PW(0)=1:KO(0)=1:UR(0)=1:SA(0)=1:BM(0)=1
 
+!- Gesamtbesetz aller Mitspieler aufsummieren inkl. Personal
 5120 FORI=1TOA
 5130 PR(0)=PR(0)+PR(I): AU(0)=AU(0)+AU(I): BA(0)=BA(0)+BA(I)
 5140 WE(0)=WE(0)+WE(I): SP(0)=SP(0)+SP(I): PU(0)=PU(0)+PU(I)
@@ -689,6 +690,7 @@
 5180 SA(0)=SA(0)+SA(I): BM(0)=BM(0)+BM(I)
 5190 NEXTI
 
+!- 100 * Anzahl Spielerbesitz / Gesamtbesitz
 5200 M(1)=100*PR(CO)/PR(0): M(2)=100*AU(CO)/AU(0): M(3)=100*BA(CO)/BA(0)
 5210 M(4)=100*WE(CO)/WE(0): M(5)=100*SP(CO)/SP(0): M(6)=100*PU(CO)/PU(0)
 5220 M(7)=100*GH(CO)/GH(0): M(8)=100*LW(CO)/LW(0): M(9)=100*RH(CO)/RH(0)
@@ -697,12 +699,13 @@
 5250 M(16)=100*SA(CO)/SA(0): M(17)=100*BM(CO)/BM(0)
 5260 MA(CO)=0
 
+!- Prozentwerte aufsummieren
 5270 FORI=1TO17
 5280 MA(CO)=MA(CO)+M(I)
 5290 NEXTI
 
 5300 MA(CO)=MA(CO)/17
-5310 IFMA(CO)<100/A-5THEN5390
+5310 IF MA(CO) < 100 / (A-5) THEN 5390
 5320 POKE53280,0:POKE53280,0:PRINT"{clear}{yellow}"
 5330 PRINTSPC(1)"{down}";:PRINT"{down*7}{right}"NA$(CO)","
 5340 PRINT"{down}{right}Sie beherrschen nun"MA(CO)"Prozent der"
