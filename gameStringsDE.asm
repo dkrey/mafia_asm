@@ -8,11 +8,11 @@
 strTitleScreen:
     .byte PET_BLACK
     .fill 8, PET_SPACE
-    .text "Mafia Assembler Editon"
+    .text "Mafia Assembler Edition"
     .byte PET_CR,PET_CR
 
     .fill 8, PET_SPACE
-    .fill 22,PET_LINE
+    .fill 23,PET_LINE
     .byte PET_CR,PET_CR,PET_CR
     .text " Nach einer Fabel von Sascha Laffrenzen"
     .byte PET_CR,PET_CR
