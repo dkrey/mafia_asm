@@ -48,7 +48,7 @@ showTitle:
     mov #RED:EXTCOL                 // Roter Overscan
     mov #YELLOW: BGCOL0             // Gelber Hintergrund
 
-    ldx #07                         // Zeile setzen
+    ldx #06                         // Zeile setzen
     ldy #00                         // Spalte setzen
 
     mov16 #strTitleScreen : TextPtr    // Titelschirm ab Zeile 7 anzeigen

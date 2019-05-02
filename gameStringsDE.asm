@@ -13,7 +13,7 @@ strTitleScreen:
 
     .fill 8, PET_SPACE
     .fill 22,PET_LINE
-    .byte PET_CR,PET_CR
+    .byte PET_CR,PET_CR,PET_CR
     .text " Nach einer Fabel von Sascha Laffrenzen"
     .byte PET_CR,PET_CR
 

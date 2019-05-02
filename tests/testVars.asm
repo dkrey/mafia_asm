@@ -1,3 +1,6 @@
+gameOver:
+    .byte 0
+
 playerNames:
     .text "Anton"
     .fill 11, 0

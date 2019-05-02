@@ -246,14 +246,15 @@ gamePropertyShow:
     ldx playerCount
     dex
     lda propsCurrentEstate
-    //lda winFactorEstatePercentage, x // Gewinnprozentsatz laden
+    cmp winFactorEstatePercentage, x    // und mit aktuellem Prozentsatz vergleichen
+    bcc !end+                           // nicht gewonnen
 
-    //cmp propsCurrentEstate           // und mit aktuellem Prozentsatz vergleichen
-    cmp winFactorEstatePercentage, x           // und mit aktuellem Prozentsatz vergleichen
-    bcc !end+                        // nicht gewonnen
+    // Hat gewonnen
+    mov #01 : gameOver
 
     mov16 #strPropertyWin : TextPtr
     jsr Print_text
+
     mov16 #strPressKey : TextPtr    // Text: Weiter
     jsr Print_text
     jsr Wait_for_key
