@@ -24,6 +24,8 @@ BasicUpstart2(init)
 #import "gameFinances.asm"
 #import "gameActionShop.asm"
 #import "gameProperty.asm"
+#import "gameWinningConditions.asm"
+#import "gameDept.asm"
 
 //===============================================================================
 // Spiel initialisieren
@@ -71,8 +73,11 @@ mainNextPlayerLoop:
 
     jsr gameFinancesOverview        // Eingaben und Ausgaben
 
+    // Schulden prüfen
+    jsr gameDept
+
     // Besitzverhältnisse ausrechnen und prüfen ob gewonnen
-    jsr gamePropertyShow
+    jsr gameCheckWinningCondition
 
     // Spiel vorbei, wieder von vorn
     lda gameOver
@@ -88,11 +93,6 @@ mainNextPlayerLoop:
     cmp #0
     bne mainGotoJail
 
-    // Schulden prüfen und
-    lda playerDebtFlag, x
-    cmp #0
-    bne mainDept
-
     // Wenn Vermögen < 20.000 $ bzw 00004e20h dann nur kleine Diebstähle
     ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte
 
@@ -105,8 +105,6 @@ mainGotoJail:
 
 mainNoMoney:
     jmp smallTheft                  // Kein Geld, nur kleine Diebstähle
-
-mainDept:                           // TODO: Schulden implementieren
 
 mainMenu:
     jsr gameShopMenu

@@ -143,19 +143,6 @@ gameFinancesShow:
     jsr gameFinancesShowCosts       // Ausgaben anzeigen
     jsr gameFinancesShowTotal       // Gesamt
 
-    // Schulden prüfen und setzen
-    ldy currentPlayerOffset_4
-    lda playerMoney + 3, y
-    and #$80
-    bpl !nodept+
-    lda #$01
-    ldy currentPlayerNumber
-    sta playerDebtFlag,y
-    jmp !skip+
-!nodept:
-    lda #$00
-    ldy currentPlayerNumber
-    sta playerDebtFlag,y
 !skip:
     mov16 #strPressKey : TextPtr    // Text: Weiter
     jsr Print_text

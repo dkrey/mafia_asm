@@ -1,6 +1,8 @@
 #import "testHeader.asm"
 #import "../gameFinances.asm"
 #import "../gameProperty.asm"
+#import "../gameWinningConditions.asm"
+#import "../gameDebt.asm"
 
 main:
 mainNextPlayerLoop:
@@ -12,8 +14,12 @@ mainNextPlayerLoop:
     // Einkommen berechnen und anzeigen
     jsr gameFinancesOverview
 
-    // Besitzverhältnisse anzeigen
-    jsr gamePropertyShow
+    // Schulden prüfen
+    jsr gameDept
+
+    // Gewonnen?
+    jsr gameCheckWinningCondition
+
     jsr Wait_for_key
 mainContinue:
     jmp main

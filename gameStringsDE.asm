@@ -456,3 +456,37 @@ strPropertyWin:
     .text " Damit haben sie gewonnen!!!"
     .byte PET_CR, PET_CR
     .byte 0
+
+//===============================================================================
+// strDept
+//
+// Sie beherrschen die Gegend
+//===============================================================================
+strDeptInfo1:
+    .byte PET_CR, PET_CR
+    .text " Sie haben Schulden!"
+    .byte PET_CR, 0
+strDeptInfo2:
+    .byte PET_CR, PET_CR
+    .text " Es bleiben Ihnen "
+    .byte 0
+strDeptInfo3:
+    .text " Runden,"
+    .byte PET_CR
+    .text " diese auszugleichen."
+    .byte PET_CR, PET_CR, PET_CR, 0
+
+strDeptPawn1:
+    .text " Heute ist Stichtag."
+    .byte PET_CR, 0
+
+strDeptFired:
+    .text " Ihr Personal wurde entlassen."
+    .byte PET_CR, 0
+
+strDeptPawn2:
+    .text " Folgende Positionen werden"
+    .byte PET_CR
+    .text " gepf@ndet:"
+    .byte PET_CR, 0
+

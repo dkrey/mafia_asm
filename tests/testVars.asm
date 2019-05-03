@@ -1,3 +1,7 @@
+
+gameMode:
+    .byte 0
+
 gameOver:
     .byte 0
 
@@ -110,7 +114,7 @@ playerDebtFlag:
 // Vermögen: 4 Byte pro Spieler
 playerMoney:
     .dword $00000064
-    .dword $00000065
+    .dword $ffff0000
     .dword $00000064
     .dword $00000064
     .dword $00000064
@@ -216,7 +220,7 @@ playerHotels:
 // Personal: 10 Byte pro Spieler
 playerGunfighters:
     .byte $00
-    .byte $01
+    .byte $a1
     .byte $00
     .byte $00
     .byte $00

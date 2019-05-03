@@ -92,7 +92,7 @@ gamePropertySumPositions:
     rts
 
 // Besitzverhältnisse errechnen
-gamePropertyCalcEstate:
+gamePropertySumEstate:
     ldx currentPlayerNumber
 
     mul8 playerSlotMachines,x : #$64                // Anzahl Besitz * 100
@@ -190,74 +190,14 @@ gamePropertyCalcEstate:
     rts
 
 
-gamePropertyShow:
-    // Unter 20.000 Einkommen keine Berechnung
-    compare32 currentTotalIncome : minMoneyForMenu
-    bcs !skip+
-    jmp !end+
-!skip:
-
-    // Ohne Personal auch keine Berechnung
-    compare32 currentTotalCosts: #$00000000
-    bne !skip+
-    jmp !end+
-!skip:
+gamePropertyCalc:
     jsr gamePropertySumPositions
-    jsr gamePropertyCalcEstate
-
-
-    // Besitzverhältnisse anzeigen
-    jsr CLEAR
-    mov #BLACK : EXTCOL             // Schwarzer Overscan
-    mov #BLACK : BGCOL0             // Schwarzer Hintergrund
-    mov #YELLOW : TEXTCOL           // Gelbe Schrift
-
-    ldx playerCount                 // Spieleranzahl -1
-    dex
-    Print_hex8_dec winFactorEstatePercentage, x
-    lda #' '
-    lda BSOUT
-
-    mov16 #strPropertyOverview1 : TextPtr
-    jsr Print_text
-
-    mov16 #strPropertyOverview2 : TextPtr
-    jsr Print_text
-
-    Print_hex16_dec propsCurrentEstate
-
-    mov16 #strPropertyOverview3 : TextPtr
-    jsr Print_text
-
+    jsr gamePropertySumEstate
 
     // Prozentsatz abspeichern
     ldx currentPlayerNumber
     lda propsCurrentEstate
     sta playerEstates,x
-
-    // Mit Schulden kann man nicht gewinnen
-    lda playerDebtFlag,x
-    cmp #$00
-    beq !skip+
-    jmp !end+
-
-!skip:
-    // Gewonnen?
-    ldx playerCount
-    dex
-    lda propsCurrentEstate
-    cmp winFactorEstatePercentage, x    // und mit aktuellem Prozentsatz vergleichen
-    bcc !end+                           // nicht gewonnen
-
-    // Hat gewonnen
-    mov #01 : gameOver
-
-    mov16 #strPropertyWin : TextPtr
-    jsr Print_text
-
-    mov16 #strPressKey : TextPtr    // Text: Weiter
-    jsr Print_text
-    jsr Wait_for_key
 
 !end:
     rts
