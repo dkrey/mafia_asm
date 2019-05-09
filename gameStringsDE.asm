@@ -477,16 +477,22 @@ strDeptInfo3:
     .byte PET_CR, PET_CR, PET_CR, 0
 
 strDeptPawn1:
-    .text " Heute ist Stichtag."
-    .byte PET_CR, 0
+    .text "          Heute ist Stichtag!"
+    .byte PET_CR
+    .fill 10, PET_SPACE
+    .fill 19,PET_LINE
+    .byte PET_CR,PET_CR,0
 
 strDeptFired:
-    .text " Ihr Personal wurde entlassen."
-    .byte PET_CR, 0
+    .byte PET_CR
+    .text " Ihr Personal wurde entlassen,"
+    .byte PET_CR
+    .text " etwaige Restschulden werden erlassen."
+    .byte PET_CR, PET_CR, 0
 
 strDeptPawn2:
-    .text " Folgende Positionen werden"
+    .text " Folgende Positionen wurden"
     .byte PET_CR
     .text " gepf@ndet:"
-    .byte PET_CR, 0
+    .byte PET_CR, PET_CR,0
 

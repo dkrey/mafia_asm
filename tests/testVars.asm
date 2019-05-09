@@ -103,7 +103,7 @@ randomFactor:
 // Schulden in bit 7    1 Byte
 playerDebtFlag:
     .byte 00
-    .byte 00
+    .byte 01
     .byte 00
     .byte 00
     .byte 00
@@ -155,7 +155,7 @@ playerEstates:
 // Besitz:
 playerSlotMachines:
     .byte $01
-    .byte $01
+    .byte $23
     .byte $01
     .byte $01
     .byte $01
@@ -174,8 +174,8 @@ playerProstitutes:
 playerBars:
     .byte $00
     .byte $01
-    .byte $0a
-    .byte $0a
+    .byte $0b
+    .byte $0c
     .byte $0a
     .byte $0a
     .byte $0a
@@ -220,7 +220,7 @@ playerHotels:
 // Personal: 10 Byte pro Spieler
 playerGunfighters:
     .byte $00
-    .byte $a1
+    .byte $01
     .byte $00
     .byte $00
     .byte $00
@@ -335,7 +335,7 @@ playerJailTotal:
 // Schuldenrunden       1 Byte
 playerDebtRounds:
     .byte 00
-    .byte 00
+    .byte 01
     .byte 00
     .byte 00
     .byte 00

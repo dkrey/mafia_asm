@@ -2,8 +2,8 @@
 
 main:
     ldx #04
-    add32 money1,x : #$000000ff
-    sub32 money1,x : #$0000ffff : hex32dec_value
+    add1632 money1,x : #$0fa0 : hex32dec_value
+    //sub32 money1,x : #$0000ffff : hex32dec_value
     //mov32 #$0000ffff : hex32dec_value
     jsr Print_hex32_dec_signed
 
@@ -16,7 +16,7 @@ result32:
 money1:
     .dword $00000001
 money2:
-    .dword $00000005
+    .dword $ffff0000
 
 mainNextPlayerLoop:
 mainContinue:
