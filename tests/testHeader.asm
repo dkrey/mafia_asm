@@ -16,6 +16,7 @@ BasicUpstart2(init)
 #import "../libMath.asm"
 #import "../gameStringsDE.asm"
 #import "../gameJail.asm"
+#import "../gameActionShop.asm"
 
 
 //===============================================================================

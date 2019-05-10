@@ -60,14 +60,13 @@ smallTheft:
 // Auswahl der Gaunereien
 //===============================================================================
 smallTheftChoice:
-    // Abfrage, welcher Diebstahl
-    ldy #1                          // Anzahl Zeichen für die Input Routine: 1
+    // Auswahl holen
+    jsr GETIN
+    cmp #$30        // sichergehen, dass es eine gültige Ziffer ist <= 0
+    bcc smallTheftChoice
+    cmp #$3a        // sichergehen, dass es eine gültige Ziffer ist >= #$3a
+    bcs smallTheftChoice
 
-    ldx #<filter_numeric        // Filter setzen LSB: Zahlen 0-9
-    lda #>filter_numeric        // Filter setzen MSB: Zahlen 0-9
-
-    jsr Get_filtered_input          // Input holen und speichern
-    lda got_input                   // Ergebnis holen
     cmp #0                          // 0 oder Enter, Abfrage erneut starten
     beq smallTheftChoice
 
@@ -94,7 +93,16 @@ smallTheftChoice:
     cmp #5
     beq branchSmallTheftPedestrian
 
-    jmp mainContinue
+    // Auswahl 6: ehrliche Arbeit
+    cmp #6
+    beq branchSmallTheftJob
+
+    // Auswahl 7: nichts
+    cmp #7
+    beq branchSmallTheftNothing
+
+    // ungültige Eingabe
+    jmp smallTheftChoice
 
 branchSmallTheftBank:
     jmp smallTheftBank
@@ -106,6 +114,10 @@ branchSmallTheftKerb:
     jmp smallTheftKerb
 branchSmallTheftPedestrian:
     jmp smallTheftPedestrian
+branchSmallTheftJob:
+    jmp mainContinue
+branchSmallTheftNothing:
+    jmp mainContinue
 // Bankraub
 smallTheftBank:
     #import "gameActionTheftBank.asm"

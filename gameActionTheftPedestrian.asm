@@ -36,9 +36,18 @@ smallTheftPedestrianPlayer:
     cmp currentPlayerNumber                 // Spielernummer darf nicht gleich sein
     beq smallTheftPedestrianPlayer
 
-    // Hat der Spieler Leibwächter?
+    // Check
     tax                     // Akku nach X
     pha                     // Akku auch nochmal sichern
+
+    // Sitzt der Spieler im Knast?
+    lda playerJailTotal, x
+    cmp #0
+    beq !skip+
+    jmp smallTheftPedestrianContinue // Spieler im Knast, doch normaler Passant
+!skip:
+
+    // Hat der Spieler Leibwächter?
     lda playerBodyguards,x
     cmp #0
     bne smallTheftPedestrianBodyguard  // Sind Leibwächter beschäftigt?

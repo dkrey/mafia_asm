@@ -189,13 +189,13 @@ gameShopMenu:
 //===============================================================================
 gameShopChoice:
     // Abfrage, welche Position
-    ldy #1                          // Anzahl Zeichen für die Input Routine: 1
+    // Auswahl holen
+    jsr GETIN
+    cmp #$30        // sichergehen, dass es eine gültige Ziffer ist <= 0
+    bcc gameShopChoice
+    cmp #$3a        // sichergehen, dass es eine gültige Ziffer ist >= #$3a
+    bcs gameShopChoice
 
-    ldx #<filter_numeric        // Filter setzen LSB: Zahlen 0-9
-    lda #>filter_numeric        // Filter setzen MSB: Zahlen 0-9
-
-    jsr Get_filtered_input          // Input holen und speichern
-    lda got_input                   // Ergebnis holen
     cmp #0                          // 0 oder Enter, Abfrage erneut starten
     beq gameShopChoice
 

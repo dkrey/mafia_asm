@@ -496,3 +496,32 @@ strDeptPawn2:
     .text " gepf@ndet:"
     .byte PET_CR, PET_CR,0
 
+//===============================================================================
+// strMainMenu
+//
+// Hauptmenü
+//===============================================================================
+
+strMainMenuTitle:
+    .byte PET_CR
+    .text " Sie haben folgende M&glichkeiten: "
+    .byte PET_CR,PET_CR
+    .fill 40,PET_LINE
+    .byte PET_CR
+    .text "   1. Kleine Diebst@hle"
+    .byte PET_CR, PET_CR
+    .text "   2. Investitionen"
+    .byte PET_CR, PET_CR
+    .text "   3. Rekrutierung"
+    .byte PET_CR, PET_CR
+    .text "   4. Bestechung"
+    .byte PET_CR, PET_CR
+    .text "   5. Aktionen"
+    .byte PET_CR, PET_CR
+    .text "   6. Geldtransfer"
+    .byte PET_CR, PET_CR
+    .text "   7. Besitzverhältnisse"
+    .byte PET_CR, PET_CR,PET_CR
+    .text " Was w@hlen Sie? "
+    .byte PET_CR, PET_CR
+    .byte 0

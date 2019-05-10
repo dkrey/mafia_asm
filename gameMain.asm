@@ -25,7 +25,8 @@ BasicUpstart2(init)
 #import "gameActionShop.asm"
 #import "gameProperty.asm"
 #import "gameWinningConditions.asm"
-#import "gameDept.asm"
+#import "gameDebt.asm"
+#import "gameMainMenu.asm"
 
 //===============================================================================
 // Spiel initialisieren
@@ -107,7 +108,7 @@ mainNoMoney:
     jmp smallTheft                  // Kein Geld, nur kleine Diebstähle
 
 mainMenu:
-    jsr gameShopMenu
+    jsr gameMainMenu
 
 mainContinue:
     ldx currentPlayerNumber         // Aktuelle Spielernummer wiederherstellen
