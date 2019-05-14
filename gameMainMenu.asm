@@ -29,9 +29,15 @@ gameMainMenuChoice:
     jmp smallTheft
 !skip:
 
-    cmp #$02
+    cmp #$02        // 2. Shop
     bne !skip+
     jsr gameShopMenu
+    rts
+!skip:
+
+    cmp #$03        // 3. Rekrutierung
+    bne !skip+
+    jsr gameRecruitingMenu
     rts
 !skip:
 

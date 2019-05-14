@@ -264,24 +264,6 @@ branchShopBrothels:
 branchShopHotels:
     jmp shopBuyHotels
 
-// Automaten kaufen
-shopSlotMachines:
-    // 3 Automaten hinzufügen
-    ldx currentPlayerNumber
-    lda playerSlotMachines,x
-    cmp #$fd // Überrollen verhindern
-    bne !skip+
-    jmp !exit+
-!skip:
-    inc playerSlotMachines,x
-    inc playerSlotMachines,x
-    inc playerSlotMachines,x
-
-    // Geld abzeiehen
-    ldy currentPlayerOffset_4
-    sub32 playerMoney,y : gameShopPriceSlotMachines : playerMoney,y
-!exit:
-    jmp gameShopMenu
 
 // Automaten kaufen
 shopBuySlotMachines:

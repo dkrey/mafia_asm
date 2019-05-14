@@ -74,6 +74,10 @@ strYouHaveMoney:
     .text " Sie haben "
     .byte 0
 
+strPerRound:
+    .text " pro Runde"
+    .byte 0
+
 strPressKey:
     .byte PET_CR
     .text "(Weiter mit beliebiger Taste)"
@@ -524,4 +528,20 @@ strMainMenuTitle:
     .byte PET_CR, PET_CR,PET_CR
     .text " Was w@hlen Sie? "
     .byte PET_CR, PET_CR
+    .byte 0
+
+//===============================================================================
+// strRecruiting
+//
+// Rekrutierungen
+//===============================================================================
+strRecruitingTitle:
+    .byte PET_CR, PET_CR
+    .text " Sie k&nnen folgende Leute einstellen: "
+    .byte PET_CR
+    .fill 40,PET_LINE
+    .byte PET_CR,0
+
+strRecruitingGunfighter:
+    .text " 1. Revolverheld     "
     .byte 0
