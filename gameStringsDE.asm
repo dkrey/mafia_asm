@@ -75,7 +75,7 @@ strYouHaveMoney:
     .byte 0
 
 strPerRound:
-    .text " pro Runde"
+    .text " / Runde"
     .byte 0
 
 strPressKey:
@@ -372,34 +372,34 @@ strFinancesHotels:
 // Ausgaben
 strFinancesGunfighters:
     .text " Revolverhelden"
-    .byte PET_CR, 0
+    .byte 0
 strFinancesBodyguards:
-    .text " Leibw@chter"
-    .byte PET_CR, 0
+    .text " Leibw@chter   "
+    .byte 0
 strFinancesGuards:
-    .text " Nachtw@chter"
-    .byte PET_CR, 0
+    .text " Nachtw@chter  "
+    .byte 0
 strFinancesInformants:
-    .text " Informanten"
-    .byte PET_CR, 0
+    .text " Informanten   "
+    .byte 0
 strFinancesAttorneys:
-    .text " Anw@lte"
-    .byte PET_CR, 0
+    .text " Anw@lte       "
+    .byte 0
 strFinancesPolice:
-    .text " Wachtmeister"
-    .byte PET_CR, 0
+    .text " Wachtmeister  "
+    .byte 0
 strFinancesInspectors:
-    .text " Kommissare"
-    .byte PET_CR, 0
+    .text " Kommissare    "
+    .byte 0
 strFinancesJudges:
-    .text " Richter"
-    .byte PET_CR, 0
+    .text " Richter       "
+    .byte 0
 strFinancesStateAttorneys:
-    .text " Staatsanw@lte"
-    .byte PET_CR, 0
+    .text " Staatsanw@lte "
+    .byte 0
 strFinancesMajors:
-    .text " B*rgermeister"
-    .byte PET_CR, 0
+    .text " B*rgermeister "
+    .byte 0
 
 //===============================================================================
 // shoppingMenu

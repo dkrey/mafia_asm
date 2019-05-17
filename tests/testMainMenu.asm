@@ -14,7 +14,6 @@ mainNextPlayerLoop:
     sta currentPlayerNumber
     jsr calcPlayerOffsets
 
-    // Kleine Gaunerei testen
     jsr gameMainMenu
 
 mainContinue:

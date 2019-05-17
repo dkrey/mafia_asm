@@ -139,14 +139,12 @@ gameFinancesShowCosts:
     mov16 #strFinancesGunfighters : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
     jsr BSOUT
     lda #' '
     jsr BSOUT
-
 
     jsr gameFinancesCalcGunfighters
     mov32 currentGunfighters : hex32dec_value
@@ -155,6 +153,7 @@ gameFinancesShowCosts:
     jsr BSOUT
 
 !skip:
+
     // Bodyguards:
     ldx currentPlayerNumber
     mov playerBodyguards, x : hex8dec_value
@@ -169,7 +168,6 @@ gameFinancesShowCosts:
     mov16 #strFinancesBodyguards : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
@@ -185,6 +183,7 @@ gameFinancesShowCosts:
     jsr BSOUT
 
 !skip:
+
     // Nachtwächter:
     ldx currentPlayerNumber
     mov playerGuards, x : hex8dec_value
@@ -199,14 +198,12 @@ gameFinancesShowCosts:
     mov16 #strFinancesGuards : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
     jsr BSOUT
     lda #' '
     jsr BSOUT
-
 
     jsr gameFinancesCalcGuards
     mov32 currentGuards : hex32dec_value
@@ -229,14 +226,12 @@ gameFinancesShowCosts:
     mov16 #strFinancesInformants : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
     jsr BSOUT
     lda #' '
     jsr BSOUT
-
 
     jsr gameFinancesCalcInformants
     mov32 currentInformants : hex32dec_value
@@ -245,6 +240,7 @@ gameFinancesShowCosts:
     jsr BSOUT
 
 !skip:
+
     // Anwälte:
     ldx currentPlayerNumber
     mov playerAttorneys, x : hex8dec_value
@@ -259,14 +255,12 @@ gameFinancesShowCosts:
     mov16 #strFinancesAttorneys : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
     jsr BSOUT
     lda #' '
     jsr BSOUT
-
 
     jsr gameFinancesCalcAttorneys
     mov32 currentAttorneys : hex32dec_value
@@ -290,14 +284,12 @@ gameFinancesShowCosts:
     mov16 #strFinancesPolice : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
     jsr BSOUT
     lda #' '
     jsr BSOUT
-
 
     jsr gameFinancesCalcPolice
     mov32 currentPolice : hex32dec_value
@@ -320,14 +312,12 @@ gameFinancesShowCosts:
     mov16 #strFinancesInspectors : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
     jsr BSOUT
     lda #' '
     jsr BSOUT
-
 
     jsr gameFinancesCalcInspectors
     mov32 currentInspectors : hex32dec_value
@@ -350,14 +340,12 @@ gameFinancesShowCosts:
     mov16 #strFinancesJudges : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
     jsr BSOUT
     lda #' '
     jsr BSOUT
-
 
     jsr gameFinancesCalcJudges
     mov32 currentJudges : hex32dec_value
@@ -380,14 +368,12 @@ gameFinancesShowCosts:
     mov16 #strFinancesStateAttorneys : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
     jsr BSOUT
     lda #' '
     jsr BSOUT
-
 
     jsr gameFinancesCalcStateAttorneys
     mov32 currentStateAttorneys : hex32dec_value
@@ -410,14 +396,12 @@ gameFinancesShowCosts:
     mov16 #strFinancesMajors : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
     jsr BSOUT
     lda #' '
     jsr BSOUT
-
     jsr gameFinancesCalcMajors
     mov32 currentMajors : hex32dec_value
     jsr Print_hex32_dec

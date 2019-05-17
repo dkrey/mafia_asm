@@ -65,27 +65,154 @@ gameRecruitingMenu:
     jsr Print_text
 
     // Anzeige Revolverhelden
-    mov16 #strRecruitingGunfighter : TextPtr
+    lda #PET_SPACE
+    jsr BSOUT
+    lda #'1'
+    jsr BSOUT
+    lda #'.'
+    jsr BSOUT
+    mov16 #strFinancesGunfighters : TextPtr
     jsr Print_text
-
+    lda #PET_SPACE
+    jsr BSOUT
     mov32 gameRecruitPriceGunfighters : hex32dec_value
     jsr Print_hex32_dec_signed
-    lda PET_SPACE
-    jsr BSOUT
-
     lda #'$'
-    jsr BSOUT
-
-    lda PET_SPACE
     jsr BSOUT
 
     mov16 #strPerRound : TextPtr // Text: "Pro Runde"
     jsr Print_text
-
-    lda PET_CR
+    lda #':'
     jsr BSOUT
 
+    lda #' '
+    jsr BSOUT
 
+    ldy currentPlayerNumber
+    Print_hex8_dec playerGunfighters,y
+
+    lda #PET_CR
+    jsr BSOUT
+
+    // Anzeige Leibwächter
+    lda #PET_SPACE
+    jsr BSOUT
+    lda #'2'
+    jsr BSOUT
+    lda #'.'
+    jsr BSOUT
+    mov16 #strFinancesBodyguards : TextPtr
+    jsr Print_text
+    lda #PET_SPACE
+    jsr BSOUT
+    mov32 gameRecruitPriceBodyguards : hex32dec_value
+    jsr Print_hex32_dec_signed
+    lda #'$'
+    jsr BSOUT
+
+    mov16 #strPerRound : TextPtr // Text: "Pro Runde"
+    jsr Print_text
+    lda #':'
+    jsr BSOUT
+
+    lda #' '
+    jsr BSOUT
+
+    ldy currentPlayerNumber
+    Print_hex8_dec playerBodyguards,y
+
+    lda #PET_CR
+    jsr BSOUT
+
+  // Anzeige Nachwächter
+    lda #PET_SPACE
+    jsr BSOUT
+    lda #'3'
+    jsr BSOUT
+    lda #'.'
+    jsr BSOUT
+    mov16 #strFinancesGuards : TextPtr
+    jsr Print_text
+    lda #PET_SPACE
+    jsr BSOUT
+    mov32 gameRecruitPriceGuards : hex32dec_value
+    jsr Print_hex32_dec_signed
+    lda #'$'
+    jsr BSOUT
+
+    mov16 #strPerRound : TextPtr // Text: "Pro Runde"
+    jsr Print_text
+    lda #':'
+    jsr BSOUT
+
+    lda #' '
+    jsr BSOUT
+
+    ldy currentPlayerNumber
+    Print_hex8_dec playerGuards,y
+
+    lda #PET_CR
+    jsr BSOUT
+
+  // Anzeige Informant
+    lda #PET_SPACE
+    jsr BSOUT
+    lda #'4'
+    jsr BSOUT
+    lda #'.'
+    jsr BSOUT
+    mov16 #strFinancesInformants : TextPtr
+    jsr Print_text
+    lda #PET_SPACE
+    jsr BSOUT
+    mov32 gameRecruitPriceInformants : hex32dec_value
+    jsr Print_hex32_dec_signed
+    lda #'$'
+    jsr BSOUT
+
+    mov16 #strPerRound : TextPtr // Text: "Pro Runde"
+    jsr Print_text
+    lda #':'
+    jsr BSOUT
+
+    lda #' '
+    jsr BSOUT
+
+    ldy currentPlayerNumber
+    Print_hex8_dec playerInformants,y
+
+    lda #PET_CR
+    jsr BSOUT
+
+  // Anzeige Anwälte
+    lda #PET_SPACE
+    jsr BSOUT
+    lda #'5'
+    jsr BSOUT
+    lda #'.'
+    jsr BSOUT
+    mov16 #strFinancesAttorneys : TextPtr
+    jsr Print_text
+    lda #PET_SPACE
+    jsr BSOUT
+    mov32 gameRecruitPriceAttorneys : hex32dec_value
+    jsr Print_hex32_dec_signed
+    lda #'$'
+    jsr BSOUT
+
+    mov16 #strPerRound : TextPtr // Text: "Pro Runde"
+    jsr Print_text
+    lda #':'
+    jsr BSOUT
+
+    lda #' '
+    jsr BSOUT
+
+    ldy currentPlayerNumber
+    Print_hex8_dec playerAttorneys,y
+
+    lda #PET_CR
+    jsr BSOUT
 
 !end:
     // Text: Nichts
@@ -117,16 +244,38 @@ gameRecruitingChoice:
     cmp #0              // Ziffer 0 = Exit
     beq branchRecruitingExit
 
-    // Auswahl 1: Spielautomat
+    // Auswahl 1: Revolverheld
     cmp #1
     beq branchRecruitingGunfighters
 
+    // Auswahl 2: Leibwächter
+    cmp #2
+    beq branchRecruitingBodyguards
+
+    // Auswahl 3: Nachtwächter
+    cmp #3
+    beq branchRecruitingGuards
+
+    // Auswahl 4: Informanten
+    cmp #4
+    beq branchRecruitingInformants
+
+    // Auswahl 5: Anwälte
+    cmp #5
+    beq branchRecruitingAttorneys
 
 branchRecruitingExit:
     rts
 branchRecruitingGunfighters:
     jmp recruitGunfighters
-
+branchRecruitingBodyguards:
+    jmp recruitBodyguards
+branchRecruitingGuards:
+    jmp recruitGuards
+branchRecruitingInformants:
+    jmp recruitInformants
+branchRecruitingAttorneys:
+    jmp recruitAttorneys
 
 recruitGunfighters:
     // einen Revolverhelden mumpiz
@@ -137,9 +286,53 @@ recruitGunfighters:
     jmp !exit+
 !skip:
     inc playerGunfighters,x
+    jmp !exit+
+
+recruitBodyguards:
+    // einen Revolverhelden mumpiz
+    ldx currentPlayerNumber
+    lda playerBodyguards,x
+    cmp #$fe // Überrollen verhindern
+    bne !skip+
+    jmp !exit+
+!skip:
+    inc playerBodyguards,x
+    jmp !exit+
+
+recruitGuards:
+    // einen Revolverhelden mumpiz
+    ldx currentPlayerNumber
+    lda playerGuards,x
+    cmp #$fe // Überrollen verhindern
+    bne !skip+
+    jmp !exit+
+!skip:
+    inc playerGuards,x
+    jmp !exit+
+
+recruitInformants:
+    // einen Revolverhelden mumpiz
+    ldx currentPlayerNumber
+    lda playerInformants,x
+    cmp #$fe // Überrollen verhindern
+    bne !skip+
+    jmp !exit+
+!skip:
+    inc playerInformants,x
+    jmp !exit+
+
+recruitAttorneys:
+    // einen Revolverhelden mumpiz
+    ldx currentPlayerNumber
+    lda playerAttorneys,x
+    cmp #$fe // Überrollen verhindern
+    bne !skip+
+    jmp !exit+
+!skip:
+    inc playerAttorneys,x
 
 !exit:
-    jmp gameShopMenu
+    jmp gameRecruitingMenu
 
 !end:
     rts
