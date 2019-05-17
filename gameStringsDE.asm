@@ -541,7 +541,3 @@ strRecruitingTitle:
     .byte PET_CR
     .fill 40,PET_LINE
     .byte PET_CR,0
-
-strRecruitingGunfighter:
-    .text " 1. Revolverheld     "
-    .byte 0
