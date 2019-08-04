@@ -4,6 +4,7 @@
 #import "../gameActionTheft.asm"
 #import "../gameActionShop.asm"
 #import "../gameActionRecruiting.asm"
+#import "../gameActionBribery.asm"
 
 
 main:

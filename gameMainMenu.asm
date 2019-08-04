@@ -41,4 +41,10 @@ gameMainMenuChoice:
     rts
 !skip:
 
+    cmp #$04        // 4. Bestechung
+    bne !skip+
+    jsr gameBriberyMenu
+    rts
+!skip:
+
     rts

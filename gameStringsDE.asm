@@ -541,3 +541,18 @@ strRecruitingTitle:
     .byte PET_CR
     .fill 40,PET_LINE
     .byte PET_CR,0
+strRecruitingFireAll:
+    .text " Alle wieder entlassen"
+    .byte 0
+
+//===============================================================================
+// strRecruiting
+//
+// Rekrutierungen
+//===============================================================================
+strBriberyTitle:
+    .byte PET_CR, PET_CR
+    .text " Wen wollen Sie bestechen? "
+    .byte PET_CR
+    .fill 40,PET_LINE
+    .byte PET_CR,0

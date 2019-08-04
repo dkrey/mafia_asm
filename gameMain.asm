@@ -23,6 +23,8 @@ BasicUpstart2(init)
 #import "gameJail.asm"
 #import "gameFinances.asm"
 #import "gameActionShop.asm"
+#import "gameActionRecruiting.asm"
+#import "gameActionBribery.asm"
 #import "gameProperty.asm"
 #import "gameWinningConditions.asm"
 #import "gameDebt.asm"

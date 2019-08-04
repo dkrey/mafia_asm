@@ -1,28 +1,25 @@
 #importonce
 
-gameRecruitPriceGunfighters:
-    .dword $00001770
-gameRecruitPriceBodyguards:
-    .dword $00000fa0
-gameRecruitPriceInformants:
-    .dword $000007d0
-    .dword $00002710
-gameRecruitPriceAttorneys:
-    .dword $00001f40
-gameRecruitPriceGuards:
-    .dword $00000bb8
-
-
+gameBribePricePolice:
+    .dword $00000BB8
+gameBribePriceInspectors:
+    .dword $00002EE0
+gameBribePriceJudges:
+    .dword $00007530
+gameBribePriceStateAttorneys:
+    .dword $00011170
+gameBribePriceMajors:
+    .dword $000186A0
 
 
 //===============================================================================
-// shopping
+// Bribery
 //
 //==============================================================================
-gameRecruitingMenu:
+gameBriberyMenu:
     jsr CLEAR
-    mov #BLACK : EXTCOL             //  Overscan
-    mov #GREEN : BGCOL0             //  Hintergrund
+    mov #RED : EXTCOL             //  Overscan
+    mov #LIGHT_RED : BGCOL0             //  Hintergrund
     mov #WHITE : TEXTCOL            //  Schrift
 
     // Zeile 2, Spalte1
@@ -61,21 +58,21 @@ gameRecruitingMenu:
     jsr Print_text
 
     // Text: Überschrift
-    mov16 #strRecruitingTitle : TextPtr
+    mov16 #strBriberyTitle : TextPtr
     jsr Print_text
 
-    // Anzeige Revolverhelden
+    // Anzeige Polzilei
     lda #PET_SPACE
     jsr BSOUT
     lda #'1'
     jsr BSOUT
     lda #'.'
     jsr BSOUT
-    mov16 #strFinancesGunfighters : TextPtr
+    mov16 #strFinancesPolice : TextPtr
     jsr Print_text
     lda #PET_SPACE
     jsr BSOUT
-    mov32 gameRecruitPriceGunfighters : hex32dec_value
+    mov32 gameBribePricePolice : hex32dec_value
     jsr Print_hex32_dec_signed
     lda #'$'
     jsr BSOUT
@@ -89,23 +86,23 @@ gameRecruitingMenu:
     jsr BSOUT
 
     ldy currentPlayerNumber
-    Print_hex8_dec playerGunfighters,y
+    Print_hex8_dec playerPolice,y
 
     lda #PET_CR
     jsr BSOUT
 
-    // Anzeige Leibwächter
+    // Anzeige Inspektoren
     lda #PET_SPACE
     jsr BSOUT
     lda #'2'
     jsr BSOUT
     lda #'.'
     jsr BSOUT
-    mov16 #strFinancesBodyguards : TextPtr
+    mov16 #strFinancesInspectors : TextPtr
     jsr Print_text
     lda #PET_SPACE
     jsr BSOUT
-    mov32 gameRecruitPriceBodyguards : hex32dec_value
+    mov32 gameBribePriceInspectors : hex32dec_value
     jsr Print_hex32_dec_signed
     lda #'$'
     jsr BSOUT
@@ -119,23 +116,23 @@ gameRecruitingMenu:
     jsr BSOUT
 
     ldy currentPlayerNumber
-    Print_hex8_dec playerBodyguards,y
+    Print_hex8_dec playerInspectors,y
 
     lda #PET_CR
     jsr BSOUT
 
-  // Anzeige Nachwächter
+  // Anzeige Richter
     lda #PET_SPACE
     jsr BSOUT
     lda #'3'
     jsr BSOUT
     lda #'.'
     jsr BSOUT
-    mov16 #strFinancesGuards : TextPtr
+    mov16 #strFinancesJudges : TextPtr
     jsr Print_text
     lda #PET_SPACE
     jsr BSOUT
-    mov32 gameRecruitPriceGuards : hex32dec_value
+    mov32 gameBribePriceJudges : hex32dec_value
     jsr Print_hex32_dec_signed
     lda #'$'
     jsr BSOUT
@@ -149,23 +146,23 @@ gameRecruitingMenu:
     jsr BSOUT
 
     ldy currentPlayerNumber
-    Print_hex8_dec playerGuards,y
+    Print_hex8_dec playerJudges,y
 
     lda #PET_CR
     jsr BSOUT
 
-  // Anzeige Informant
+  // Anzeige Staatsanwalt
     lda #PET_SPACE
     jsr BSOUT
     lda #'4'
     jsr BSOUT
     lda #'.'
     jsr BSOUT
-    mov16 #strFinancesInformants : TextPtr
+    mov16 #strFinancesStateAttorneys : TextPtr
     jsr Print_text
     lda #PET_SPACE
     jsr BSOUT
-    mov32 gameRecruitPriceInformants : hex32dec_value
+    mov32 gameBribePriceStateAttorneys : hex32dec_value
     jsr Print_hex32_dec_signed
     lda #'$'
     jsr BSOUT
@@ -179,23 +176,23 @@ gameRecruitingMenu:
     jsr BSOUT
 
     ldy currentPlayerNumber
-    Print_hex8_dec playerInformants,y
+    Print_hex8_dec playerStateAttorneys,y
 
     lda #PET_CR
     jsr BSOUT
 
-  // Anzeige Anwälte
+  // Anzeige Bürgermeister
     lda #PET_SPACE
     jsr BSOUT
     lda #'5'
     jsr BSOUT
     lda #'.'
     jsr BSOUT
-    mov16 #strFinancesAttorneys : TextPtr
+    mov16 #strFinancesMajors : TextPtr
     jsr Print_text
     lda #PET_SPACE
     jsr BSOUT
-    mov32 gameRecruitPriceAttorneys : hex32dec_value
+    mov32 gameBribePriceMajors : hex32dec_value
     jsr Print_hex32_dec_signed
     lda #'$'
     jsr BSOUT
@@ -209,7 +206,7 @@ gameRecruitingMenu:
     jsr BSOUT
 
     ldy currentPlayerNumber
-    Print_hex8_dec playerAttorneys,y
+    Print_hex8_dec playerMajors,y
 
     lda #PET_CR
     jsr BSOUT
@@ -244,130 +241,125 @@ gameRecruitingMenu:
 //
 // Auswahl im Shop
 //===============================================================================
-gameRecruitingChoice:
+gameBribeChoice:
     // Abfrage, welche Position
     // Auswahl holen
     jsr GETIN
     cmp #$30        // sichergehen, dass es eine gültige Ziffer ist <= 0
-    bcc gameRecruitingChoice
+    bcc gameBribeChoice
     cmp #$3a        // sichergehen, dass es eine gültige Ziffer ist >= #$3a
-    bcs gameRecruitingChoice
+    bcs gameBribeChoice
 
     cmp #0                          // keine Eingabe und Enter, Abfrage erneut starten
-    beq gameRecruitingChoice
+    beq gameBribeChoice
 
     sec                             // Konv PetSCII Zeichen zur Zahl
     sbc #$30
 
     cmp #0              // Ziffer 0 = Exit
-    beq branchRecruitingExit
+    beq branchBribeExit
 
-    // Auswahl 1: Revolverheld
+    // Auswahl 1: Polizist
     cmp #1
-    beq branchRecruitingGunfighters
+    beq branchBribePolice
 
-    // Auswahl 2: Leibwächter
+    // Auswahl 2: Inspektoren
     cmp #2
-    beq branchRecruitingBodyguards
+    beq branchBribeInspectors
 
-    // Auswahl 3: Nachtwächter
+    // Auswahl 3: Richter
     cmp #3
-    beq branchRecruitingGuards
+    beq branchBribeJudges
 
-    // Auswahl 4: Informanten
+    // Auswahl 4: Staatsanwälte
     cmp #4
-    beq branchRecruitingInformants
+    beq branchBribeStateAttorneys
 
-    // Auswahl 5: Anwälte
+    // Auswahl 5: Bürgermeister
     cmp #5
-    beq branchRecruitingAttorneys
+    beq branchBribeMajors
 
     // Auswahl 6: alle feuern
     cmp #6
-    beq branchRecruitingFireAll
+    beq branchBribeFireAll
 
-branchRecruitingExit:
+branchBribeExit:
     rts
-branchRecruitingGunfighters:
-    jmp recruitGunfighters
-branchRecruitingBodyguards:
-    jmp recruitBodyguards
-branchRecruitingGuards:
-    jmp recruitGuards
-branchRecruitingInformants:
-    jmp recruitInformants
-branchRecruitingAttorneys:
-    jmp recruitAttorneys
-branchRecruitingFireAll:
-    jmp recruitFireAll
+branchBribePolice:
+    jmp bribePolice
+branchBribeInspectors:
+    jmp bribeInspectors
+branchBribeJudges:
+    jmp bribeJudges
+branchBribeStateAttorneys:
+    jmp bribeStateAttorneys
+branchBribeMajors:
+    jmp bribeMajors
+branchBribeFireAll:
+    jmp bribeFireAll
 
-recruitGunfighters:
-    // einen Revolverhelden mumpiz
+bribePolice:
     ldx currentPlayerNumber
-    lda playerGunfighters,x
+    lda playerPolice,x
     cmp #$fe // Überrollen verhindern
     bne !skip+
     jmp !exit+
 !skip:
-    inc playerGunfighters,x
+    inc playerPolice,x
     jmp !exit+
 
-recruitBodyguards:
-    // einen Revolverhelden mumpiz
+bribeInspectors:
     ldx currentPlayerNumber
-    lda playerBodyguards,x
+    lda playerInspectors,x
     cmp #$fe // Überrollen verhindern
     bne !skip+
     jmp !exit+
 !skip:
-    inc playerBodyguards,x
+    inc playerInspectors,x
     jmp !exit+
 
-recruitGuards:
-    // einen Revolverhelden mumpiz
+bribeJudges:
     ldx currentPlayerNumber
-    lda playerGuards,x
+    lda playerJudges,x
     cmp #$fe // Überrollen verhindern
     bne !skip+
     jmp !exit+
 !skip:
-    inc playerGuards,x
+    inc playerJudges,x
     jmp !exit+
 
-recruitInformants:
-    // einen Revolverhelden mumpiz
+bribeStateAttorneys:
     ldx currentPlayerNumber
-    lda playerInformants,x
+    lda playerStateAttorneys,x
     cmp #$fe // Überrollen verhindern
     bne !skip+
     jmp !exit+
 !skip:
-    inc playerInformants,x
+    inc playerStateAttorneys,x
     jmp !exit+
 
-recruitAttorneys:
-    // einen Revolverhelden mumpiz
+bribeMajors:
     ldx currentPlayerNumber
-    lda playerAttorneys,x
+    lda playerMajors,x
     cmp #$fe // Überrollen verhindern
     bne !skip+
     jmp !exit+
 !skip:
-    inc playerAttorneys,x
+    inc playerMajors,x
     jmp !exit+
 
-recruitFireAll:
+bribeFireAll:
     // Alle Schergen feuern
     ldx currentPlayerNumber
     lda #0
-    sta playerAttorneys,x
-    sta playerInformants,x
-    sta playerGuards,x
-    sta playerBodyguards,x
-    sta playerGunfighters,x
+    sta playerPolice,x
+    sta playerInspectors,x
+    sta playerJudges,x
+    sta playerStateAttorneys,x
+    sta playerMajors,x
 
 !exit:
-    jmp gameRecruitingMenu
+    jmp gameBriberyMenu
 
 !end:
     rts
