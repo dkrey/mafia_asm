@@ -191,12 +191,12 @@ got_input:
 
 //===============================================================================
 // Move_input_to_TextPtr
-// Schiebt got_input an die Adresse von TextPtr
+// Schiebt got_input an die Adresse von TextPtr aber nur 16 Stellen
 // Y - Register = Offset
 //===============================================================================
 Move_input_to_TextPtr:
         ldx #$00            // Init x-Register
-                            // Das Y-Register muss schon mit dem Offser vorgeladen sein
+                            // Das Y-Register muss schon mit dem Offset vorgeladen sein
 !loop:
         lda got_input, x    // Got Input byte-weise laden
         beq !end+           // 0 Terminiterter String bedeutet Ende

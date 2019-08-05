@@ -26,6 +26,8 @@ BasicUpstart2(init)
 #import "gameActionRecruiting.asm"
 #import "gameActionBribery.asm"
 #import "gameProperty.asm"
+#import "gameActionTransfer.asm"
+#import "gameOverview.asm"
 #import "gameWinningConditions.asm"
 #import "gameDebt.asm"
 #import "gameMainMenu.asm"

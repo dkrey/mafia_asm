@@ -314,6 +314,8 @@ gameDeptPawnEnd:
     jsr Print_text
     lda #PET_CR
     jsr BSOUT
+    lda #PET_CR
+    jsr BSOUT
 !skip:
 
 
@@ -328,6 +330,8 @@ gameDeptPawnEnd:
     jsr BSOUT
     mov16 #strFinancesBars : TextPtr // Text: "Bars
     jsr Print_text
+    lda #PET_CR
+    jsr BSOUT
     lda #PET_CR
     jsr BSOUT
 
@@ -345,6 +349,8 @@ gameDeptPawnEnd:
     jsr Print_text
     lda #PET_CR
     jsr BSOUT
+    lda #PET_CR
+    jsr BSOUT
 
 !skip:
     lda gameDeptPawnGambling
@@ -358,6 +364,8 @@ gameDeptPawnEnd:
     jsr BSOUT
     mov16 #strFinancesGambling : TextPtr // Text: "Spielsalon
     jsr Print_text
+    lda #PET_CR
+    jsr BSOUT
     lda #PET_CR
     jsr BSOUT
 
@@ -376,6 +384,8 @@ gameDeptPawnEnd:
     jsr Print_text
     lda #PET_CR
     jsr BSOUT
+    lda #PET_CR
+    jsr BSOUT
 
 !skip:
     lda gameDeptPawnHotels
@@ -391,7 +401,8 @@ gameDeptPawnEnd:
     jsr Print_text
     lda #PET_CR
     jsr BSOUT
-
+    lda #PET_CR
+    jsr BSOUT
 
 !skip:
     mov16 #strDeptFired : TextPtr // Text: "Alle gefeuert"

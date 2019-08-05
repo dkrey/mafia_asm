@@ -5,7 +5,8 @@
 #import "../gameActionShop.asm"
 #import "../gameActionRecruiting.asm"
 #import "../gameActionBribery.asm"
-
+#import "../gameOverview.asm"
+#import "../gameActionTransfer.asm"
 
 main:
 mainNextPlayerLoop:

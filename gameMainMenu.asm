@@ -47,4 +47,15 @@ gameMainMenuChoice:
     rts
 !skip:
 
+    cmp #$06        // 6. Geldtransfer
+    bne !skip+
+    jsr gameTransferMenu
+    rts
+!skip:
+
+    cmp #$07        // 7. Besitz
+    bne !skip+
+    jsr gameOverviewMenu
+    rts
+!skip:
     rts

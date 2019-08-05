@@ -140,7 +140,6 @@ gameFinancesShowIncome:
     mov16 #strFinancesSlotMachines : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
@@ -167,7 +166,6 @@ gameFinancesShowIncome:
     mov16 #strFinancesProstitutes : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
@@ -193,7 +191,6 @@ gameFinancesShowIncome:
     mov16 #strFinancesBars : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
@@ -219,7 +216,6 @@ gameFinancesShowIncome:
     mov16 #strFinancesBetting : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
@@ -245,7 +241,6 @@ gameFinancesShowIncome:
     mov16 #strFinancesGambling : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
@@ -271,7 +266,6 @@ gameFinancesShowIncome:
     mov16 #strFinancesBrothels : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'
@@ -297,7 +291,6 @@ gameFinancesShowIncome:
     mov16 #strFinancesHotels : TextPtr
     jsr Print_text
     plot_get
-    dex
     ldy #25
     plot_set
     lda #'$'

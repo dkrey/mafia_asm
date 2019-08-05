@@ -231,7 +231,7 @@ gameBriberyMenu:
 
 !end:
     // Text: Nichts
-    mov16 #strSelectNothing : TextPtr
+    mov16 #strBack : TextPtr
     jsr Print_text
     mov16 #strChoice : TextPtr
     jsr Print_text

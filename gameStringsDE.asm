@@ -95,6 +95,10 @@ strTotal:
 strChoice:
     .text " Ihre Wahl ? "
     .byte 0
+strBack:
+    .byte PET_CR
+    .text " 0. zur*ck "
+    .byte PET_CR,PET_CR,0
 
 strSelectNothing:
     .byte PET_CR
@@ -349,26 +353,25 @@ strFinancesFinal:
 // Einkommenspositionen
 strFinancesSlotMachines:
     .text " Spielautomaten"
-    .byte PET_CR, 0
+    .byte 0
 strFinancesProstitutes:
     .text " Prostituierte"
-    .byte PET_CR, 0
+    .byte 0
 strFinancesBars:
     .text " Bars"
-    .byte PET_CR, 0
+    .byte 0
 strFinancesBetting:
     .text " Wettb*ros"
-    .byte PET_CR, 0
+    .byte 0
 strFinancesGambling:
     .text " Spielsalons"
-    .byte PET_CR, 0
+    .byte 0
 strFinancesBrothels:
     .text " Bordelle"
-    .byte PET_CR, 0
+    .byte 0
 strFinancesHotels:
     .text " Hotels"
-    .byte PET_CR, 0
-
+    .byte 0
 // Ausgaben
 strFinancesGunfighters:
     .text " Revolverhelden"
@@ -546,9 +549,9 @@ strRecruitingFireAll:
     .byte 0
 
 //===============================================================================
-// strRecruiting
+// strBribery
 //
-// Rekrutierungen
+// Bestechungen
 //===============================================================================
 strBriberyTitle:
     .byte PET_CR, PET_CR
@@ -556,3 +559,55 @@ strBriberyTitle:
     .byte PET_CR
     .fill 40,PET_LINE
     .byte PET_CR,0
+
+//===============================================================================
+// strOverviewTitle
+//
+// Besitzverhältnisse
+//===============================================================================
+strOverviewTitle:
+    .byte PET_CR
+    .text " Besitzverh@ltnisse"
+    .byte PET_CR
+    .fill 40,PET_LINE
+    .byte PET_CR,0
+
+//===============================================================================
+// strTransferTitle
+//
+// Geld überweisen
+//===============================================================================
+strTransferTitle:
+    .byte PET_CR
+    .text " Geldtransfer"
+    .byte PET_CR
+    .fill 40,PET_LINE
+    .byte PET_CR,0
+
+strTransferWho:
+    .text " An wen soll die *berweisung gehen? "
+    .byte PET_CR
+    .byte 0
+
+strTransferAccountant:
+    .text " Der beg&nstigte ist "
+    .byte 0
+
+strTransferAmount:
+    .text " Betrag: "
+    .byte 0
+
+strTransferImpossible:
+    .text " Sie machen wohl Witze?! "
+    .byte PET_CR
+    .byte 0
+
+strTransferNotEnough:
+    .text " So viel Geld haben Sie nicht. "
+    .byte PET_CR
+    .byte 0
+
+strTransferDone:
+    .text " Der Betrag wurde &berwiesen. "
+    .byte PET_CR
+    .byte 0

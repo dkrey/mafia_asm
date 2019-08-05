@@ -155,7 +155,7 @@ playerEstates:
 // Besitz:
 playerSlotMachines:
     .byte $01
-    .byte $23
+    .byte $ef
     .byte $01
     .byte $01
     .byte $01
@@ -164,7 +164,7 @@ playerSlotMachines:
     .byte $01
 playerProstitutes:
     .byte $00
-    .byte $01
+    .byte $02
     .byte $09
     .byte $09
     .byte $09
@@ -182,7 +182,7 @@ playerBars:
     .byte $0a
 playerBetting:
     .byte $00
-    .byte $01
+    .byte $04
     .byte $00
     .byte $00
     .byte $00
@@ -191,7 +191,7 @@ playerBetting:
     .byte $00
 playerGambling:
     .byte $00
-    .byte $01
+    .byte $05
     .byte $00
     .byte $00
     .byte $00
@@ -200,7 +200,7 @@ playerGambling:
     .byte $00
 playerBrothels:
     .byte $00
-    .byte $00
+    .byte $01
     .byte $00
     .byte $00
     .byte $00
@@ -209,7 +209,7 @@ playerBrothels:
     .byte $00
 playerHotels:
     .byte $00
-    .byte $00
+    .byte $01
     .byte $00
     .byte $00
     .byte $00
