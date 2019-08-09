@@ -208,3 +208,14 @@ Move_input_to_TextPtr:
         bne !loop-
 !end:
         rts
+
+inputToHex32:
+    ldx #$00
+!loop:
+    lda got_input, x        // Got Input byte-weise laden
+    beq !end+               // 0 Terminiterter String bedeutet Ende
+    sec
+    sbc #$30                // von PetSCII nach
+!end:
+
+Move_input_to_Hex32:
