@@ -4,48 +4,24 @@
 
 //Print_hex32_dec
 main:
-    ldy #$0A                    // Anzahl Zeichen für die Input Routine: 10
-    ldx #<filter_numeric        // Filter setzen LSB: Zahlen
-    lda #>filter_numeric        // Filter setzen MSB: Zahlen
+    Print_hex32_dec source
 
-    jsr Get_filtered_input          // Input holen und speichern
-    lda got_input                   // Ergebnis holen
-    cmp #0                          // Prüfen, ob Spieleranzahl stimmt
-    beq main          // Wenn einfach nur Enter gedrückt wurde,
-                                    //  nochmal von vor
-    jsr strToHex32
+    jsr mul32by10
+
+    lda #PET_CR
+    jsr BSOUT
+
 
     lda #PET_CR
     jsr BSOUT
     Print_hex32_dec target
 
+    lda #PET_CR
+    jsr BSOUT
+
     mov16 #strPressKey : TextPtr // Text: Weiter
     jsr Print_text
     jsr Wait_for_key
-
-
-strToHex32:
-    ldx #0
-
-!loop:
-    lda got_input, x
-    beq !done+      // Schluss bei 0
-    pha             // String erstmal weglegen
-    jsr mul32by10   // zwischenergebnis * 10
-    pla             // String wiederholen
-    sec             // um PETSCII bereinigen
-    sbc #$30
-    sta ZeroPageTemp
-    clc
-    // Hinzuaddieren
-    add8To32 ZeroPageTemp : target : target
-    mov32 target : source
-    inx
-    cpx #$0B    // 10 Stellen max.
-    bne !loop-
-
-!done:
-    rts
 
 mul32by10:
 
@@ -106,13 +82,11 @@ mul32by10:
     sta target +3
     rts
 
-
 target:
     .dword $00000000
 
 source:
-    .dword $00000000
-
+    .dword $000000ff
 
 mainNextPlayerLoop:
 mainContinue:
