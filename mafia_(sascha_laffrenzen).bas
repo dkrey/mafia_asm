@@ -964,64 +964,81 @@
 7540 :
 
 !- Mögliche Unglücke bei Einkommen über 50000
+!- Erst werden Immobilien gepfändet, dann Automaten, zum Schluss Prostituierte
 7550 :
-7555 N1=0:N2=0:N3=0:N4=0:N5=0:N6=0:N7=0
-7560 IFG1<50000THENRETURN
-7570 ZU=INT(RND(1)*100)
-7580 X1=1.2:X2=1.6:Y=1.4:C=1.8
-7581 X=75-PW(CO)*X1-UR(CO)*X2-KO(CO)*Y-AN(CO)-SA(CO)*C-BM(CO)*2-PU(CO)-GH(CO)*7
-7582 IFZU>XTHENRETURN
-7583 ZU=INT(RND(1)*5+1)
-7585 ONZUGOTO7590,7620,7650,7680,7700
-7590 IFBA(CO)=0THEN7730
-7600 N1=INT(RND(1)*BA(CO)/2)
-7610 IFN1>1THENBA(CO)=BA(CO)-N1:GOTO7900
-7620 IFWE(CO)=0THEN7730
-7630 N2=INT(RND(1)*WE(CO)/2)
-7640 IFN2>1THENWE(CO)=WE(CO)-N2:GOTO7900
-7650 IFPU(CO)=0THEN7730
-7660 N4=INT(RND(1)*PU(CO)/2)
-7670 IFN4>1THENPU(CO)=PU(CO)-N4:GOTO7900
-7680 IFGH(CO)=0THEN7730
-7685 N5=INT(RND(1)*GH(CO)/2)
-7690 IFN5>1THENGH(CO)=GH(CO)-N5:GOTO7900
-7700 IFSP(CO)=0THEN7730
-7710 N3=INT(RND(1)*SP(CO)/2)
-7720 IFN3>1THENSP(CO)=SP(CO)-N3:GOTO7900
-7730 IFAU(CO)=0THEN7300
-7740 N6=INT(RND(1)*AU(CO)/2)
-7750 IFN6<2THENN6=0:GOTO7780
-7760 AU(CO)=AU(CO)-N6:GOTO7900
-7780 IFPR(CO)=0THEN8000
-7790 N7=INT(RND(1)*PR(CO)/2)
-7800 IFN7<2THEN7890
-7810 PR(CO)=PR(CO)-N7:GOTO7900
+7555 N1=0: N2=0: N3=0: N4=0: N5=0: N6=0: N7=0
+7560 IF G1 < 50000 THEN RETURN !- Einnahmen zu gering, zurück
+7570 ZU = INT(RND(1)*100)
+7580 X1=1.2: X2=1.6: Y=1.4: C=1.8
+7581 X = 75 - PW(CO) * X1 - UR(CO)*X2 - KO(CO)*Y - AN(CO) - SA(CO)*C - BM(CO)*2 - PU(CO) - GH(CO)* 7
+7582 IF ZU > X THEN RETURN  !- Bestechungen können nach Weltformel Unheil abwenden
+                            !- 75 Prozent Unglück - Bestechungen aller Art
+
+7583 ZU=INT(RND(1)*5+1) !- 5 Unglücke stehen zur Auswahl
+                        !- 7590: Bars werden gegschlossen, alternativ Automaten
+                        !- 7620: Wettbüros werden geschlossen, alternativ Automaten
+                        !- 7650: Bordelle werden geschlossen,  alternativ Automaten
+                        !- 7680: Hotels werden geschlossen, alternativ Automaten
+                        !- 7700: Spielsalons werden geschlossen, alternativ Automaten
+
+7585 ON ZU GOTO 7590,7620,7650,7680,7700
+7590 IF BA(CO)=0THEN7730
+7600 N1 = INT (RND(1) * BA(CO)/ 2 ) !- Anzahl
+7610 IF N1 > 1 THEN BA(CO) = BA(CO) - N1 : GOTO 7900
+7620 IF WE(CO) = 0 THEN 7730
+7630 N2 = INT(RND(1) * WE(CO)/2)
+7640 IF N2 > 1 THEN WE(CO) = WE(CO) - N2: GOTO 7900
+7650 IF PU(CO) = 0 THEN 7730
+7660 N4 = INT(RND(1)*PU(CO)/2)
+7670 IF N4 > 1 THEN PU(CO) = PU(CO) - N4: GOTO 7900
+7680 IF GH(CO) = 0 THEN 7730
+7685 N5 = INT(RND(1)*GH(CO)/2)
+7690 IF N5 > 1 THEN GH(CO)=GH(CO)-N5: GOTO 7900
+7700 IF SP(CO) = 0 THEN 7730
+7710 N3 = INT(RND(1)*SP(CO)/2)
+7720 IF N3 > 1 THEN SP(CO) =SP(CO)-N3: GOTO 7900
+7730 IF AU(CO) = 0 THEN 7300
+7740 N6 = INT(RND(1)*AU(CO)/2)
+7750 IF N6 < 2 THEN N6=0: GOTO 7780 !- 2 Automaten verbleiben auf jeden Fall, danach kommen Prostituierte dran
+7760 AU(CO) = AU(CO)-N6:GOTO 7900
+7780 IF PR(CO) = 0 THEN 8000
+7790 N7 = INT(RND(1)*PR(CO)/2)
+7800 IF N7 < 2 THEN 7890
+7810 PR(CO) = PR(CO) - N7: GOTO 7900
 7890 RETURN
-7900 POKE53280,0:POKE53281,7:PRINT"{black}"
-7910 PRINTSPC(1)"{down}"NA$(CO)","
-7915 IF(N6<>0)+(N7<>0)THEN7973
-7920 GOSUB8010
+
+!
+7900 POKE 53280,0: POKE 53281,7: PRINT"{black}"
+7910 PRINT SPC(1)"{down}"NA$(CO)","
+7915 IF (N6<>0)+(N7<>0) THEN 7973 !- Überspringe bei Automaten oder Prost.
+7920 GOSUB 8010
 7930 PRINT" mussten{down}"
-7938 IFN1>1THENPRINTTAB(5)N1;"Ihrer Bars"
-7939 IFN2>1THENPRINTTAB(5)N2;"Ihrer Wettbueros"
-7940 IFN3>1THENPRINTTAB(5)N3;"Ihrer Spielsalons"
-7941 IFN4>1THENPRINTTAB(5)N4;"Ihrer Bordelle"
-7942 IFN5>1THENPRINTTAB(5)N5;"Ihrer Hotels"
+7938 IF N1>1 THEN PRINTTAB(5)N1;"Ihrer Bars"
+7939 IF N2>1 THEN PRINTTAB(5)N2;"Ihrer Wettbueros"
+7940 IF N3>1 THEN PRINTTAB(5)N3;"Ihrer Spielsalons"
+7941 IF N4>1 THEN PRINTTAB(5)N4;"Ihrer Bordelle"
+7942 IF N5>1 THEN PRINTTAB(5)N5;"Ihrer Hotels"
 7950 PRINT"{down}{right}geschlossen werden."
-7955 IFGF(CO)<>0THEN7980
-7960 ZU=INT(RND(1)*10)
-7970 IFZU<=4THENGF(CO)=INT(RND(1)*5+2)
-7971 PRINT"{down}{right}Sie selbst erhielten"GF(CO)"Runden Haft.":GOTO7980
-7972 GOTO7980
-7973 IFN6<>0THENPRINTSPC(1)N6"Ihrer Automaten sind veraltert.":GOTO7980
-7975 ZU=INT(RND(1)*4+1)
-7976 IFZU>3THENVM(CO)=VM(CO)-N7*50000:PRINTSPC(1)N7"Ihrer Prostituierten sind"
-7977 PRINT"{right}schwanger,und sie helfen finanziell.":GOTO7980
-7978 PRINTSPC(1)N7"Ihrer Prostituierten sind veraltet."
-7980 FORZ=1TO2500: NEXTZ
+
+7955 IF GF(CO) <> 0THEN 7980 !- Wenn schon Gefängnis ansteht, dann nicht noch mehr
+7960 ZU = INT(RND(1)*10)     !- Gefängnischance 1:4
+7970 IF ZU <= 4 THEN GF(CO)=INT(RND(1)*5+2) !- 2-5 Runden Knast
+7971 PRINT"{down}{right}Sie selbst erhielten"GF(CO)"Runden Haft.":GOTO 7980
+7972 GOTO 7980
+
+7973 IF N6 <> 0 THEN PRINT SPC(1) N6 "Ihrer Automaten sind veraltert.": GOTO 7980
+
+!- Finanzielle Hilfe 50000$ pro Prostituierter
+7975 ZU = INT(RND(1)*4+1)
+7976 IF ZU > 3 THEN VM(CO) = VM(CO) - N7 * 50000: PRINT SPC(1) N7"Ihrer Prostituierten sind"
+7977 PRINT"{right}schwanger,und sie helfen finanziell.": GOTO 7980
+7978 PRINT SPC(1)N7"Ihrer Prostituierten sind veraltet."
+
+7980 FOR Z=1 TO 2500: NEXT Z
 8000 RETURN
+
 8010 I=INT(RND(1)*5+1)
-8020 ONIGOTO8030,8040,8050,8060,8070
+8020 ON I GOTO 8030,8040,8050,8060,8070
 8030 PRINT"{right}Aus hygienischen Gruenden":RETURN
 8040 PRINT"{right}Wegen akuter Einsturzgefahr":RETURN
 8050 PRINT"{right}Wegen wiederholter Steuerhinterziehung":RETURN

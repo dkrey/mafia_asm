@@ -560,6 +560,14 @@ strBriberyTitle:
     .fill 40,PET_LINE
     .byte PET_CR,0
 
+strBriberyComputer1:
+    .text " Computer"
+    .byte 0
+strBriberyComputer2:
+    .text " Wenn Sie nicht sofort Ihren L&tkolben"
+    .byte PET_CR
+    .text " da wegnehmen, rufe ich die Polizei!"
+    .byte PET_CR, 0
 //===============================================================================
 // strOverviewTitle
 //

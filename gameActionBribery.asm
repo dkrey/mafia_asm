@@ -211,12 +211,29 @@ gameBriberyMenu:
     lda #PET_CR
     jsr BSOUT
 
+  // Anzeige Computer
+
+    lda #PET_SPACE
+    jsr BSOUT
+    lda #'6'
+    jsr BSOUT
+    lda #'.'
+    jsr BSOUT
+    mov16 #strBriberyComputer1 : TextPtr
+    jsr Print_text
+
+    lda #PET_CR
+    jsr BSOUT
+
+    lda #PET_CR
+    jsr BSOUT
+
   // Anzeige Alle feuern
     lda #PET_CR
     jsr BSOUT
     lda #PET_SPACE
     jsr BSOUT
-    lda #'6'
+    lda #'7'
     jsr BSOUT
     lda #'.'
     jsr BSOUT
@@ -279,8 +296,12 @@ gameBribeChoice:
     cmp #5
     beq branchBribeMajors
 
-    // Auswahl 6: alle feuern
+    // Auswahl 7: Computer
     cmp #6
+    beq branchBribeComputer
+
+    // Auswahl 7: alle feuern
+    cmp #7
     beq branchBribeFireAll
 
 branchBribeExit:
@@ -295,6 +316,8 @@ branchBribeStateAttorneys:
     jmp bribeStateAttorneys
 branchBribeMajors:
     jmp bribeMajors
+branchBribeComputer:
+    jmp bribeComputer
 branchBribeFireAll:
     jmp bribeFireAll
 
@@ -346,6 +369,17 @@ bribeMajors:
     jmp !exit+
 !skip:
     inc playerMajors,x
+    jmp !exit+
+
+bribeComputer:
+    lda #PET_CR
+    jsr BSOUT
+    mov16 #strBriberyComputer2 : TextPtr // Text: "Pro Runde"
+    jsr Print_text
+    jsr Wait_for_key
+    lda #PET_CR
+    jsr BSOUT
+
     jmp !exit+
 
 bribeFireAll:
