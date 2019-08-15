@@ -119,20 +119,14 @@ gameTransferChoice:
 
     cmp playerCount
     bcc !skip+          // Auswahl < ist okay
-    // hier ist's nicht okay, weil größer
-    plot_get
-    dey                 // Cursor zurücksetzen
-    plot_set            // alte Auswahl überschreiben
-    lda #' '
-    jsr BSOUT
-    plot_set            // Cursor zurücksetzen
+
     jmp gameTransferChoice
 
 !skip:
     // Nicht an sich selbst überweisen
     cmp currentPlayerNumber
     bne gameTransferAmount
-    mov16 #strTransferImpossible : TextPtr // Text: "An wen soll das Geld fließen:"
+    mov16 #strTransferImpossible : TextPtr // Text: "Sie machen wohl Witze"
     jsr Print_text
     lda #PET_CR
     mov16 #strPressKey : TextPtr // Text: Weiter
@@ -162,7 +156,7 @@ gameTransferAmount:
     lda #PET_CR
     jsr BSOUT
 
-    mov16 #strTransferAmount : TextPtr // Text: "An wen soll das Geld fließen:"
+    mov16 #strTransferAmount : TextPtr // Text: "Wieviel"
     jsr Print_text
 
     // Spielernummer wieder auf den Stack
@@ -179,13 +173,59 @@ gameTransferAmount:
     beq gameTransferAmount          // Wenn einfach nur Enter gedrückt wurde,
                                     //  nochmal von vorn
 
-   //TODO: DEC in HEX konvertieren!
+    jsr Move_input_to_Hex32         // Eingabe als Zahl konvertieren
 
-    pla
+    lda #PET_CR
+    jsr BSOUT
+
+    // Prüfen ob das Geld überhaupt reicht
+    ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte
+
+    compare32 playerMoney,y  : strToHex32_result
+
+    bcs gameTransferAmount2     // Hat genug Geld, sonst exit
+    pla                         // Ziel-Spielernummer trotzdem vom Stack holen, auch wenn sie nicht mehr benutzt wird
+    mov16 #strTransferNotEnough : TextPtr // Text: "So viel haben sie nicht"
+    jsr Print_text
+
+    mov16 #strPressKey : TextPtr // Text: Weiter
+    jsr Print_text
+
+    jsr Wait_for_key
+    rts
+    // Überweisung tätigen
+gameTransferAmount2:
+
+    ldy currentPlayerOffset_4
+
+    sub32 playerMoney, y : strToHex32_result : playerMoney, y
+
+
+/*
+    lda #' '
+    jsr BSOUT
+    mov32 playerMoney,y : hex32dec_value
+    jsr Print_hex32_dec_signed
+    lda #' '
+    jsr BSOUT
+    mov32 strToHex32_result: hex32dec_value
+    jsr Print_hex32_dec_signed
+*/
+    pla // Ziel-Spielernummer vom Stack holen
+    asl
+    asl
+    tax // und nach X schieben
+
+    add32 playerMoney, x : strToHex32_result : playerMoney, x
+
+    mov16 #strTransferDone : TextPtr // Text: "Überweisung erfolgt"
+    jsr Print_text
+
     mov16 #strPressKey : TextPtr // Text: Weiter
     jsr Print_text
     jsr Wait_for_key
-    // Überweisung tätigen
+    rts
+
 !exit:
     rts
 

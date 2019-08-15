@@ -594,7 +594,7 @@ strTransferAccountant:
     .byte 0
 
 strTransferAmount:
-    .text " Betrag: "
+    .text " Betrag $ "
     .byte 0
 
 strTransferImpossible:

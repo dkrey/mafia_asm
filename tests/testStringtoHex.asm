@@ -13,17 +13,18 @@ main:
     cmp #0                          // Prüfen, ob Spieleranzahl stimmt
     beq main          // Wenn einfach nur Enter gedrückt wurde,
                                     //  nochmal von vor
-    jsr strToHex32
+    //jsr strToHex32
+    jsr Move_input_to_Hex32
 
     lda #PET_CR
     jsr BSOUT
-    Print_hex32_dec target
+    Print_hex32_dec strToHex32_result
 
     mov16 #strPressKey : TextPtr // Text: Weiter
     jsr Print_text
     jsr Wait_for_key
 
-
+/*
 strToHex32:
     ldx #0
 
@@ -48,7 +49,6 @@ strToHex32:
     rts
 
 mul32by10:
-
     // Source * 2
     lda source
     asl
@@ -63,20 +63,8 @@ mul32by10:
     rol
     sta target +3
     // target * 2
-    lda target
-    asl
-    sta target
-    lda target +1
-    rol
-    sta target +1
-    lda target +2
-    rol
-    sta target +2
-    lda target +3
-    rol
-    sta target +3
-
-    // + target
+    jsr mul2
+    // + source
     clc
     lda target
     adc source
@@ -90,20 +78,12 @@ mul32by10:
     lda target +3
     adc source +3
     sta target +3
-
+mul2:
     // target *2
-    lda target
-    asl
-    sta target
-    lda target +1
-    rol
-    sta target +1
-    lda target +2
-    rol
-    sta target +2
-    lda target +3
-    rol
-    sta target +3
+    asl target
+    rol target +1
+    rol target +2
+    rol target +3
     rts
 
 
@@ -113,6 +93,6 @@ target:
 source:
     .dword $00000000
 
-
+*/
 mainNextPlayerLoop:
 mainContinue:

@@ -218,4 +218,77 @@ inputToHex32:
     sbc #$30                // von PetSCII nach
 !end:
 
+
+//===============================================================================
+// Move_input_to_Hex32
+// Konvertiert got_input zu hex32 Zahl
+// X Register wird verwendet
+//===============================================================================
 Move_input_to_Hex32:
+    clear32 strToHex32_source
+    clear32 strToHex32_result
+    ldx #0
+
+!loop:
+    lda got_input, x // Zeichen aus der Eingabe holen
+    beq !done+      // Schluss bei 0
+    pha             // Zeichen erstmal weglegen
+    jsr mul32by10   // zwischenergebnis * 10
+    pla             // Zeichen wiederholen
+    sec             // um PETSCII bereinigen
+    sbc #$30
+    sta ZeroPageTemp // Zahl in ZP zwischenspeichern
+    clc
+
+    add8To32 ZeroPageTemp : strToHex32_result : strToHex32_result  // Zahl zum Zwischenergebnis addieren
+    mov32 strToHex32_result : strToHex32_source // Zwischenergebnis ist neues Gesamtergebnis
+    inx
+    cpx #$0A    // 10 Stellen max.
+    bne !loop-
+
+!done:
+    rts
+
+mul32by10:
+    // Source * 2
+    lda strToHex32_source
+    asl
+    sta strToHex32_result
+    lda strToHex32_source +1
+    rol
+    sta strToHex32_result +1
+    lda strToHex32_source +2
+    rol
+    sta strToHex32_result +2
+    lda strToHex32_source +3
+    rol
+    sta strToHex32_result +3
+    // strToHex32_result * 2
+    jsr mul2
+    // + strToHex32_source
+    clc
+    lda strToHex32_result
+    adc strToHex32_source
+    sta strToHex32_result
+    lda strToHex32_result +1
+    adc strToHex32_source +1
+    sta strToHex32_result +1
+    lda strToHex32_result +2
+    adc strToHex32_source +2
+    sta strToHex32_result +2
+    lda strToHex32_result +3
+    adc strToHex32_source +3
+    sta strToHex32_result +3
+mul2:
+    // target *2
+    asl strToHex32_result
+    rol strToHex32_result +1
+    rol strToHex32_result +2
+    rol strToHex32_result +3
+    rts
+
+strToHex32_result:
+    .dword $00000000
+
+strToHex32_source:
+    .dword $00000000
