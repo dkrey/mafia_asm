@@ -115,7 +115,7 @@ branchSmallTheftKerb:
 branchSmallTheftPedestrian:
     jmp smallTheftPedestrian
 branchSmallTheftJob:
-    jmp mainContinue
+    jmp smallTheftJob
 branchSmallTheftNothing:
     jmp mainContinue
 // Bankraub
@@ -142,6 +142,11 @@ smallTheftKerb:
 smallTheftPedestrian:
     #import "gameActionTheftPedestrian.asm"
     jmp smallTheftContinue
+
+// Auswahl : Arbeit annehmen, kein Geld ausgeben
+smallTheftJob:
+    #import "gameActionTheftJob.asm"
+    jmp !end+
 
 // Wenn das Vermögen jetzt über 20.000 $ liegt: einkaufen!
 smallTheftContinue:

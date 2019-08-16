@@ -17,7 +17,8 @@ BasicUpstart2(init)
 #import "../gameStringsDE.asm"
 #import "../gameJail.asm"
 #import "../gameActionShop.asm"
-
+#import "../gameJob.asm"
+#import "../gameDisaster.asm"
 
 //===============================================================================
 // Spiel initialisieren

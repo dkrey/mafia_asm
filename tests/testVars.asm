@@ -111,6 +111,18 @@ playerDebtFlag:
     .byte 00
     .byte 00
 
+// Mitspieler als Mitarbeiter
+playerEmployee:
+    .byte 00
+    .byte 03
+    .byte 00
+    .byte 00
+    .byte 00
+    .byte 00
+    .byte 00
+    .byte 00
+
+
 // Vermögen: 4 Byte pro Spieler
 playerMoney:
     .dword $00000064
@@ -121,6 +133,17 @@ playerMoney:
     .dword $00000064
     .dword $00000064
     .dword $00000064
+
+// Einkommen: 4 Byte pro Spieler
+playerIncome:
+    .dword $00000000
+    .dword $0000c351
+    .dword $00000000
+    .dword $00000000
+    .dword $00000000
+    .dword $00000000
+    .dword $00000000
+    .dword $00000000
 
 // Vermögen in Dezimal: 10 Byte pro Spieler + 6 Byte Luft für einfaches Multiplizieren
 playerMoneyDec:
@@ -200,13 +223,13 @@ playerGambling:
     .byte $00
 playerBrothels:
     .byte $00
-    .byte $01
-    .byte $00
-    .byte $00
-    .byte $00
-    .byte $00
-    .byte $00
-    .byte $00
+    .byte $02
+    .byte $03
+    .byte $04
+    .byte $05
+    .byte $06
+    .byte $07
+    .byte $08
 playerHotels:
     .byte $00
     .byte $01
@@ -282,7 +305,7 @@ playerPolice:
 
 playerInspectors:
     .byte $00
-    .byte $00
+    .byte $01
     .byte $00
     .byte $00
     .byte $00
@@ -292,7 +315,7 @@ playerInspectors:
 
 playerJudges:
     .byte $00
-    .byte $00
+    .byte $01
     .byte $00
     .byte $00
     .byte $00
@@ -302,7 +325,7 @@ playerJudges:
 
 playerStateAttorneys:
     .byte $00
-    .byte $00
+    .byte $01
     .byte $00
     .byte $00
     .byte $00
@@ -312,7 +335,7 @@ playerStateAttorneys:
 
 playerMajors:
     .byte $00
-    .byte $00
+    .byte $01
     .byte $00
     .byte $00
     .byte $00

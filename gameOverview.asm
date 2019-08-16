@@ -295,7 +295,7 @@ gameOverviewMenu:
     jsr BSOUT
 !skip:
 
-    // Informanten:
+    // Staatsanwälte:
     ldx currentPlayerNumber
     mov playerStateAttorneys, x : hex8dec_value
     cmp #0
@@ -312,7 +312,7 @@ gameOverviewMenu:
     jsr BSOUT
 !skip:
 
-    // Anwälte:
+    // Bürgermeister:
     ldx currentPlayerNumber
     mov playerMajors, x : hex8dec_value
     cmp #0

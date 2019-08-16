@@ -999,11 +999,11 @@
 7720 IF N3 > 1 THEN SP(CO) =SP(CO)-N3: GOTO 7900
 7730 IF AU(CO) = 0 THEN 7300
 7740 N6 = INT(RND(1)*AU(CO)/2)
-7750 IF N6 < 2 THEN N6=0: GOTO 7780 !- 2 Automaten verbleiben auf jeden Fall, danach kommen Prostituierte dran
+7750 IF N6 < 2 THEN N6=0: GOTO 7780 !- 1 Automat verbleiben auf jeden Fall, danach kommen Prostituierte dran
 7760 AU(CO) = AU(CO)-N6:GOTO 7900
 7780 IF PR(CO) = 0 THEN 8000
 7790 N7 = INT(RND(1)*PR(CO)/2)
-7800 IF N7 < 2 THEN 7890
+7800 IF N7 < 2 THEN 7890            !- 1 Prostituerte verbleiben immer
 7810 PR(CO) = PR(CO) - N7: GOTO 7900
 7890 RETURN
 

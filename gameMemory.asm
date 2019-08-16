@@ -106,8 +106,30 @@ playerDebtFlag:
     .byte 00
     .byte 00
 
+// Mitspieler als Mitarbeiter
+playerEmployee:
+    .byte 00
+    .byte 00
+    .byte 00
+    .byte 00
+    .byte 00
+    .byte 00
+    .byte 00
+    .byte 00
+
 // Vermögen: 4 Byte pro Spieler
 playerMoney:
+    .dword $00000000
+    .dword $00000000
+    .dword $00000000
+    .dword $00000000
+    .dword $00000000
+    .dword $00000000
+    .dword $00000000
+    .dword $00000000
+
+// Einkommen: 4 Byte pro Spieler
+playerIncome:
     .dword $00000000
     .dword $00000000
     .dword $00000000
@@ -370,6 +392,7 @@ resetGame:
     sta currentPlayerNumber
     sta gameOver
     sta gameMode
+
     // Spielernamen löschen
     tax
 !loop_x:
@@ -385,6 +408,15 @@ resetGame:
     inx
     cpx #8
     bne !loop_x-
+
+    // Mitarbeiter löschen
+    tax
+!loop_x:
+    sta playerEmployee,x
+    inx
+    cpx #8
+    bne !loop_x-
+
     // Geld löschen
     tax
 !loop_x:
@@ -392,7 +424,12 @@ resetGame:
     inx
     cpx #64
     bne !loop_x-
-
+    // Einkommen löschen
+!loop_x:
+    sta playerIncome,x
+    inx
+    cpx #64
+    bne !loop_x-
     // Geld in Dez löschen
     tax
 !loop_x:

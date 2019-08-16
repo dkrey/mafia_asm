@@ -107,12 +107,37 @@ checkPlayerNames:
     cmp #0
     beq checkPlayerNames          // aus versehen Enter gedrückt
     cmp #'J'
-    beq readyToBegin
+    beq welcomePayment
     jsr resetGame
     jmp howManyPlayers      // Ansonsten von vorn
 
+welcomePayment:
+    mov16 #strWelcomePayment : TextPtr
+    jsr Print_text
+    ldx #<filter_yesno       // Diese Zeichen sind erlaubt
+    lda #>filter_yesno
+!getinput:
+    jsr Get_filtered_input  // Ja oder nein
+    lda got_input           // Antwort Char in den Akku
+    cmp #0
+    beq !getinput-          // aus versehen Enter gedrückt
+    cmp #'J'
+    bne readyToBegin
+
+    // 60.000$ Startkapital
+    ldx #00
+!loop:
+    txa
+    asl
+    asl
+    tay
+    add32 playerMoney, y : #$0000EA60 : playerMoney, y
+    inx
+    cpx playerCount                 // Solange x< Spieleranzahl
+    bne !loop-                      // weiter mit Schleife
 
 readyToBegin:
     mov16 #strGoodLuck: TextPtr     // Viel Glück anzeigen
     jsr Print_text
     jsr Wait_for_key                // auf Testendruck warten
+    rts

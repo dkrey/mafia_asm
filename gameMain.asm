@@ -31,6 +31,9 @@ BasicUpstart2(init)
 #import "gameWinningConditions.asm"
 #import "gameDebt.asm"
 #import "gameMainMenu.asm"
+#import "gameSetupPlayers.asm"
+#import "gameJob.asm"
+#import "gameDisaster.asm"
 
 //===============================================================================
 // Spiel initialisieren
@@ -63,7 +66,7 @@ showTitle:
     jsr Wait_for_key                // auf Testendruck warten
 
     // Wie viele Spiele, welche Namen etc.
-    #import "gameSetupPlayers.asm"
+    jsr howManyPlayers
 
     ldx #00 // Spieler 0 beginnt
 //===============================================================================
@@ -75,6 +78,10 @@ mainNextPlayerLoop:
     stx currentPlayerNumber         // Aktuelle Spielernummer sichern
 
     jsr calcPlayerOffsets           // Offsets für den Speicher berechnen
+
+    jsr gameDisasterCheck           // Schicksalschläge
+
+    jsr gameJobCheck                // Parasit an Board?
 
     jsr gameFinancesOverview        // Eingaben und Ausgaben
 

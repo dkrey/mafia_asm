@@ -28,9 +28,9 @@ strTitleScreen:
 
     .byte PET_RED
     .fill 5, PET_CR
-    .text "(c) 2019 Proktologisches Institut"
+    .text "(c) 2019 Geriatrische Gesellschaft"
     .byte PET_CR
-    .text "    f*r abgewandte Informatik"
+    .text "    f*r abgewandte Daten*bertragung"
     .byte PET_BLACK, 0
 
 //===============================================================================
@@ -63,6 +63,12 @@ strGoodLuck:
     .text "M&ge der Bessere gewinnen!"
     .byte PET_CR, PET_CR
     .text "(Weiter mit beliebiger Taste)"
+    .byte 0
+
+strWelcomePayment:
+    .byte PET_CR
+    .byte PET_CR
+    .text " Startkapital von 60.000$ (J/N) "
     .byte 0
 
 //===============================================================================
@@ -290,8 +296,7 @@ strTheftKerbSuccess2:
 strTheftKerbSuccess3:
     .byte PET_CR
     .text " d*rfen sie behalten."
-    .byte PET_CR
-    .byte 0
+    .byte PET_CR, 0
 
 strTheftKerbFail:
     .text " Aus Mitleid hat man Sie"
@@ -309,21 +314,65 @@ strTheftPedestrianPlayer2:
     .byte 0
 strTheftPedestrianPlayer3:
     .text " bei sich."
-    .byte PET_CR
-    .byte 0
+    .byte PET_CR, 0
 
 strTheftPedestrianSuccess1:
     .text " Der Passant hatte "
     .byte 0
 strTheftPedestrianSuccess2:
     .text " bei sich."
-    .byte PET_CR
-    .byte 0
+    .byte PET_CR, 0
 strTheftPedestrianBodyguard:
     .text " Ein Leibw@chter konnte den *berfall"
     .byte PET_CR
     .text " verhindern."
+    .byte PET_CR, 0
+
+// Ehrliche Arbeit
+strTheftJobWait:
+    .text " Sie legen sich auf die Lauer und "
     .byte PET_CR
+    .text " hoffen auf einen potenten Arbeitgeber."
+    .byte PET_CR, 0
+
+strTheftJobIntro1:
+    .byte PET_CR
+    .text " freuen Sie sich!"
+    .byte PET_CR, PET_CR
+    .text " F*r nur schlappe "
+    .byte 0
+strTheftJobIntro2:
+    .text "$ arbeitet "
+    .byte PET_CR
+    .byte 0
+strTheftJobIntro3:
+    .text " diese Runde f*r sie als"
+    .byte PET_CR
+    .byte 0
+
+strTheftJob1:
+    .text " R&ckenkratzer"
+    .byte 0
+strTheftJob2:
+    .text " K&chenschabe"
+    .byte 0
+strTheftJob3:
+    .text " Rhinozeros"
+    .byte 0
+strTheftJob4:
+    .text " Luftpumpe"
+    .byte 0
+strTheftJob5:
+    .text " Buchst&tze"
+    .byte 0
+strTheftJob6:
+    .text " Torpfosten"
+    .byte 0
+strTheftJob7:
+    .text " Brusttoupet"
+    .byte 0
+strTheftJob8:
+    .text " T*rstopper"
     .byte 0
 
 //===============================================================================
@@ -527,7 +576,7 @@ strMainMenuTitle:
     .byte PET_CR, PET_CR
     .text "   6. Geldtransfer"
     .byte PET_CR, PET_CR
-    .text "   7. Besitzverhältnisse"
+    .text "   7. Besitzverh@ltnisse"
     .byte PET_CR, PET_CR,PET_CR
     .text " Was w@hlen Sie? "
     .byte PET_CR, PET_CR
