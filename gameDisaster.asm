@@ -1,16 +1,41 @@
 #importonce
 
+disasterHeader:
+    jsr CLEAR
+
+    mov #YELLOW  : EXTCOL            // Schwarzer Overscan
+    mov #YELLOW  : BGCOL0            // Gelber Hintergrund
+    mov #BLACK : TEXTCOL             // schwarze Schrift
+
+    set_cursor_position #8 : #2
+
+    // Spielernamen anzeigen
+    ldy currentPlayerOffset_16      // Offset für Spielernamen 16 Byte
+
+    mov16 #playerNames : TextPtr
+    jsr Print_text_offset           // Schreibe den Spielernamen
+
+    lda #','
+    jsr BSOUT
+    lda #PET_CR                     // Zeilenumbruch
+    jsr BSOUT
+    jsr BSOUT
+    rts
+
+// Bei weniger als 50.000 $ Einkommen keine Disaster
 gameDisasterCheck:
     ldx currentPlayerOffset_4
 
-    compare32 playerIncome,x : #$0000c350 // Bei weniger als 50.000 $ Einkommen keine Disaster
+    compare32 playerIncome,x : #$0000c350
 
     bcs gameDisasterDefense
     rts
 
+// Bestochene erhöhen die Chance, das Unheil abzuwehren
 gameDisasterDefense:
     // 750 gilt es zu verringern
     mov16 #$02ee : disasterGroundvalue
+    mov16 #$0000 : disasterTotalFactor
 
     // Faktoren für die Bestochenen ausrechnen
     ldx currentPlayerNumber
@@ -59,28 +84,35 @@ gameDisasterDefense:
     // ... und vom Grundwert abziehen
     sub32 disasterGroundvalue : disasterTotalFactor : disasterGroundvalue
 
-    // Zufall von 100:1100
-    getRandomRange16 #$0064 : #$044c
+    // wenn Grundwert > 750 ist Grundwert auf 100 zurücksetzen
+    compare16  #$02ee : disasterGroundvalue
+    bcs !skip+
+    mov16 #$0064 : disasterGroundvalue
+!skip:
+    // Zufall von 0:1100
+    getRandomRange16 #$0000 : #$044c
 
-    /*
+
     Print_hex16_dec rnd16_result
 
     lda #' '
     jsr BSOUT
     Print_hex16_dec disasterGroundvalue
-
+    lda #'.'
+    jsr BSOUT
     lda #PET_CR
     jsr BSOUT
-    */
+    jsr Wait_for_key
 
     // Wenn der Zufallswert unter dem Grundwert liegt, nimmt das Schicksal seinen lauf
     compare16 rnd16_result : disasterGroundvalue
-    bcs gameDisasterContinue
+    bcc gameDisasterContinue
     rts
 
 // Unheil ließ sich nicht abwenden
 gameDisasterContinue:
-    // Speicher leeren
+    // Speicher leeren und Bildschirm vorbereiten
+
     lda #00
     sta disasterAmountSlotMachines
     sta disasterAmountProstitutes
@@ -89,8 +121,15 @@ gameDisasterContinue:
     sta disasterAmountGambling
     sta disasterAmountBrothels
     sta disasterAmountHotels
+    sta disasterAmountGeneral
 
-    getRandomRange8 #0 : #5
+    clear32 disasterLoss
+
+    // Schicksal auswürfeln
+    lda #' '
+    jsr BSOUT
+    getRandomRange8 #$00 : #$05
+
     lda rnd8_result
 
     // Zufall bestimmt, was betroffen ist
@@ -122,6 +161,34 @@ branchDisasterHotels:
 
 // Veraltete Automaten
 disasterSlotMachines:
+    ldx currentPlayerNumber
+    lda playerSlotMachines, x
+    cmp #$01
+    bne !skip+
+    rts         // nur ein Automat, Glück gehabt
+!skip:
+    getRandomRange8 #01 : playerSlotMachines, x
+    lda rnd8_result
+    lsr                     // Ergebnis / 2
+    cmp #0                  // wenn 0 dann Glück gehabt
+    bne !skip+
+    rts
+!skip:
+
+    sta disasterAmountSlotMachines
+    jsr disasterHeader
+
+    Print_hex8_dec disasterAmountSlotMachines
+    mov16 #strDisasterSlotMachines : TextPtr // Text: "Automaten sind veraltet"
+    jsr Print_text
+    // Anzahl der Automaten abziehen
+    ldx currentPlayerNumber
+    sec
+    lda playerSlotMachines, x
+    sbc disasterAmountSlotMachines
+    sta playerSlotMachines, x
+    jmp !end+
+
 
 // Schwangere Prostituierte
 disasterProstitutes:
@@ -132,29 +199,295 @@ disasterProstitutes:
     jmp disasterSlotMachines // keine Prostituierten, vielleicht Automaten
 !skip:
     getRandomRange8 #01 : playerProstitutes, x
-    //rnd8_result
+    lda rnd8_result
+    lsr                     // Ergebnis / 2
+    cmp #0                  // wenn 0 dann Glück gehabt
+    bne !skip+
+    rts
+!skip:
+    sta disasterAmountProstitutes
+    jsr disasterHeader
+
+    Print_hex8_dec disasterAmountProstitutes
+
+    getRandomRange8 #00 : #01
+    lda rnd8_result
+    cmp #01
+    bne !skip+
+    mov16 #strDisasterProstitute1 : TextPtr // Text: "sind schwanger"
+    jsr Print_text
+    jmp !skip2+
+!skip:
+    mov16 #strDisasterProstitute2 : TextPtr // Text: "sind veraltet"
+    jsr Print_text
+!skip2:
+    mov16 #strDisasterProstitute3 : TextPtr // Text :" Sie helfen finanziell "
+    jsr Print_text
+
+    // Kosten aufaddieren 10.000$ pro Person
+    ldx #00
+!loop:
+    add16To32 #$2710 : disasterLoss : disasterLoss
+    inx
+    cpx disasterAmountProstitutes
+    bne !loop-
+
+    Print_hex32_dec disasterLoss
+
+    lda #'$'
+    jsr BSOUT
+
+    // Geld abziehen
+    ldx currentPlayerOffset_4
+    sub32 playerMoney, x : disasterLoss : playerMoney, x
+
+    // Anzahl der Prostituierten abziehen
+    ldx currentPlayerNumber
+    sec
+    lda playerProstitutes, x
+    sbc disasterAmountProstitutes
+    sta playerProstitutes, x
+    jmp !end+
+
 
 //geschlossene Bars
 disasterBars:
+    ldx currentPlayerNumber
+    lda playerBars, x
+    cmp #$01
+    bne !skip+
+    jmp disasterSlotMachines // vielleicht Automaten
+!skip:
+    cmp #$02                // bei 2  wird nur noch eine Immo abgezogen
+    bne !skip+
+    lda #$01
+    jmp !skip2+
+!skip:
+    getRandomRange8 #01 : playerBars, x
+    lda rnd8_result
+    lsr                     // Ergebnis / 2
+    cmp #0                  // wenn 0 dann Glück gehabt
+    bne !skip2+
+    rts
+!skip2:
+
+    sta disasterAmountBars
+    sta disasterAmountGeneral
+    jsr disasterHeader
+
+    jsr disasterShowReasons
+
+    mov16 #strFinancesBars : TextPtr // Ihrer Bars
+    jsr Print_text
+
+    lda #PET_CR
+    jsr BSOUT
+    mov16 #strDisasterCloseDown : TextPtr // geschlossen werden
+    jsr Print_text
+
+    ldx currentPlayerNumber
+    sec
+    lda playerBars, x
+    sbc disasterAmountGeneral
+    sta playerBars, x
+    jmp !end+
+
 // geschlossene Wettbüros
 disasterBetting:
+    ldx currentPlayerNumber
+    lda playerBetting, x
+    cmp #$01
+    bne !skip+
+    jmp disasterSlotMachines // vielleicht Automaten
+!skip:
+    cmp #$02                // bei 2  wird nur noch eine Immo abgezogen
+    bne !skip+
+    lda #$01
+    jmp !skip2+
+!skip:
+    getRandomRange8 #01 : playerBetting, x
+    lda rnd8_result
+    lsr                     // Ergebnis / 2
+    cmp #0                  // wenn 0 dann Glück gehabt
+    bne !skip2+
+    rts
+!skip2:
+
+    sta disasterAmountBetting
+    sta disasterAmountGeneral
+    jsr disasterHeader
+
+    jsr disasterShowReasons
+
+    mov16 #strFinancesBetting : TextPtr // Ihrer Immobilie
+    jsr Print_text
+
+    lda #PET_CR
+    jsr BSOUT
+    mov16 #strDisasterCloseDown : TextPtr // geschlossen werden
+    jsr Print_text
+
+    ldx currentPlayerNumber
+    sec
+    lda playerBetting, x
+    sbc disasterAmountGeneral
+    sta playerBetting, x
+    jmp !end+
+
 // geschlossene Spielsalons
 disasterGambling:
+    ldx currentPlayerNumber
+    lda playerGambling, x
+    cmp #$01
+    bne !skip+
+    jmp disasterSlotMachines // vielleicht Automaten
+!skip:
+    cmp #$02                // bei 2  wird nur noch eine Immo abgezogen
+    bne !skip+
+    lda #$01
+    jmp !skip2+
+!skip:
+    getRandomRange8 #01 : playerGambling, x
+    lda rnd8_result
+    lsr                     // Ergebnis / 2
+    cmp #0                  // wenn 0 dann Glück gehabt
+    bne !skip2+
+    rts
+!skip2:
+
+    sta disasterAmountGambling
+    sta disasterAmountGeneral
+    jsr disasterHeader
+
+    jsr disasterShowReasons
+
+    mov16 #strFinancesGambling : TextPtr // Ihrer Immobilie
+    jsr Print_text
+
+    lda #PET_CR
+    jsr BSOUT
+    mov16 #strDisasterCloseDown : TextPtr // geschlossen werden
+    jsr Print_text
+
+    ldx currentPlayerNumber
+    sec
+    lda playerGambling, x
+    sbc disasterAmountGeneral
+    sta playerGambling, x
+    jmp !end+
+
 // geschlossene Bordelle
 disasterBrothels:
+    ldx currentPlayerNumber
+    lda playerBrothels, x
+    cmp #$01
+    bne !skip+
+    jmp disasterSlotMachines // vielleicht Automaten
+!skip:
+    cmp #$02                // bei 2  wird nur noch eine Immo abgezogen
+    bne !skip+
+    lda #$01
+    jmp !skip2+
+!skip:
+    getRandomRange8 #01 : playerBrothels, x
+    lda rnd8_result
+    lsr                     // Ergebnis / 2
+    cmp #0                  // wenn 0 dann Glück gehabt
+    bne !skip2+
+    rts
+!skip2:
+
+    sta disasterAmountBrothels
+    sta disasterAmountGeneral
+    jsr disasterHeader
+
+    jsr disasterShowReasons
+
+    mov16 #strFinancesBrothels : TextPtr // Ihrer Immobilie
+    jsr Print_text
+
+    lda #PET_CR
+    jsr BSOUT
+    mov16 #strDisasterCloseDown : TextPtr // geschlossen werden
+    jsr Print_text
+
+    ldx currentPlayerNumber
+    sec
+    lda playerBrothels, x
+    sbc disasterAmountGeneral
+    sta playerBrothels, x
+    jmp !end+
+
 // geschlossene Hotels
 disasterHotels:
+    ldx currentPlayerNumber
+    lda playerHotels, x
+    cmp #$01
+    bne !skip+
+    jmp disasterSlotMachines // vielleicht Automaten
+!skip:
+    cmp #$02                // bei 2  wird nur noch eine Immo abgezogen
+    bne !skip+
+    lda #$01
+    jmp !skip2+
+!skip:
+    getRandomRange8 #01 : playerHotels, x
+    lda rnd8_result
+    lsr                     // Ergebnis / 2
+    cmp #0                  // wenn 0 dann Glück gehabt
+    bne !skip2+
+    rts
+!skip2:
 
-// Anzeige der geschlossenen Immobilie
-disasterEstate:
+    sta disasterAmountHotels
+    sta disasterAmountGeneral
+    jsr disasterHeader
 
+    jsr disasterShowReasons
 
+    mov16 #strFinancesHotels : TextPtr // Ihrer Immobilie
+    jsr Print_text
+
+    lda #PET_CR
+    jsr BSOUT
+    mov16 #strDisasterCloseDown : TextPtr // geschlossen werden
+    jsr Print_text
+
+    ldx currentPlayerNumber
+    sec
+    lda playerHotels, x
+    sbc disasterAmountGeneral
+    sta playerHotels, x
+    jmp !end+
+
+disasterShowReasons:
+    getRandomRange8 #0 : #4
+    tax
+    lda disaster_table_low, x
+    sta TextPtr
+    lda disaster_table_high, x
+    sta TextPtr + 1
+    jsr Print_text
+
+    mov16 #strDisasterHadTo : TextPtr // Text: mussten
+    jsr Print_text
+
+    Print_hex8_dec disasterAmountGeneral // Anzahl der Dinge
+    lda #' '
+    mov16 #strDisasterYours : TextPtr // Text: Ihrer
+    jsr Print_text
+
+    rts
+
+// Taste für weiter und Ende
 !end:
+    lda #PET_CR
+    jsr BSOUT
     mov16 #strPressKey : TextPtr    // Text: Weiter
     jsr Print_text
     jsr Wait_for_key
-
     rts
+
 
 disasterGroundvalue:
     .word $0000
@@ -192,3 +525,18 @@ disasterAmountBrothels:
     .byte $00
 disasterAmountHotels:
     .byte $00
+//
+disasterAmountGeneral:
+    .byte $00
+
+// Finanzielle Hilfe für Prostituierte
+disasterLoss:
+    .dword $0000
+
+disaster_table_low:
+    .byte <strDisasterReason1, <strDisasterReason2, <strDisasterReason3
+    .byte <strDisasterReason4, >strDisasterReason5
+
+disaster_table_high:
+    .byte >strDisasterReason1, >strDisasterReason2, >strDisasterReason3
+    .byte >strDisasterReason4, >strDisasterReason5

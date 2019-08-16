@@ -73,7 +73,7 @@ gameJobContinue:
     jsr Print_text
 
     // Beruf ausknobeln und anzeigen
-    getRandomRange8 #0 : #8
+    getRandomRange8 #0 : #7
     tax
     lda job_table_low, x
     sta TextPtr
@@ -104,6 +104,3 @@ job_table_low:
 job_table_high:
     .byte >strTheftJob1, >strTheftJob2, >strTheftJob3, >strTheftJob4
     .byte >strTheftJob5, >strTheftJob6, >strTheftJob7, >strTheftJob8
-
-job_employee:
-    .byte $00

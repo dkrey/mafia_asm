@@ -178,7 +178,7 @@ playerEstates:
 // Besitz:
 playerSlotMachines:
     .byte $01
-    .byte $ef
+    .byte $0a
     .byte $01
     .byte $01
     .byte $01
@@ -187,7 +187,7 @@ playerSlotMachines:
     .byte $01
 playerProstitutes:
     .byte $00
-    .byte $02
+    .byte $0A
     .byte $09
     .byte $09
     .byte $09
@@ -196,7 +196,7 @@ playerProstitutes:
     .byte $09
 playerBars:
     .byte $00
-    .byte $01
+    .byte $1f
     .byte $0b
     .byte $0c
     .byte $0a
@@ -223,7 +223,7 @@ playerGambling:
     .byte $00
 playerBrothels:
     .byte $00
-    .byte $02
+    .byte $06
     .byte $03
     .byte $04
     .byte $05
@@ -232,7 +232,7 @@ playerBrothels:
     .byte $08
 playerHotels:
     .byte $00
-    .byte $01
+    .byte $00
     .byte $00
     .byte $00
     .byte $00
@@ -295,7 +295,7 @@ playerAttorneys:
 //Bestechungen:
 playerPolice:
     .byte $00
-    .byte $01
+    .byte $00
     .byte $00
     .byte $00
     .byte $00
@@ -305,7 +305,7 @@ playerPolice:
 
 playerInspectors:
     .byte $00
-    .byte $01
+    .byte $00
     .byte $00
     .byte $00
     .byte $00
@@ -315,7 +315,7 @@ playerInspectors:
 
 playerJudges:
     .byte $00
-    .byte $01
+    .byte $00
     .byte $00
     .byte $00
     .byte $00
@@ -325,7 +325,7 @@ playerJudges:
 
 playerStateAttorneys:
     .byte $00
-    .byte $01
+    .byte $00
     .byte $00
     .byte $00
     .byte $00
@@ -335,7 +335,7 @@ playerStateAttorneys:
 
 playerMajors:
     .byte $00
-    .byte $01
+    .byte $00
     .byte $00
     .byte $00
     .byte $00

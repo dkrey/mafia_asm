@@ -1,5 +1,6 @@
 #import "testHeader.asm"
 #import "../gameActionTheft.asm"
+#import "../gameOverview.asm"
 
 main:
 mainNextPlayerLoop:
@@ -10,7 +11,7 @@ mainNextPlayerLoop:
 
     jsr gameDisasterCheck
     // Kleine Gaunerei testen
-    jsr smallTheft
+    jsr gameOverviewMenu
 
 mainContinue:
     jsr main

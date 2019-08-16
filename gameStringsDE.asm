@@ -668,3 +668,45 @@ strTransferDone:
     .text " Der Betrag wurde &berwiesen. "
     .byte PET_CR
     .byte 0
+
+//===============================================================================
+// strDisaster
+//
+// Schicksalschläge
+//===============================================================================
+strDisasterProstitute1:
+    .text " Ihrer Prostituierten sind schwanger. "
+    .byte PET_CR, 0
+strDisasterProstitute2:
+    .text " Ihrer Prostituierten sind veraltet. "
+    .byte PET_CR, 0
+strDisasterProstitute3:
+    .text "Sie helfen finanziell mit "
+    .byte 0
+strDisasterSlotMachines:
+    .text " Ihrer Automaten sind veraltet. "
+    .byte 0
+strDisasterHadTo:
+    .text " musste(n) "
+    .byte 0
+strDisasterYours:
+    .text " Ihrer"
+    .byte 0
+strDisasterCloseDown:
+    .text " geschlossen werden."
+    .byte 0
+strDisasterReason1:
+    .text " Aus hygenischen Gr*nden"
+    .byte PET_CR,0
+strDisasterReason2:
+    .text " Wegen akuter Einsturzgefahr"
+    .byte PET_CR,0
+strDisasterReason3:
+    .text " Wegen wiederholter Steuerhinterziehung"
+    .byte PET_CR,0
+strDisasterReason4:
+    .text " Auf Dr@ngen einer B*rgerinitiative"
+    .byte PET_CR,0
+strDisasterReason5:
+    .text " Aus Fairness gegen*ber Ihren Mitspielern"
+    .byte PET_CR,0
