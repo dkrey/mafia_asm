@@ -92,18 +92,6 @@ gameDisasterDefense:
     // Zufall von 0:1100
     getRandomRange16 #$0000 : #$044c
 
-
-    Print_hex16_dec rnd16_result
-
-    lda #' '
-    jsr BSOUT
-    Print_hex16_dec disasterGroundvalue
-    lda #'.'
-    jsr BSOUT
-    lda #PET_CR
-    jsr BSOUT
-    jsr Wait_for_key
-
     // Wenn der Zufallswert unter dem Grundwert liegt, nimmt das Schicksal seinen lauf
     compare16 rnd16_result : disasterGroundvalue
     bcc gameDisasterContinue
@@ -290,7 +278,7 @@ disasterBars:
     lda playerBars, x
     sbc disasterAmountGeneral
     sta playerBars, x
-    jmp !end+
+    jmp disasterJailCheck
 
 // geschlossene Wettbüros
 disasterBetting:
@@ -332,7 +320,7 @@ disasterBetting:
     lda playerBetting, x
     sbc disasterAmountGeneral
     sta playerBetting, x
-    jmp !end+
+    jmp disasterJailCheck
 
 // geschlossene Spielsalons
 disasterGambling:
@@ -374,7 +362,7 @@ disasterGambling:
     lda playerGambling, x
     sbc disasterAmountGeneral
     sta playerGambling, x
-    jmp !end+
+    jmp disasterJailCheck
 
 // geschlossene Bordelle
 disasterBrothels:
@@ -416,7 +404,7 @@ disasterBrothels:
     lda playerBrothels, x
     sbc disasterAmountGeneral
     sta playerBrothels, x
-    jmp !end+
+    jmp disasterJailCheck
 
 // geschlossene Hotels
 disasterHotels:
@@ -458,7 +446,7 @@ disasterHotels:
     lda playerHotels, x
     sbc disasterAmountGeneral
     sta playerHotels, x
-    jmp !end+
+    jmp disasterJailCheck
 
 disasterShowReasons:
     getRandomRange8 #0 : #4
@@ -478,6 +466,35 @@ disasterShowReasons:
     jsr Print_text
 
     rts
+
+// GGf winken Gefängnisrunden
+disasterJailCheck:
+    // Sitzt der Spieler schon im Knast?
+    ldx currentPlayerNumber
+    lda playerJailTotal,x
+    cmp #0
+    beq !skip+
+    jmp !end+
+!skip:
+    getRandomRange8 #$00 : #$09
+    lda rnd8_result
+    cmp #06
+    bcs !skip+  // >= 6: Knast
+    jmp !end+
+!skip:
+    getRandomRange8 #$02 : #$05
+    lda rnd8_result
+    ldx currentPlayerNumber
+    sta playerJailTotal,x   // Knastrunden festlegen
+
+    lda #PET_CR
+    jsr BSOUT
+    mov16 #strDisasterJail1 : TextPtr // Text: Sie haben Knast
+    jsr Print_text
+
+    Print_hex8_dec rnd8_result
+    mov16 #strDisasterJail2 : TextPtr // Text: Sie haben Knast Teil 2
+    jsr Print_text
 
 // Taste für weiter und Ende
 !end:

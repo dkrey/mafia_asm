@@ -710,3 +710,10 @@ strDisasterReason4:
 strDisasterReason5:
     .text " Aus Fairness gegen*ber Ihren Mitspielern"
     .byte PET_CR,0
+strDisasterJail1:
+    .byte PET_CR
+    .text " Sie selbst erhielten "
+    .byte 0
+strDisasterJail2:
+    .text " Runden Haft."
+    .byte PET_CR,0
