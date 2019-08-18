@@ -74,6 +74,21 @@
 !-
 !- KZ = Kosten Zusammen
 
+!- Demolierung
+!- DO = Name der Immobilie: Bar Wettbüro
+!- BS = Besitzer
+!- OB = Objektnr. der Immobilie
+!- WV = String Wie viele
+!- SH = String zu viele!
+!- SC = Anzahl Revolverhelden
+!- FL = Flag / Debugging Zeugs
+!- EX = ?
+!- TR = Treffer RH
+!- TL = Treffer Leibwächter
+!- TW = Treffer Wächter
+!- MI = Misserfolg?
+!- BK = Begräbniskosten
+
 10 CLR:PRINTCHR$(14)
 20 GOTO180
 30 :
@@ -454,90 +469,90 @@
 !- Aktionen
 3210 :
 3220 POKE53280,0:POKE53281,8:PRINT"{clear}{black}{down}"
-3230 IFRH(CO)=0THENPRINT" Sie haben nicht die richtigen Leute ":GOTO3235
-3231 GOTO3240
+3230 IF RH(CO)=0 THEN PRINT" Sie haben nicht die richtigen Leute ":GOTO3235
+3231 GOTO 3240
 3235 PRINT" fuer eine Aktion.":FORI=1TO3000:NEXTI:GOTO4630
 3240 PRINT"{space*2}Sie koennen diese Aktionen befehlen:"
 3250 PRINT"{down}{space*11}1. Entfuehrung"
 3260 PRINT"{space*11}2. Ermordung"
 3270 PRINT"{space*11}3. Demolierung (Bars,etc.)"
 3280 PRINT"{space*11}4. Keine"
-3290 GETW$
+3290 GET W$
 3300 W=VAL(W$)
-3310 IF(W<1)+(W>4)THEN3290
-3320 ONWGOTO3330,3580,3920,4630
+3310 IF(W<1)+(W>4)THEN 3290
+3320 ON W GOTO 3330,3580,3920,4630
 
 !- Entführung: egal wen
 3330 :
 3340 PRINT"{clear}":FL$="e":EG=0
 3350 PRINT"{down}{right}Wen wollen Sie entfuehren lassen ?"
 3360 PRINTSPC(1);:INPUTOP$(CO):EX=0
-3370 IFOP$(CO)="Niemanden"THEN4630
-3380 FORI=1TOA !- Mitspieler kann man nicht entführen
-3390 IFNA$(I)=OP$(CO)THENPRINT"{down}{right}Das kann ich nicht zulassen!":GOTO3350
+3370 IF OP$(CO)="Niemanden"THEN 4630
+3380 FOR I=1TOA !- Mitspieler kann man nicht entführen
+3390 IF NA$(I)=OP$(CO)THEN PRINT"{down}{right}Das kann ich nicht zulassen!":GOTO3350
 3400 NEXTI
 
 3430 ZU=INT(RND(1)*100)
 3440 REM
 3450 PRINT"{down}"WV$:PRINTSPC(1);:INPUTSC
-3460 IFSC=0THENRETURN
-3470 IFSC>RH(CO)THENPRINTSH$:GOTO3440
-3480 GOSUB4360:FORZ=1TO1000:NEXTZ
-3490 IFMI=1THEN3540
-3510 IFZU<60+SC/2+IN(CO)THEN3550 !- Zufall Entführung
-3520 GOTO3540
+3460 IFSC=0THEN RETURN
+3470 IFSC > RH(CO) THEN PRINT SH$:GOTO3440
+3480 GOSUB 4360: FOR Z=1TO1000:NEXTZ
+3490 IF MI =1 THEN 3540
+3510 IF ZU<60+SC/2+IN(CO)THEN 3550 !- Zufall Entführung
+3520 GOTO 3540
 3540 PRINT"{down}{right}Die Entfuehrung ist nicht geglueckt!":FORP7=1TO2000:NEXTP7:RETURN
 3550 PRINT"{down}{right}Die Geisel befindet sich in Ihrer{space*7}Gewalt.":
-3560 FORZ=1TO2000:NEXTZ:GOTO7360
+3560 FOR Z =1TO2000:NEXT Z:GOTO 7360
 3570 REM
 
 !- Mord: Schergen eines Mitspielers
 3580 :
 3590 PRINT"{clear}{down}":EX=0
 3600 PRINT"{right}Wen wollen Sie ermorden lassen ?{down}"
-3610 PRINTSPC(1);:INPUTBS$
-3620 IFBS$="Niemanden"THEN3890
+3610 PRINTSPC(1);:INPUT BS$
+3620 IF BS$="Niemanden"THEN 3890
 !- Selbstmord und Mitspieler
-3630 IFNA$(CO)=BS$THENPRINT"{down}{right}Das machen Sie lieber selber!":GOTO3690
+3630 IF NA$(CO)=BS$ THEN PRINT"{down}{right}Das machen Sie lieber selber!":GOTO3690
 
-3640 FORI=1TOA
-3650 IFNA$(I)=BS$THEN3652
-3651 GOTO3655
+3640 FOR I=1 TO A
+3650 IF NA$(I)=BS$ THEN 3652
+3651 GOTO 3655
 3652 PRINT"{down}{right}Du sollst Deinen Naechsten lieben wie"
 3653 PRINT"{right}Dich selbst!!(SASCHA-Kapitel 16)"
-3655 GOTO3690
-3670 NEXTI
+3655 GOTO 3690
+3670 NEXT I
 
 3672 PRINT"{down}{right}Wessen ";BS$;" ?{down}" !- Schergen des Mitspielers
-3674 PRINTSPC(1);:INPUTAG$
+3674 PRINTSPC(1);:INPUT AG$
 
-3676 FORI=1TOA
-3678 IFNA$(I)=AG$THEN3700
-3680 NEXTI
+3676 FORI=1 TO A
+3678 IF NA$(I)=AG$ THEN 3700
+3680 NEXT I
 
-3690 GOSUB3900:GOTO3590 !- Ungültige Eingabe: Wiederholung
+3690 GOSUB 3900:GOTO 3590 !- Ungültige Eingabe: Wiederholung
 3700 PRINT"{down}"WV$
 3710 REM
-3720 PRINTSPC(1);:INPUTSC !- Wie viele Revolverhelden schicken
-3730 IFSC=0THENRETURN !- Keine RH geschickt
-3740 IFSC>RH(CO)THENPRINT"{down}"SH$:GOSUB3900:GOTO3700 !- mehr RH als angeheuert
-3750 GOSUB4360 !- Verlust ausrechnen
-3760 ZU=INT(RND(1)*100)
-3770 IFZU<50+SC/2+IN(CO)THEN3790 !- Informanten schützen vor Mord
+3720 PRINTSPC(1);:INPUT SC !- Wie viele Revolverhelden schicken
+3730 IF SC = 0 THEN RETURN !- Keine RH geschickt
+3740 IF SC > RH(CO) THEN PRINT"{down}"SH$:GOSUB 3900:GOTO 3700 !- mehr RH als angeheuert
+3750 GOSUB 4360 !- Verlust ausrechnen
+3760 ZU = INT(RND(1)*100)
+3770 IF ZU < 50 + SC / 2 + IN(CO) THEN 3790 !- Informanten schützen vor Mord
 
 3780 PRINT"{down}{right}Das Attentat ist schiefgegangen!!":GOTO3880
 3790 PRINT"{down}{right}Das Attentat ist geglueckt!"
-3800 IF(BS$="Polizist")*(PW(I)<>0)THENPW(I)=PW(I)-1
-3810 IF(BS$="Kommissar")*(KO(I)<>0)THENKO(I)=KO(I)-1
-3820 IF(BS$="Untersuchungsrichter")*(UR(I)<>0)THENUR(I)=UR(I)-1
-3830 IF(BS$="Staatsanwalt")*(SA(I)<>0)THENSA(I)=SA(I)-1
-3840 IF(BS$="Buergermeister")*(BM(I)<>0)THENBM(I)=BM(I)-1
-3850 IF(BS$="Anwalt")*(AN(I)<>0)THENAN(I)=AN(I)-1
-3860 IF(BS$="Informant")*(IN(I)<>0)THENIN(I)=IN(I)-1
-3870 IFEX=1THENEG(I)=0
-3880 FORZ=1TO3000:NEXTZ
+3800 IF(BS$="Polizist")*(PW(I)<>0) THEN PW(I)=PW(I)-1
+3810 IF(BS$="Kommissar")*(KO(I)<>0) THEN KO(I)=KO(I)-1
+3820 IF(BS$="Untersuchungsrichter")*(UR(I)<>0) THEN UR(I)=UR(I)-1
+3830 IF(BS$="Staatsanwalt")*(SA(I)<>0)THEN SA(I)=SA(I)-1
+3840 IF(BS$="Buergermeister")*(BM(I)<>0)THEN BM(I)=BM(I)-1
+3850 IF(BS$="Anwalt")*(AN(I)<>0)THEN AN(I)=AN(I)-1
+3860 IF(BS$="Informant")*(IN(I)<>0)THEN IN(I)=IN(I)-1
+3870 IF EX = 1 THEN EG(I)=0
+3880 FOR Z=1TO3000:NEXT Z
 3890 RETURN
-3900 FORZ=1TO1500:NEXTZ:RETURN
+3900 FOR Z=1TO1500:NEXT Z:RETURN
 3910 REM
 
 !- Demolieren
@@ -545,84 +560,90 @@
 3930 PRINT"{clear}"
 3940 PRINT"{down}{right}Was wollen Sie demolieren lassen ?"
 3950 PRINTSPC(1);:INPUTDO$
-3960 IF(DO$="Bar")+(DO$="Spielsalon")+(DO$="Bordell")+(DO$="Wettbuero")THEN3990
-3965 IF(DO$="Hotel")THEN3990
-3970 IFDO$="Nichts"THEN4340
-3980 PRINT"{down}{right}Ist doch zum Ficken!!":GOTO3940
+3960 IF(DO$="Bar")+(DO$="Spielsalon")+(DO$="Bordell")+(DO$="Wettbuero")THEN 3990
+3965 IF(DO$="Hotel")THEN 3990
+3970 IF DO$="Nichts"THEN 4340
+3980 PRINT"{down}{right}Ist doch zum Ficken!!":GOTO 3940
+
 3990 PRINT"{down}{right}Wer ist der Besitzer ?"
-4000 PRINTSPC(1);:INPUTBS$
-4010 IFNA$(CO)=BS$THENPRINT"{down}{right}Biss bekackt,Alter?":GOTO3990
-4020 FORI=1TOA
-4030 IFNA$(I)=BS$THENEX=1:GOTO4050
-4040 NEXTI
-4050 IFEX=0THEN4120
-4060 IFDO$="Bar"THENOB=BA(I)
-4070 IFDO$="Wettbuero"THENOB=WE(I)
-4080 IFDO$="Spielsalon"THENOB=SP(I)
-4090 IFDO$="Bordell"THENOB=PU(I)
-4100 IFDO$="Hotel"THENOB=GH(I)
-4110 IFOB=0THENPRINT"{down}"SPC(1);BS$;"besitzt sowas nicht.":GOTO3940
+4000 PRINTSPC(1);:INPUT BS$
+4010 IF NA$(CO) = BS$ THEN PRINT"{down}{right}Biss bekackt,Alter?":GOTO 3990
+
+4020 FOR I=1 TO A
+4030 IF NA$(I) = BS$ THEN EX=1:GOTO 4050
+4040 NEXT I
+4050 IF EX=0 THEN 4120
+4060 IF DO$="Bar"THEN OB=BA(I)
+4070 IF DO$="Wettbuero"THEN OB=WE(I)
+4080 IF DO$="Spielsalon"THEN OB=SP(I)
+4090 IF DO$="Bordell"THEN OB=PU(I)
+4100 IF DO$="Hotel"THEN OB=GH(I)
+4110 IF OB =0 THEN PRINT"{down}"SPC(1);BS$;"besitzt sowas nicht.":GOTO3940
 4120 PRINT"{down}"WV$
 4130 REM
-4140 PRINTSPC(1);:INPUTSC
-4150 IFSC=0THENRETURN
-4160 IFSC>RH(CO)THENPRINTSH$:GOTO4120
-4170 IFSC=0THEN4340
-4180 FL$="D":GOSUB4360
-4190 ZU=INT(RND(1)*100):FORZ=1TO1000:NEXTZ
-4200 IFEX=0THEN4240
-4210 IFZU>30+SC+IN(CO)-WA(I)THEN4310
+4140 PRINT SPC(1);:INPUT SC
+4150 IF SC=0 THEN RETURN
+4160 IF SC > RH(CO) THEN PRINT SH$:GOTO 4120
+4170 IF SC =0 THEN 4340
+4180 FL$="D": GOSUB 4360
+4190 ZU= INT(RND(1)*100): FOR Z= 1 TO 1000: NEXTZ
+4200 IF EX =0 THEN 4240
+
+!- Misserfolg bei Zufall > 30 + RH + Informanten - Wächter
+4210 IF ZU > 30 + SC + IN(CO) - WA(I) THEN 4310
 4220 PRINT"{down}"SPC(1);NA$(I);"'s "DO$:PRINT"{right}wurde vollstaendig demoliert."
 4230 GOTO4250
 4240 PRINT" Ihre Leute haben gruendlich aufge-"
-4245 PRINT" raeumt.":GOTO4330
-4250 IFDO$="Bar"THENBA(I)=BA(I)-1
-4260 IFDO$="Wettbuero"THENWE(I)=WE(I)-1
-4270 IFDO$="Spielsalon"THENSP(I)=SP(I)-1
-4280 IFDO$="Bordell"THENPU(I)=PU(I)-1
-4290 IFDO$="Hotel"THENGH(I)=GH(I)-1
-4300 GOTO4330
+4245 PRINT" raeumt.":GOTO 4330
+4250 IF DO$="Bar" THEN BA(I) = BA(I)-1
+4260 IF DO$="Wettbuero" THEN WE(I) = WE(I)-1
+4270 IF DO$="Spielsalon" THEN SP(I) = SP(I)-1
+4280 IF DO$="Bordell" THEN PU(I) = PU(I)-1
+4290 IF DO$="Hotel" THEN GH(I) = GH(I)-1
+4300 GOTO 4330
 4310 PRINT"{down}{right}Sie wurden zurueckgeschlagen und "
 4312 PRINT"{right}konnten keinen nennenswerten Schaden"
 4315 PRINT"{right}anrichten."
 4320 PRINT"{down}{right}Aber wir kommen wieder!!!!!!"
-4330 FORI=1TO3000:NEXTI
+4330 FOR I = 1 TO 3000: NEXTI
 4340 RETURN
 4350 REM
 
 !- Verlustrechnung der Aktion
+!- Bei Schulden keine Begräbniskosten
 4360 :
-4370 FORZ=1TO2500:NEXTZ
+4370 FOR Z=1 TO 2500: NEXT Z
 4380 PRINTTAB(14)"{down}Verluste":PRINTTAB(14)"{cm y*8}"
 4390 PRINT"{right}Auf Ihrer Seite:"
-4400 TR=INT(RND(1)*(SC+1))
-4410 RH(CO)=RH(CO)-TR
-4420 IFTR=SCTHENMI=1
-4430 IFSF(CO)=0THENVM(CO)=VM(CO)-TR*25000
+4400 TR = INT(RND(1)*(SC+1))
+4410 RH(CO) = RH (CO)-TR
+4420 IF TR = SC THEN MI=1
+4430 IF SF(CO)=0 THEN VM(CO)=VM(CO)-TR*25000
 4440 PRINTTAB(8)"Revolverhelden:";TAB(25)TR
 4450 PRINTTAB(8)"Begraebniskosten:";
-4460 IFSF<>0THENPRINTTAB(25)"Keine":GOTO4480
+4460 IF SF <> 0 THEN PRINTTAB(25)"Keine":GOTO 4480
 4470 PRINTTAB(25)TR*25000
-4480 IFEX=0THEN4630
+4480 IF EX= 0 THEN 4630
+
 4490 PRINT" Auf der anderen Seite:":BK=0
-4500 IFRH(I)=0THEN4530
-4505 TR=INT(RND(1)*SC)*2
-4510 IFTR>RH(I)THEN4505
-4520 PRINTTAB(8)"Revolverhelden:";TAB(25)TR:BK=BK+TR*25000:RH(I)=RH(I)-TR
-4530 IFWA(I)=0THEN4560
-4535 TW=INT(RND(1)*SC)*2
-4540 IFTW>WA(I)THEN4535
-4550 IF(FL$="d")+(FL$="t")THENWA(I)=WA(I)-TW:BK=BK+TW*25000
+4500 IF RH(I) = 0 THEN 4530
+4505 TR = INT(RND(1)*SC)*2
+4510 IF TR > RH(I) THEN 4505
+4520 PRINTTAB(8)"Revolverhelden:";TAB(25)TR: BK = BK+TR * 25000: RH(I)=RH(I)-TR
+4530 IF WA(I) = 0 THEN 4560
+4535 TW = INT(RND(1)*SC)*2
+4540 IF TW > WA(I) THEN 4535
+4550 IF (FL$="d") + (FL$="t") THEN WA(I)=WA(I)-TW:BK=BK+TW*25000
 4555 PRINTTAB(8)"Waechter:";TAB(25)TL
-4560 IFLW(I)=0THEN4590
-4565 TL=INT(RND(1)*SC)*2
-4570 IFTL>LW(I)THEN4565
-4580 IF(FL$="e")+(FL$="t")THENLW(I)=LW(I)-TL:BK=BK+TL*25000
+4560 IF LW(I) = 0 THEN 4590
+4565 TL = INT(RND(1)*SC) *2
+4570 IF TL > LW(I) THEN 4565
+4580 IF(FL$="e") + (FL$="t") THEN LW(I)=LW(I)-TL:BK=BK+TL*25000
 4585 PRINTTAB(8)"Leibwaechter:";TAB(25)TL
 4590 PRINTTAB(8)"Begraebniskosten:";
-4600 IF(SF<>0)+(BK=0)THENPRINTTAB(25)"Keine":GOTO4630
+4600 IF (SF <> 0)+( BK = 0) THENPRINTTAB(25)"Keine":GOTO4630
 4610 PRINTTAB(25)BK
-4620 VM(I)=VM(I)-BK
+4620 VM(I) = VM(I)-BK
 4630 FL$="":RETURN
 4640 :
 4650 PRINT"{clear}{down}"
