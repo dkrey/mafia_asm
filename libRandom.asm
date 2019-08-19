@@ -182,3 +182,51 @@ rnd32_result:
   mov32 high_val32 : rnd32_high
   jsr getRandom32
 }
+
+
+//===============================================================================
+// randomPerm8
+//
+// Bringt Zeichen in eine zufällige Reihenfolge
+//===============================================================================
+randomPerm8:
+  // Ziffern-Sequenz aufbauen
+  ldy #$00
+!loop:
+  tya
+  sta rndPerm8_result, y
+  iny
+  cpy rndPerm8_limit
+  bne !loop-
+  dey
+
+// Zahlen vertauschen
+!loop:
+  sty rndPerm8_limit                      // Y = Stelle in Ziffern-Sequenz
+
+  getRandomRange8 #$00 : rndPerm8_limit   // Zufällige Stelle der Sequenz von 0 bis aktuelle Stelle
+  tax                                     // Zufallsstelle in X
+  // Zahlen vertauschen
+  mov rndPerm8_result, x : ZeroPageTemp   // Zahl an der Stelle Zufallszahl temp. speichern
+  mov rndPerm8_result, y : rndPerm8_result, x // Zahl an Stelle y nach y kopieren
+
+  mov ZeroPageTemp : rndPerm8_result, y   // temp Wert (x) zurückholen und an y speichern
+  dey
+  cpy #$00
+  bne !loop-
+
+  rts
+
+
+.pseudocommand randomPerm8 limit {
+  lda extract_byte_argument(limit, 0)
+  sta rndPerm8_limit
+  jsr randomPerm8
+}
+
+rndPerm8_limit:
+  .byte $08
+
+rndPerm8_result:
+  .byte $00,$00,$00,$00,$00
+  .byte $00,$00,$00,$00,$00

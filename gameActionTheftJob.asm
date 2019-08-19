@@ -13,12 +13,17 @@
     jmp smallTheftJobFail
 
 smallTheftJobSuccess:
+    // Liste aller Mitspieler in zufälliger Reihenfolge erstellen:
+    randomPerm8 playerCount
     ldy #00
     // Nach dem Arbeitgeber wird entsprechend der Spieleranzahl gesucht
 !loop:
-    getRandomRange8 #0 : playerCount
+    lda rndPerm8_result, y
     cmp currentPlayerNumber             // Spielernummer darf nicht gleich sein
-    beq !loop-
+    bne !skip+
+    iny
+    jmp !loop-
+!skip:
     sta ZeroPageTemp                    // Spielernummer für den Fall der Fälle weglegen
 
     // Einkommen unter 5000$ werden geschont
@@ -33,7 +38,7 @@ smallTheftJobSuccess:
     iny
     cpy playerCount
     bne !loop-
-    jmp smallTheftJobContinue    // hat kein Geld
+    jmp smallTheftJobContinue    // niemand hat genug Geld, wird aber nicht verraten
 
     // Die eigene Spielernummer als Mitarbeiter beim Mitspieler setzen
 smallTheftJob2:
