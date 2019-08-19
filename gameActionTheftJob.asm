@@ -6,6 +6,27 @@
     lda #PET_CR
     jsr BSOUT
 
+    // Prüfen, ob man nicht zu reich ist
+    // 10.000€ Einkommen
+    ldx currentPlayerOffset_4
+
+    compare32 playerIncome,x : #$00002710    // Obergrenze
+    bcc smallTheftJobIsPoor
+
+    // Zu wohlhabend
+    mov16 #strTheftTooRich : TextPtr // Text: "Sie legen sich auf die Lauer"
+    jsr Print_text
+
+    lda #PET_CR
+    jsr BSOUT
+    jsr BSOUT
+    mov16 #strPressKey : TextPtr // Text: Weiter
+    jsr Print_text
+    jsr Wait_for_key
+    jmp !exit+
+
+smallTheftJobIsPoor:
+
     // Erfolg oder Misserfolg beim Überfall
     getRandomRange8 #01 : #100
     cmp #20
@@ -31,7 +52,6 @@ smallTheftJobSuccess:
     asl
     tax
 
-    lda playerMoney,x                   // Pos im Speicher
     compare32 playerMoney,x : #$00001388 // Bei weniger als 5000 $ Einkommen kein Job
     bcs smallTheftJob2
 

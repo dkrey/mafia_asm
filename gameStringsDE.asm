@@ -335,6 +335,17 @@ strTheftJobWait:
     .text " hoffen auf einen potenten Arbeitgeber."
     .byte PET_CR, 0
 
+strTheftTooRich:
+    .byte PET_CR
+    .text " Aber aber..."
+    .byte PET_CR, PET_CR
+    .text " Bei Ihren Einkommensverhältnissen "
+    .byte PET_CR
+    .text " werden Sie sich doch nicht selbst"
+    .byte PET_CR
+    .text " die Hände schmutzig machen."
+    .byte PET_CR, 0
+
 strTheftJobIntro1:
     .byte PET_CR
     .text " freuen Sie sich!"

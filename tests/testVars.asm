@@ -137,7 +137,7 @@ playerMoney:
 // Einkommen: 4 Byte pro Spieler
 playerIncome:
     .dword $00000000
-    .dword $0000c351
+    .dword $00002710
     .dword $00000000
     .dword $00000000
     .dword $00000000
