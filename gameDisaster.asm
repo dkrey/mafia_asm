@@ -459,7 +459,9 @@ disasterShowReasons:
 
     mov16 #strDisasterHadTo : TextPtr // Text: mussten
     jsr Print_text
-
+    lda #PET_CR
+    jsr BSOUT
+    jsr BSOUT
     Print_hex8_dec disasterAmountGeneral // Anzahl der Dinge
     lda #' '
     mov16 #strDisasterYours : TextPtr // Text: Ihrer

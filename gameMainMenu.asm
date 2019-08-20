@@ -7,6 +7,20 @@ gameMainMenu:
     mov #RED : BGCOL0               // Roter Hintergrund
     mov #BLACK : TEXTCOL            // Schwarze Schrift
 
+   // Spielernamen anzeigen
+    ldy currentPlayerOffset_16      // Offset für Spielernamen 16 Byte
+
+    lda #PET_CR                     // Zeilenumbruch
+    jsr BSOUT
+    lda #' '
+    jsr BSOUT
+    mov16 #playerNames : TextPtr
+    jsr Print_text_offset           // Schreibe den Spielernamen
+
+    lda #','
+    jsr BSOUT
+    lda #PET_CR                     // Zeilenumbruch
+    jsr BSOUT
     // Hauptmenü
     mov16 #strMainMenuTitle : TextPtr
     jsr Print_text
@@ -53,9 +67,9 @@ gameMainMenuChoice:
     rts
 !skip:
 
-    cmp #$07        // 7. Besitz
+    cmp #$07        // 7. Besitz - beende die Runde nicht
     bne !skip+
     jsr gameOverviewMenu
-    rts
+    jmp gameMainMenu
 !skip:
     rts

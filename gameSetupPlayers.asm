@@ -7,26 +7,24 @@ howManyPlayers:
     mov #BLACK : EXTCOL             // Schwarzer Overscan
     mov #BLUE : BGCOL0              // Blauer Hintergrund
 
-    ldx #01                         // Zeile setzen
-    ldy #01                         // Spalte setzen
 
     mov16 #strHowManyScreen : TextPtr  // Adresse vom Text setzen
-    jsr Print_text_xy                  // Text anzeigen
+    jsr Print_text                  // Text anzeigen
 
-    ldy #1
-                      // Anzahl Zeichen für die Input Routine: 1
-    ldx #<filter_num_players        // Filter setzen LSB: Zahlen 1-8
-    lda #>filter_num_players        // Filter setzen MSB: Zahlen 1-8
+howManyPlayersInput:
+    jsr GETIN
+    cmp #$32        // sichergehen, dass es eine gültige Ziffer ist >= 2
+    bcc howManyPlayersInput
+    cmp #$39        // sichergehen, dass es eine gültige Ziffer ist <= 8
+    bcs howManyPlayersInput
 
-    jsr Get_filtered_input          // Input holen und speichern
-    lda got_input                   // Ergebnis holen
-    cmp #0                          // Prüfen, ob Spieleranzahl stimmt
-    beq howManyPlayers              // Wenn einfach nur Enter gedrückt wurde,
-                                    //  nochmal von vorn
+    cmp #0                          // 0 oder Enter, Abfrage erneut starten
+    beq howManyPlayersInput
 
     sec                             // Konv PetSCII Zeichen zur Zahl
     sbc #$30
     sta playerCount                 // Abspeichern und Schluss
+    Print_hex8_dec playerCount
 
 //===============================================================================
 // Wer spielt mit
@@ -98,32 +96,36 @@ checkPlayerNames:
     mov16 #strIsThatCorrect: TextPtr // Ist das richtig?
     jsr Print_text
 
-    ldx #<filter_yesno       // Diese Zeichen sind erlaubt
-    lda #>filter_yesno
-!getinput:
-    jsr Get_filtered_input  // Ja oder nein
 
-    lda got_input           // Antwort Char in den Akku
-    cmp #0
-    beq checkPlayerNames          // aus versehen Enter gedrückt
-    cmp #'J'
+!getinput:
+    jsr GETIN
+    cmp inputYes            // Spieler hat J gedrückt
     beq welcomePayment
+    cmp inputNo            // Spieler hat N gedrückt
+    beq !skip+
+    jmp !getinput-          // nichts gedrückt
+!skip:
     jsr resetGame
     jmp howManyPlayers      // Ansonsten von vorn
 
 welcomePayment:
+    // noch das Ja von vorhin anzeigen
+    jsr BSOUT
     mov16 #strWelcomePayment : TextPtr
     jsr Print_text
-    ldx #<filter_yesno       // Diese Zeichen sind erlaubt
-    lda #>filter_yesno
-!getinput:
-    jsr Get_filtered_input  // Ja oder nein
-    lda got_input           // Antwort Char in den Akku
-    cmp #0
-    beq !getinput-          // aus versehen Enter gedrückt
-    cmp #'J'
-    bne readyToBegin
 
+!getinput:
+    jsr GETIN
+
+    cmp inputYes
+    beq !skip+
+    cmp inputNo            // Spieler hat N gedrückt
+    beq readyToBegin
+
+    jmp !getinput-          // nichts gedrückt
+
+!skip:
+    jsr BSOUT
     // 60.000$ Startkapital
     ldx #00
 !loop:
@@ -135,8 +137,11 @@ welcomePayment:
     inx
     cpx playerCount                 // Solange x< Spieleranzahl
     bne !loop-                      // weiter mit Schleife
+    jmp readyToBegin2
 
 readyToBegin:
+    jsr BSOUT                       // das N von Nein anzeigen
+readyToBegin2:
     mov16 #strGoodLuck: TextPtr     // Viel Glück anzeigen
     jsr Print_text
     jsr Wait_for_key                // auf Testendruck warten

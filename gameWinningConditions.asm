@@ -12,13 +12,13 @@ gameCheckWinEstate:
     // Unter 20.000 Einkommen keine Berechnung
     compare32 currentTotalIncome : minMoneyForMenu
     bcs !skip+
-    jmp !end+
+    rts
 !skip:
 
     // Ohne Personal auch keine Berechnung
     compare32 currentTotalCosts: #$00000000
     bne !skip+
-    jmp !end+
+    rts
 !skip:
 
     // Besitzanteile ausrechnen
@@ -28,7 +28,7 @@ gameCheckWinEstate:
     lda playerDebtFlag,x
     cmp #$00
     beq !skip+
-    jmp !end+
+    rts
 
 !skip:
     // Besitzverhältnisse anzeigen
@@ -71,8 +71,8 @@ gameCheckWinEstate:
     mov16 #strPropertyWin : TextPtr
     jsr Print_text
 
+!end:
     mov16 #strPressKey : TextPtr    // Text: Weiter
     jsr Print_text
     jsr Wait_for_key
-!end:
     rts

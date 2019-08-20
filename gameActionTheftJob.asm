@@ -53,7 +53,7 @@ smallTheftJobSuccess:
     tax
 
     compare32 playerMoney,x : #$00001388 // Bei weniger als 5000 $ Einkommen kein Job
-    bcs smallTheftJob2
+    bcs smallTheftJob2                   // >=
 
     iny
     cpy playerCount

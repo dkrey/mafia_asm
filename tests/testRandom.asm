@@ -15,7 +15,7 @@ main:
 
 
 //Zahlenreihe Durcheinander:
-randomPerm8 #$03
+randomPerm8 #$08
     ldx #00
 !loop:
     txa
@@ -24,7 +24,7 @@ randomPerm8 #$03
     pla
     tax
     inx
-    cpx #$03
+    cpx #$08
     bne !loop-
 
     lda #'.'

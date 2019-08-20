@@ -206,13 +206,6 @@ gameShopChoice:
     cmp gameShopBuyingMask
     beq !skip+          // Auswahl = höchste Auswahl ist okay
     bcc !skip+          // Auswahl < ist auch okay
-    // hier ist's nicht okay, weil größer
-    plot_get
-    dey                 // Cursor zurücksetzen
-    plot_set            // alte Auswahl überschreiben
-    lda #' '
-    jsr BSOUT
-    plot_set            // Cursor zurücksetzen
     jmp gameShopChoice
 
 !skip:

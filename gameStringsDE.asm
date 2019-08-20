@@ -1,10 +1,20 @@
 #importonce
 
 //===============================================================================
+// InputYESNO
+//
+// Eingabe Ja / Nein bzw. yes no später
+//===============================================================================
+inputYes:
+    .byte 'J'
+inputNo:
+    .byte 'N'
+//===============================================================================
 // titleScreen
 //
 // Der Startbildschirm
 //===============================================================================
+
 strTitleScreen:
     .byte PET_BLACK
     .fill 8, PET_SPACE
@@ -28,9 +38,9 @@ strTitleScreen:
 
     .byte PET_RED
     .fill 5, PET_CR
-    .text "(c) 2019 Geriatrische Gesellschaft"
+    .text "(c) 2019 Geriatrisches Kombinat f*r "
     .byte PET_CR
-    .text "    f*r abgewandte Daten*bertragung"
+    .text "    D*ngemittel und Datenverarbeitung"
     .byte PET_BLACK, 0
 
 //===============================================================================
@@ -103,7 +113,7 @@ strChoice:
     .byte 0
 strBack:
     .byte PET_CR
-    .text " 0. zur*ck "
+    .text " 0. Runde beenden "
     .byte PET_CR,PET_CR,0
 
 strSelectNothing:
@@ -704,8 +714,9 @@ strDisasterYours:
     .text " Ihrer"
     .byte 0
 strDisasterCloseDown:
+    .byte PET_CR
     .text " geschlossen werden."
-    .byte 0
+    .byte PET_CR, 0
 strDisasterReason1:
     .text " Aus hygenischen Gr*nden"
     .byte PET_CR,0

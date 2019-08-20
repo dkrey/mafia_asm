@@ -26,6 +26,30 @@ rndTimer:
     eor $d41b   // eor mit SID
     rts
 
+.macro rndSidTimer() {
+    lda #$80        //Frequenz
+    sta $d40e       //Low-Byte  der Frequenz für Stimme 3
+    sta $d40f       //High-Byte der Frequenz für Stimme 3
+    sta $d412       //Rauschen für die 3. Stimme setzen
+    lda $dc04  // Low-Byte  von Timer A aus dem CIA-1
+    eor $dc05  // High-Byte von Timer A aus dem CIA-1
+    eor $dd04  // Low-Byte  von Timer A aus dem CIA-2
+    adc $dd05  // High-Byte von Timer A aus dem CIA-2
+    eor $dd06  // Low-Byte  von Timer B aus dem CIA-2
+    eor $dd07  // High-Byte von Timer B aus dem CIA-2
+    eor $d41b   // eor mit SID
+}
+
+.macro rndOnlyTimer() {
+    lda $dc04  // Low-Byte  von Timer A aus dem CIA-1
+    eor $dc05  // High-Byte von Timer A aus dem CIA-1
+    eor $dd04  // Low-Byte  von Timer A aus dem CIA-2
+    adc $dd05  // High-Byte von Timer A aus dem CIA-2
+    eor $dd06  // Low-Byte  von Timer B aus dem CIA-2
+    eor $dd07  // High-Byte von Timer B aus dem CIA-2
+    eor $d41b   // eor mit SID
+}
+
 //===============================================================================
 // getRandom8
 //
@@ -35,13 +59,17 @@ rndTimer:
 getRandom8:
     sec                     // Obergrenze berechnen
     lda rnd8_high
+    cmp #0                  // Wenn die Obergrenze 0 ist, dann raus
+    beq !end+
     sbc rnd8_low
     sta rnd8_diff
-    jsr rndSid              // Seed aus dem SID holen
-    jsr rndTimer            // Zufallszahl aus dem CIA Timer generieren
+    rndSidTimer()
+    //jsr rndSid              // Seed aus dem SID holen
+    //jsr rndTimer            // Zufallszahl aus dem CIA Timer generieren
     cmp rnd8_diff
     bcs getRandom8           // Wenn der Wert darüber liegt, neu berechnen
     adc rnd8_low             // Untergrenze hinzufügen
+!end:
     sta rnd8_result          // Ergebnis sichern
     rts
 
@@ -71,19 +99,22 @@ rnd8_result:
 getRandom16:
     sub16 rnd16_high : rnd16_low : rnd16_diff
 
-    jsr rndSid              // Seed aus dem SID holen
-
+    //jsr rndSid              // Seed aus dem SID holen
+    rndSidTimer()
     lda rnd16_diff + 1      // Ist das Byte überhaupt gesetzt?
     cmp #00
     beq !skip+
 
 !again:
-    jsr rndTimer            // HighByte generieren
+    rndOnlyTimer()
+    //jsr rndTimer            // HighByte generieren
     sta rnd16_result +1
     cmp rnd16_diff + 1
     bcs !again-             // Wenn der Wert darüber liegt, neu berechnen
 !skip:
-    jsr rndTimer            // lowbyte generieren
+    //
+    rndOnlyTimer()
+    //jsr rndTimer            // lowbyte generieren
     sta rnd16_result
     cmp rnd16_diff
     bcs !skip-              // Wenn zu hoch, dann nochmal
@@ -126,6 +157,7 @@ rnd16_result:
 getRandom32:
     sub32 rnd32_high : rnd32_low : rnd32_diff
     jsr rndSid              // Seed aus dem SID holen
+    //rndSidTimer()
 
     lda rnd32_diff + 3      // Ist das Byte überhaupt gesetzt?
     cmp #00
@@ -133,6 +165,7 @@ getRandom32:
 
 !skip3:
     jsr rndTimer            // Zufallswert setzen Byte3
+    //rndOnlyTimer()
     sta rnd32_result +3
     cmp rnd32_diff + 3      // Ist der Wert zu groß?
     bcs !skip3-
@@ -143,6 +176,7 @@ getRandom32:
     beq !skip1+
 
     jsr rndTimer
+    //rndOnlyTimer()
     sta rnd32_result +2
     cmp rnd32_diff + 2
     bcs !skip2-
@@ -152,11 +186,13 @@ getRandom32:
     cmp #00
     beq !skip0+
     jsr rndTimer
+    //rndOnlyTimer()
     sta rnd32_result + 1
     cmp rnd32_diff + 1
     bcs !skip1-
 !skip0:
     jsr rndTimer
+    //rndOnlyTimer()
     sta rnd32_result
     cmp rnd32_diff
     bcs !skip0-
@@ -199,7 +235,6 @@ randomPerm8:
   cpy rndPerm8_limit
   bne !loop-
   dey
-
 // Zahlen vertauschen
 !loop:
   sty rndPerm8_limit                      // Y = Stelle in Ziffern-Sequenz
@@ -211,9 +246,9 @@ randomPerm8:
   mov rndPerm8_result, y : rndPerm8_result, x // Zahl an Stelle y nach y kopieren
 
   mov ZeroPageTemp : rndPerm8_result, y   // temp Wert (x) zurückholen und an y speichern
+
   dey
-  cpy #$00
-  bne !loop-
+  bpl !loop-
 
   rts
 
