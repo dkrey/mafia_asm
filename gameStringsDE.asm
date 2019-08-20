@@ -358,7 +358,7 @@ strTheftTooRich:
 
 strTheftJobIntro1:
     .byte PET_CR
-    .text " freuen Sie sich!"
+    .text " Freuen Sie sich!"
     .byte PET_CR, PET_CR
     .text " F*r nur schlappe "
     .byte 0
@@ -367,7 +367,7 @@ strTheftJobIntro2:
     .byte PET_CR
     .byte 0
 strTheftJobIntro3:
-    .text " diese Runde f*r sie als"
+    .text " diese Runde f*r Sie als"
     .byte PET_CR
     .byte 0
 
@@ -375,10 +375,10 @@ strTheftJob1:
     .text " R&ckenkratzer"
     .byte 0
 strTheftJob2:
-    .text " K&chenschabe"
+    .text " Z@pfchen"
     .byte 0
 strTheftJob3:
-    .text " Rhinozeros"
+    .text " Popeldreher"
     .byte 0
 strTheftJob4:
     .text " Luftpumpe"
@@ -387,10 +387,10 @@ strTheftJob5:
     .text " Buchst&tze"
     .byte 0
 strTheftJob6:
-    .text " Torpfosten"
+    .text " Arschgeweih"
     .byte 0
 strTheftJob7:
-    .text " Brusttoupet"
+    .text " Brusthaartoupet"
     .byte 0
 strTheftJob8:
     .text " T*rstopper"

@@ -52,7 +52,7 @@ smallTheftJobSuccess:
     asl
     tax
 
-    compare32 playerMoney,x : #$00001388 // Bei weniger als 5000 $ Einkommen kein Job
+    compare32 playerIncome,x : #$00001388 // Bei weniger als 5000 $ Einkommen kein Job
     bcs smallTheftJob2                   // >=
 
     iny

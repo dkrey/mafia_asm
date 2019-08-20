@@ -7,10 +7,20 @@ gameJobCheck:
     sta ZeroPageTemp
 
     cmp #0
-    bne gameJobContinue
+    bne gameJobContinue1
     rts
 
-gameJobContinue:
+// Einkommen immerhin über > 1000$?
+gameJobContinue1:
+    ldx currentPlayerOffset_4
+    compare32 playerIncome,x :#$000003e8
+    bcs gameJobContinue2
+    // ansonsten doch keine Arbeit
+    ldx currentPlayerNumber
+    lda #00
+    sta playerEmployee, x
+    rts
+gameJobContinue2:
     jsr CLEAR
 
     mov #BLACK  : EXTCOL            // Schwarzer Overscan
@@ -38,6 +48,7 @@ gameJobContinue:
     jsr Print_text
 
     // Gehalt anzeigen und gleich abziehen, mindestens 1000$
+
     ldx currentPlayerOffset_4
     getRandomRange32 #$000003e8 : playerIncome,x
     sub32 playerMoney, x : rnd32_result : playerMoney, x
