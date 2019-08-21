@@ -4,6 +4,8 @@ gameFinancesCalcTotal:
     ldy currentPlayerOffset_4
     add32 currentTotalIncome : playerMoney,y : playerMoney,y
     sub32 playerMoney,y : currentTotalCosts : playerMoney,y
+    // store current income
+    mov32 currentTotalIncome : playerIncome,y
     rts
 
 gameFinancesShowTotal:

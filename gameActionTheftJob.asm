@@ -26,7 +26,6 @@
     jmp !exit+
 
 smallTheftJobIsPoor:
-
     // Erfolg oder Misserfolg beim Überfall
     getRandomRange8 #01 : #100
     cmp #20
@@ -50,6 +49,17 @@ smallTheftJobSuccess:
     // Einkommen unter 5000$ werden geschont
     asl
     asl
+
+    //DEBUG
+    pha
+    tax
+    Print_hex32_dec playerIncome, x
+    mov16 #strPressKey : TextPtr // Text: Weiter
+    jsr Print_text
+    jsr Wait_for_key
+    pla
+
+    //DEBUG
     tax
 
     compare32 playerIncome,x : #$00001388 // Bei weniger als 5000 $ Einkommen kein Job

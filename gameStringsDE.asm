@@ -382,19 +382,19 @@ strTheftJobIntro3:
     .byte 0
 
 strTheftJob1:
-    .text " R&ckenkratzer"
+    .text " R*ckenkratzer"
     .byte 0
 strTheftJob2:
     .text " Z@pfchen"
     .byte 0
 strTheftJob3:
-    .text " Popeldreher"
+    .text " Axelhaar-Stylist"
     .byte 0
 strTheftJob4:
     .text " Luftpumpe"
     .byte 0
 strTheftJob5:
-    .text " Buchst&tze"
+    .text " Buchst*tze"
     .byte 0
 strTheftJob6:
     .text " Arschgeweih"
