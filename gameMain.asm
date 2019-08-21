@@ -99,6 +99,7 @@ mainNextPlayerLoop:
     jmp showTitle
 !skip:
 
+mainTheftOrMenu:
     // Spieler im Gefängnis?
     ldx currentPlayerNumber         // Aktuelle Spielernummer wiederherstellen
     lda playerJailTotal, x

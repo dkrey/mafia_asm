@@ -356,6 +356,16 @@ strTheftTooRich:
     .text " die Hände schmutzig machen."
     .byte PET_CR, 0
 
+strTheftNotFound:
+    .byte PET_CR
+    .text " Leider fand sich niemand,"
+    .byte PET_CR
+    .text " der Ihre F@higkeiten"
+    .byte PET_CR
+    .text " zu sch@tzen wusste."
+
+    .byte PET_CR, 0
+
 strTheftJobIntro1:
     .byte PET_CR
     .text " Freuen Sie sich!"
@@ -686,7 +696,7 @@ strTransferNotEnough:
     .byte 0
 
 strTransferDone:
-    .text " Der Betrag wurde &berwiesen. "
+    .text " Der Betrag wurde *berwiesen. "
     .byte PET_CR
     .byte 0
 

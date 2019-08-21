@@ -31,16 +31,9 @@ rndTimer:
     sta $d40e       //Low-Byte  der Frequenz für Stimme 3
     sta $d40f       //High-Byte der Frequenz für Stimme 3
     sta $d412       //Rauschen für die 3. Stimme setzen
-    lda $dc04  // Low-Byte  von Timer A aus dem CIA-1
-    eor $dc05  // High-Byte von Timer A aus dem CIA-1
-    eor $dd04  // Low-Byte  von Timer A aus dem CIA-2
-    adc $dd05  // High-Byte von Timer A aus dem CIA-2
-    eor $dd06  // Low-Byte  von Timer B aus dem CIA-2
-    eor $dd07  // High-Byte von Timer B aus dem CIA-2
-    eor $d41b   // eor mit SID
 }
 
-.macro rndOnlyTimer() {
+.macro rndCiaTimer() {
     lda $dc04  // Low-Byte  von Timer A aus dem CIA-1
     eor $dc05  // High-Byte von Timer A aus dem CIA-1
     eor $dd04  // Low-Byte  von Timer A aus dem CIA-2
@@ -59,13 +52,13 @@ rndTimer:
 getRandom8:
     sec                     // Obergrenze berechnen
     lda rnd8_high
-    cmp #0                  // Wenn die Obergrenze 0 ist, dann raus
+    cmp rnd8_low            // Wenn die Obergrenze = Untergrenze ist
     beq !end+
     sbc rnd8_low
     sta rnd8_diff
     rndSidTimer()
+    rndCiaTimer()
     //jsr rndSid              // Seed aus dem SID holen
-    //jsr rndTimer            // Zufallszahl aus dem CIA Timer generieren
     cmp rnd8_diff
     bcs getRandom8           // Wenn der Wert darüber liegt, neu berechnen
     adc rnd8_low             // Untergrenze hinzufügen
@@ -98,26 +91,29 @@ rnd8_result:
 //===============================================================================
 getRandom16:
     sub16 rnd16_high : rnd16_low : rnd16_diff
-
+    compare16 rnd16_diff : #$0000
+    beq !end+
     //jsr rndSid              // Seed aus dem SID holen
     rndSidTimer()
+    rndCiaTimer()
     lda rnd16_diff + 1      // Ist das Byte überhaupt gesetzt?
     cmp #00
     beq !skip+
 
 !again:
-    rndOnlyTimer()
+    rndCiaTimer()
     //jsr rndTimer            // HighByte generieren
     sta rnd16_result +1
     cmp rnd16_diff + 1
     bcs !again-             // Wenn der Wert darüber liegt, neu berechnen
 !skip:
     //
-    rndOnlyTimer()
+    rndCiaTimer()
     //jsr rndTimer            // lowbyte generieren
     sta rnd16_result
     cmp rnd16_diff
     bcs !skip-              // Wenn zu hoch, dann nochmal
+!end:
     add16 rnd16_result : rnd16_low : rnd16_result // Untergrenze hinzuaddieren
     rts
 
@@ -156,16 +152,20 @@ rnd16_result:
 //===============================================================================
 getRandom32:
     sub32 rnd32_high : rnd32_low : rnd32_diff
-    jsr rndSid              // Seed aus dem SID holen
-    //rndSidTimer()
-
+    compare32 rnd32_diff : #$00000000 // Obergrenze = Untergrenze
+    bne !skip+
+    jmp !end+
+!skip:
+    //jsr rndSid              // Seed aus dem SID holen
+    rndSidTimer()
+    rndCiaTimer()
     lda rnd32_diff + 3      // Ist das Byte überhaupt gesetzt?
     cmp #00
     beq !skip2+
 
 !skip3:
-    jsr rndTimer            // Zufallswert setzen Byte3
-    //rndOnlyTimer()
+    //jsr rndTimer            // Zufallswert setzen Byte3
+    rndCiaTimer()
     sta rnd32_result +3
     cmp rnd32_diff + 3      // Ist der Wert zu groß?
     bcs !skip3-
@@ -175,8 +175,8 @@ getRandom32:
     cmp #00
     beq !skip1+
 
-    jsr rndTimer
-    //rndOnlyTimer()
+    //jsr rndTimer
+    rndCiaTimer()
     sta rnd32_result +2
     cmp rnd32_diff + 2
     bcs !skip2-
@@ -185,17 +185,18 @@ getRandom32:
     lda rnd32_diff + 1
     cmp #00
     beq !skip0+
-    jsr rndTimer
-    //rndOnlyTimer()
+    //jsr rndTimer
+    rndCiaTimer()
     sta rnd32_result + 1
     cmp rnd32_diff + 1
     bcs !skip1-
 !skip0:
-    jsr rndTimer
-    //rndOnlyTimer()
+    //jsr rndTimer
+    rndCiaTimer()
     sta rnd32_result
     cmp rnd32_diff
     bcs !skip0-
+!end:
     add32 rnd32_result : rnd32_low : rnd32_result // Untergrenze hinzuaddieren
     rts
 

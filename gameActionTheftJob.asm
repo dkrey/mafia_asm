@@ -53,12 +53,12 @@ smallTheftJobSuccess:
     tax
 
     compare32 playerIncome,x : #$00001388 // Bei weniger als 5000 $ Einkommen kein Job
-    bcs smallTheftJob2                   // >=
+    bcs smallTheftJob2
 
     iny
     cpy playerCount
-    bne !loop-
-    jmp smallTheftJobContinue    // niemand hat genug Geld, wird aber nicht verraten
+    bcs smallTheftJobNotFound
+    jmp !loop-
 
     // Die eigene Spielernummer als Mitarbeiter beim Mitspieler setzen
 smallTheftJob2:
@@ -67,9 +67,19 @@ smallTheftJob2:
     sta playerEmployee, x
     inc playerEmployee, x   // +1 damit auch Spieler 0 eine Chance hat
 
-//
-smallTheftJobContinue:
     mov16 #strTheftJobWait : TextPtr // Text: "Sie legen sich auf die Lauer"
+    jsr Print_text
+
+    lda #PET_CR
+    jsr BSOUT
+    jsr BSOUT
+    mov16 #strPressKey : TextPtr // Text: Weiter
+    jsr Print_text
+    jsr Wait_for_key
+    jmp !exit+
+
+smallTheftJobNotFound:
+    mov16 #strTheftNotFound : TextPtr // Text: "Niemand wollte sie einstellen"
     jsr Print_text
 
     lda #PET_CR

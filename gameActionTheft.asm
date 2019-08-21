@@ -150,6 +150,12 @@ smallTheftJob:
 
 // Wenn das Vermögen jetzt über 20.000 $ liegt: einkaufen!
 smallTheftContinue:
+    // Spieler im Gefängnis?
+    ldx currentPlayerNumber         // Aktuelle Spielernummer wiederherstellen
+    lda playerJailTotal, x
+    cmp #0
+    bne !end+
+
     // Wenn Vermögen < 20.000 $ bzw 00004e20h dann nur kleine Diebstähle
     ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte
 
