@@ -34,6 +34,7 @@ BasicUpstart2(init)
 #import "gameSetupPlayers.asm"
 #import "gameJob.asm"
 #import "gameDisaster.asm"
+#import "gameActionsMenu.asm"
 
 //===============================================================================
 // Spiel initialisieren

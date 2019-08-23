@@ -7,6 +7,7 @@
 #import "../gameActionBribery.asm"
 #import "../gameOverview.asm"
 #import "../gameActionTransfer.asm"
+#import "../gameActionsMenu.asm"
 
 main:
 mainNextPlayerLoop:
@@ -18,5 +19,6 @@ mainNextPlayerLoop:
 
     jsr gameMainMenu
 
+mainTheftOrMenu:
 mainContinue:
     jsr main

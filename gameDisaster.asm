@@ -198,10 +198,9 @@ disasterProstitutes:
 
     Print_hex8_dec disasterAmountProstitutes
 
-    getRandomRange8 #00 : #01
-    lda rnd8_result
-    cmp #01
-    bne !skip+
+    getRandomRange8 #00 : #$0A  // Zufall von 1 - 10, bei > 5 gibts den einen Text, sonst den anderen
+    cmp #$05
+    bcs !skip+
     mov16 #strDisasterProstitute1 : TextPtr // Text: "sind schwanger"
     jsr Print_text
     jmp !skip2+

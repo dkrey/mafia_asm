@@ -60,6 +60,11 @@ gameMainMenuChoice:
     jsr gameBriberyMenu
     rts
 !skip:
+    cmp #$05        // 4. Bestechung
+    bne !skip+
+    jsr gameActionsMenu
+    rts
+!skip:
 
     cmp #$06        // 6. Geldtransfer
     bne !skip+

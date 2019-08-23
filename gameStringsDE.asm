@@ -749,3 +749,20 @@ strDisasterJail1:
 strDisasterJail2:
     .text " Runden Haft."
     .byte PET_CR,0
+
+//===============================================================================
+// strActions
+//
+// Aktionen Aufträge und so weiter
+//===============================================================================
+
+strActionsMenu:
+    .byte PET_CR, PET_CR
+    .text " Sie k&nnen diese Aktionen befehlen:"
+    .byte PET_CR, PET_CR
+    .text " 1. Demolierungen"
+    .byte PET_CR
+    .text " 2. Entf*hrung"
+    .byte PET_CR
+    .text " 3. Keine"
+    .byte PET_CR,0
