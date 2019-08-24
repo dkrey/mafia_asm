@@ -756,13 +756,26 @@ strDisasterJail2:
 // Aktionen Aufträge und so weiter
 //===============================================================================
 
-strActionsMenu:
-    .byte PET_CR, PET_CR
-    .text " Sie k&nnen diese Aktionen befehlen:"
-    .byte PET_CR, PET_CR
-    .text " 1. Demolierungen"
+strGangwarTitle:
     .byte PET_CR
-    .text " 2. Entf*hrung"
+    .text " Im Namen der Familie"
     .byte PET_CR
-    .text " 3. Keine"
+    .fill 40,PET_LINE
+    .byte PET_CR
+    .text " Mit wem wollen Sie sich anlegen?"
+    .byte PET_CR, PET_CR,0
+strGangwarCancel:
+    .text " 0. Den Schwanz einkneifen."
+    .byte PET_CR,0
+strGangwarImpossible:
+    .byte PET_CR
+    .text " Sie hauen Sich selbst eine rein"
+    .byte PET_CR
+    .text " und belassen es debei"
+    .byte PET_CR,0
+strGangwarMissing:
+    .byte PET_CR
+    .text " Daf&r fehlen Ihnen"
+    .byte PET_CR
+    .text " die richtigen Leute."
     .byte PET_CR,0

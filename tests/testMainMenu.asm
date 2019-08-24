@@ -7,7 +7,7 @@
 #import "../gameActionBribery.asm"
 #import "../gameOverview.asm"
 #import "../gameActionTransfer.asm"
-#import "../gameActionsMenu.asm"
+#import "../gameActionGangwar.asm"
 
 main:
 mainNextPlayerLoop:

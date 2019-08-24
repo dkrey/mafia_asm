@@ -60,9 +60,9 @@ gameMainMenuChoice:
     jsr gameBriberyMenu
     rts
 !skip:
-    cmp #$05        // 4. Bestechung
+    cmp #$05        // 5. Bandenkrieg
     bne !skip+
-    jsr gameActionsMenu
+    jsr gameGangwarMenu
     rts
 !skip:
 
