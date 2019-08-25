@@ -243,7 +243,7 @@ playerHotels:
 // Personal: 10 Byte pro Spieler
 playerGunfighters:
     .byte $00
-    .byte $01
+    .byte $0A
     .byte $00
     .byte $00
     .byte $00
@@ -295,7 +295,7 @@ playerAttorneys:
 //Bestechungen:
 playerPolice:
     .byte $00
-    .byte $00
+    .byte $01
     .byte $00
     .byte $00
     .byte $00
@@ -305,7 +305,7 @@ playerPolice:
 
 playerInspectors:
     .byte $00
-    .byte $00
+    .byte $01
     .byte $00
     .byte $00
     .byte $00
@@ -315,7 +315,7 @@ playerInspectors:
 
 playerJudges:
     .byte $00
-    .byte $00
+    .byte $01
     .byte $00
     .byte $00
     .byte $00
@@ -325,7 +325,7 @@ playerJudges:
 
 playerStateAttorneys:
     .byte $00
-    .byte $00
+    .byte $01
     .byte $00
     .byte $00
     .byte $00
@@ -335,7 +335,7 @@ playerStateAttorneys:
 
 playerMajors:
     .byte $00
-    .byte $00
+    .byte $01
     .byte $00
     .byte $00
     .byte $00

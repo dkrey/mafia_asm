@@ -86,8 +86,11 @@ strWelcomePayment:
 //
 // Wiederkehrende Texte
 //===============================================================================
-strYouHaveMoney:
+strYouHave:
     .text " Sie haben "
+    .byte 0
+strHeHas:
+    .text " hat"
     .byte 0
 
 strPerRound:
@@ -756,11 +759,13 @@ strDisasterJail2:
 // Aktionen Aufträge und so weiter
 //===============================================================================
 
-strGangwarTitle:
+strGangwarTitle1:
     .byte PET_CR
     .text " Im Namen der Familie"
     .byte PET_CR
     .fill 40,PET_LINE
+    .byte 0
+strGangwarTitle2:
     .byte PET_CR
     .text " Mit wem wollen Sie sich anlegen?"
     .byte PET_CR, PET_CR,0
@@ -771,7 +776,7 @@ strGangwarImpossible:
     .byte PET_CR
     .text " Sie hauen Sich selbst eine rein"
     .byte PET_CR
-    .text " und belassen es debei"
+    .text " und belassen es dabei"
     .byte PET_CR,0
 strGangwarMissing:
     .byte PET_CR
@@ -779,3 +784,32 @@ strGangwarMissing:
     .byte PET_CR
     .text " die richtigen Leute."
     .byte PET_CR,0
+strGangwarSummary1:
+    .byte PET_CR
+    .text " Sie wollen bei "
+    .byte 0
+strGangwarSummary2:
+    .byte PET_CR
+    .text " gr&ndlich aufräumen."
+    .byte 0
+
+strGangwarAttackersAmount:
+    .byte PET_CR
+    .text " Aber nur 9 Schergen passen"
+    .byte PET_CR
+    .text " in Ihren Kleintransporter."
+    .byte 0
+
+strGangwarAttackersBonus:
+    .byte PET_CR
+    .text " Durch Ihre ausgezeichneten Kontakte"
+    .byte PET_CR
+    .text " bekommen Sie Verst@rkung:"
+    .byte 0
+
+strGangwarDefendersBonus:
+    .byte PET_CR
+    .text " Auch Ihr Gegner unterh@lt beste Kontakte"
+    .byte PET_CR
+    .text " und bekommt Unterst&tzung: "
+    .byte 0

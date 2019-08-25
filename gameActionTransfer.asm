@@ -19,7 +19,7 @@ gameTransferHead:
     lda #','
     jsr BSOUT
 
-    mov16 #strYouHaveMoney : TextPtr // Text: "Sie haben"
+    mov16 #strYouHave : TextPtr // Text: "Sie haben"
     jsr Print_text
 
     ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte

@@ -22,6 +22,55 @@ disasterHeader:
     jsr BSOUT
     rts
 
+
+// Bestechungswert berechnen
+gameCalcTotalFactor:
+   // Faktoren für die Bestochenen ausrechnen
+    ldx disasterPlayer
+    mul8 playerPolice, x : #$0C
+    mov16 mulResult : disasterPoliceFactor
+
+    ldx disasterPlayer
+    mul8 playerInspectors, x : #$0E
+    mov16 mulResult : disasterInspectorFactor
+
+    ldx disasterPlayer
+    mul8 playerJudges, x : #$10
+    mov16 mulResult : disasterJudgeFactor
+
+    ldx disasterPlayer
+    mul8 playerStateAttorneys, x : #$12
+    mov16 mulResult : disasterStateAttorneyFactor
+
+    ldx disasterPlayer
+    mul8 playerMajors, x : #$14
+    mov16 mulResult : disasterMajorFactor
+
+    // Faktoren für Anwälte, Bordelle und Hotels
+    ldx disasterPlayer
+    mul8 playerAttorneys, x : #$0A
+    mov16 mulResult : disasterAttorneyFactor
+
+    ldx disasterPlayer
+    mul8 playerBrothels, x : #$0A
+    mov16 mulResult : disasterBrothelFactor
+
+    ldx disasterPlayer
+    mul8 playerHotels, x : #$46
+    mov16 mulResult : disasterHotelFactor
+
+    // Faktoren addieren
+    add16 disasterPoliceFactor      : disasterTotalFactor : disasterTotalFactor
+    add16 disasterInspectorFactor   : disasterTotalFactor : disasterTotalFactor
+    add16 disasterJudgeFactor       : disasterTotalFactor : disasterTotalFactor
+    add16 disasterStateAttorneyFactor : disasterTotalFactor : disasterTotalFactor
+    add16 disasterMajorFactor       : disasterTotalFactor : disasterTotalFactor
+    add16 disasterAttorneyFactor    : disasterTotalFactor : disasterTotalFactor
+    add16 disasterBrothelFactor     : disasterTotalFactor : disasterTotalFactor
+    add16 disasterHotelFactor       : disasterTotalFactor : disasterTotalFactor
+
+    rts
+
 // Bei weniger als 50.000 $ Einkommen keine Disaster
 gameDisasterCheck:
     ldx currentPlayerOffset_4
@@ -37,49 +86,9 @@ gameDisasterDefense:
     mov16 #$02ee : disasterGroundvalue
     mov16 #$0000 : disasterTotalFactor
 
-    // Faktoren für die Bestochenen ausrechnen
-    ldx currentPlayerNumber
-    mul8 playerPolice, x : #$0C
-    mov16 mulResult : disasterPoliceFactor
+    mov currentPlayerNumber : disasterPlayer
 
-    ldx currentPlayerNumber
-    mul8 playerInspectors, x : #$0E
-    mov16 mulResult : disasterInspectorFactor
-
-    ldx currentPlayerNumber
-    mul8 playerJudges, x : #$10
-    mov16 mulResult : disasterJudgeFactor
-
-    ldx currentPlayerNumber
-    mul8 playerStateAttorneys, x : #$12
-    mov16 mulResult : disasterStateAttorneyFactor
-
-    ldx currentPlayerNumber
-    mul8 playerMajors, x : #$14
-    mov16 mulResult : disasterMajorFactor
-
-    // Faktoren für Anwälte, Bordelle und Hotels
-    ldx currentPlayerNumber
-    mul8 playerAttorneys, x : #$0A
-    mov16 mulResult : disasterAttorneyFactor
-
-    ldx currentPlayerNumber
-    mul8 playerBrothels, x : #$0A
-    mov16 mulResult : disasterBrothelFactor
-
-    ldx currentPlayerNumber
-    mul8 playerHotels, x : #$46
-    mov16 mulResult : disasterHotelFactor
-
-    // Faktoren addieren
-    add16 disasterPoliceFactor      : disasterTotalFactor : disasterTotalFactor
-    add16 disasterInspectorFactor   : disasterTotalFactor : disasterTotalFactor
-    add16 disasterJudgeFactor       : disasterTotalFactor : disasterTotalFactor
-    add16 disasterStateAttorneyFactor : disasterTotalFactor : disasterTotalFactor
-    add16 disasterMajorFactor       : disasterTotalFactor : disasterTotalFactor
-    add16 disasterAttorneyFactor    : disasterTotalFactor : disasterTotalFactor
-    add16 disasterBrothelFactor     : disasterTotalFactor : disasterTotalFactor
-    add16 disasterHotelFactor       : disasterTotalFactor : disasterTotalFactor
+    jsr gameCalcTotalFactor
 
     // ... und vom Grundwert abziehen
     sub32 disasterGroundvalue : disasterTotalFactor : disasterGroundvalue
@@ -506,6 +515,9 @@ disasterJailCheck:
     jsr Wait_for_key
     rts
 
+
+disasterPlayer:
+    .byte 00
 
 disasterGroundvalue:
     .word $0000

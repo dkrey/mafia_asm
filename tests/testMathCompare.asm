@@ -2,8 +2,8 @@
 
 main:
 
-    compare32 #$00002a21 : #$00003a21
-    //compare16  #$00ff : #$00fe
+    ///compare32 #$00002a21 : #$00003a21
+    compare16  #$00c8 : #$0032
     //
     beq is_equal
     bcs is_bigger //or equal
@@ -22,4 +22,5 @@ is_equal:
     jsr Wait_for_key
     rts
 mainNextPlayerLoop:
+mainTheftOrMenu:
 mainContinue:

@@ -19,21 +19,27 @@ dann max 3 Revolverhelden oder 3 Wächter extra, ebenfalls per Zufall
 // Gangwar - demolish buildings in the process
 //
 //==============================================================================
-gameGangwarMenu:
+gameGangwarHeader:
     jsr CLEAR
-    mov #RED : EXTCOL            //  Overscan
-    mov #BLACK : BGCOL0              //  Hintergrund
-    mov #WHITE : TEXTCOL           //  Schrift
+    mov #BLACK : EXTCOL            //  Overscan
+    mov #BROWN : BGCOL0              //  Hintergrund
+    mov #BLACK : TEXTCOL           //  Schrift
 
-    mov16 #strGangwarTitle : TextPtr // Text: "Überschrift:"
+    mov16 #strGangwarTitle1 : TextPtr // Text: "Überschrift:"
     jsr Print_text
+    rts
+
+gameGangwarMenu:
+    jsr gameGangwarHeader
 
 // Prüfe Revolverhelden
 gameGangwarCheck:
     ldx currentPlayerNumber
     lda playerGunfighters, x
+    sta gameGangwarAttackers    // schon mal Angreifer speichern
     bne !skip+
     mov16 #strGangwarMissing : TextPtr
+    jsr Print_text
     lda #PET_CR
     jsr BSOUT
     mov16 #strPressKey : TextPtr // Text: Weiter
@@ -43,6 +49,8 @@ gameGangwarCheck:
 
 // RH vorhanden
 !skip:
+    mov16 #strGangwarTitle2 : TextPtr // Text: "Überschrift2"
+    jsr Print_text
 // Spielernamen anzeigen
     ldx #00                         // Durch die Spielernamen mit X zählen
     mov16 #playerNames : TextPtr    // Beginn der Spielernamen
@@ -133,4 +141,93 @@ gameGangwarChoice:
     rts
 
 !gameGangwarContinue:
+    sta gameGangwarVictim
+    pha
+    jsr gameGangwarHeader
+    mov16 #strGangwarSummary1 : TextPtr // Text: "Sie wollen bei"
+    jsr Print_text
+    mov16 #playerNames : TextPtr
+    pla
+    asl
+    asl
+    asl
+    asl
+    tay
+    jsr Print_text_offset   // Text:  <Spielername> CR CR
+    mov16 #strGangwarSummary2 : TextPtr // Text: "Aufräumen"
+    jsr Print_text
+
+
+// Der Angreifer hat
+!gameGangwarAttackerSummary:
+    mov16 #strYouHave : TextPtr
+    jsr Print_text
+    lda gameGangwarAttackers
+    pha
+    Print_hex8_dec gameGangwarAttackers
+    lda #PET_CR
+    jsr BSOUT
+    mov16 #strFinancesGunfighters : TextPtr
+    jsr Print_text
+
+    pla
+    cmp #$0A                    // max 9 Angreifer
+    bcc !skip+                  // also bcc < 10
+    lda #$09
+    sta gameGangwarAttackers
+    lda #PET_CR
+    jsr BSOUT
+    mov16 #strGangwarAttackersAmount : TextPtr
+    jsr Print_text
+!skip:
+    // Angriffbonus durch Bestechungen
+    mov16 #$0000 : disasterTotalFactor
+    mov currentPlayerNumber : disasterPlayer
+    jsr gameCalcTotalFactor
+    lda #PET_CR
+    jsr BSOUT
+    Print_hex16_dec disasterTotalFactor
+
+    compare16 disasterTotalFactor : #$00C9   // über 200 Bestechungspunkte +3
+    bcc !skip+
+    clc
+    lda gameGangwarAttackers
+    adc #03
+    sta gameGangwarAttackers
+    jmp gameGangwarDefenderSummary
+!skip:
+    compare16 disasterTotalFactor : #$0064   // über 100 Bestechungspunkte +2
+    bcc !skip+
+    clc
+    lda gameGangwarAttackers
+    adc #02
+    sta gameGangwarAttackers
+    jmp gameGangwarDefenderSummary
+!skip:
+    compare16 disasterTotalFactor
+     : #$0032  // über 50 Bestechungspunkte +1
+    bcc gameGangwarDefenderSummary
+    clc
+    lda gameGangwarAttackers
+    adc #01
+    sta gameGangwarAttackers
+    jmp gameGangwarDefenderSummary
+
+gameGangwarDefenderSummary:
+    Print_hex8_dec gameGangwarAttackers
+    mov16 #strPressKey : TextPtr // Text: Weiter
+    jsr Print_text
+    jsr Wait_for_key
+
     rts
+
+// Spielernummer des angegriffenen
+gameGangwarVictim:
+    .byte 0
+// Anzahl Angreifer
+gameGangwarAttackers:
+    .byte 0
+
+// Anzahl Verteidiger
+gameGangwarDefenders:
+    .byte 0
