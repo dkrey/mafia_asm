@@ -77,4 +77,5 @@ gameMainMenuChoice:
     jsr gameOverviewMenu
     jmp gameMainMenu
 !skip:
-    rts
+
+    jmp gameMainMenuChoice

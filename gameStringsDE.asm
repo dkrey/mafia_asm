@@ -355,11 +355,11 @@ strTheftTooRich:
     .byte PET_CR
     .text " Aber aber..."
     .byte PET_CR, PET_CR
-    .text " Bei Ihren Einkommensverhältnissen "
+    .text " Bei Ihren Einkommensverh@ltnissen "
     .byte PET_CR
     .text " werden Sie sich doch nicht selbst"
     .byte PET_CR
-    .text " die Hände schmutzig machen."
+    .text " die H@nde schmutzig machen."
     .byte PET_CR, 0
 
 strTheftNotFound:
@@ -780,7 +780,7 @@ strGangwarTitle3:
     .byte PET_CR
     .byte 0
 strGangwarCancel:
-    .text " 0. Den Schwanz einkneifen."
+    .text " 0. een Schwanz einkneifen."
     .byte PET_CR,0
 strGangwarImpossible:
     .byte PET_CR
@@ -790,7 +790,7 @@ strGangwarImpossible:
     .byte PET_CR,0
 strGangwarMissing:
     .byte PET_CR
-    .text " Daf&r fehlen Ihnen"
+    .text " Daf*r fehlen Ihnen"
     .byte PET_CR
     .text " die richtigen Leute."
     .byte PET_CR,0
@@ -800,7 +800,7 @@ strGangwarSummary1:
     .byte 0
 strGangwarSummary2:
     .byte PET_CR
-    .text " gr&ndlich aufräumen."
+    .text " gr*ndlich aufr@umen."
     .byte 0
 
 strGangwarAttackersAmount:

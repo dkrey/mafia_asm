@@ -32,26 +32,17 @@ gameDept:
     sta playerDebtRounds, x
     jmp !end+
 
-/*
-
-    // Auf Schulden prüfen
-    ldx currentPlayerNumber
-    lda playerDebtFlag, x
-    cmp #00
-    bne !skip+
-    jmp !end+
-    */
 // Schulden
 gameDeptSet:
     ldx currentPlayerNumber
     lda playerDebtFlag, x
-    cmp #01 // Hatte schon vorherschulden + Schuldenrunden verringern
-    beq gameDeptRounds
+    cmp #0 // Hatte schon vorherschulden + Schuldenrunden verringern
+    bne gameDeptRounds
     // neue Schulden
     lda #01
     sta playerDebtFlag,x
     // 6 Runden Zeit, die Schulden abzubauen
-    lda #06
+    lda #$06
     sta playerDebtRounds,x
     jmp gameDeptShow
 
@@ -76,6 +67,7 @@ gameDeptShow:
     mov16 #strDeptInfo2 : TextPtr   // Text: Sie haben Schulden
     jsr Print_text
 
+    ldx currentPlayerNumber
     Print_hex8_dec playerDebtRounds, x // Runden
 
     mov16 #strDeptInfo3 : TextPtr   // Text: zu begleichen

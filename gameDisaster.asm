@@ -160,8 +160,8 @@ branchDisasterHotels:
 disasterSlotMachines:
     ldx currentPlayerNumber
     lda playerSlotMachines, x
-    cmp #$01
-    bne !skip+
+    cmp #$02
+    bcs !skip+
     rts         // nur ein Automat, Glück gehabt
 !skip:
     getRandomRange8 #01 : playerSlotMachines, x
@@ -191,8 +191,8 @@ disasterSlotMachines:
 disasterProstitutes:
     ldx currentPlayerNumber
     lda playerProstitutes, x
-    cmp #$01
-    bne !skip+
+    cmp #$02
+    bcs !skip+
     jmp disasterSlotMachines // keine Prostituierten, vielleicht Automaten
 !skip:
     getRandomRange8 #01 : playerProstitutes, x
@@ -250,8 +250,8 @@ disasterProstitutes:
 disasterBars:
     ldx currentPlayerNumber
     lda playerBars, x
-    cmp #$01
-    bne !skip+
+    cmp #$02
+    bcs !skip+
     jmp disasterSlotMachines // vielleicht Automaten
 !skip:
     cmp #$02                // bei 2  wird nur noch eine Immo abgezogen
@@ -292,8 +292,8 @@ disasterBars:
 disasterBetting:
     ldx currentPlayerNumber
     lda playerBetting, x
-    cmp #$01
-    bne !skip+
+    cmp #$02
+    bcs !skip+
     jmp disasterSlotMachines // vielleicht Automaten
 !skip:
     cmp #$02                // bei 2  wird nur noch eine Immo abgezogen
@@ -334,8 +334,8 @@ disasterBetting:
 disasterGambling:
     ldx currentPlayerNumber
     lda playerGambling, x
-    cmp #$01
-    bne !skip+
+    cmp #$02
+    bcs !skip+
     jmp disasterSlotMachines // vielleicht Automaten
 !skip:
     cmp #$02                // bei 2  wird nur noch eine Immo abgezogen
@@ -376,8 +376,8 @@ disasterGambling:
 disasterBrothels:
     ldx currentPlayerNumber
     lda playerBrothels, x
-    cmp #$01
-    bne !skip+
+    cmp #$02
+    bcs !skip+
     jmp disasterSlotMachines // vielleicht Automaten
 !skip:
     cmp #$02                // bei 2  wird nur noch eine Immo abgezogen
@@ -418,8 +418,8 @@ disasterBrothels:
 disasterHotels:
     ldx currentPlayerNumber
     lda playerHotels, x
-    cmp #$01
-    bne !skip+
+    cmp #$02                // Ein Immotyp bleibt immer erhalten
+    bcs !skip+
     jmp disasterSlotMachines // vielleicht Automaten
 !skip:
     cmp #$02                // bei 2  wird nur noch eine Immo abgezogen

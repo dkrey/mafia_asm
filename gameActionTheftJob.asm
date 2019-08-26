@@ -7,10 +7,10 @@
     jsr BSOUT
 
     // Prüfen, ob man nicht zu reich ist
-    // 10.000€ Einkommen
+    // 65integer € Einkommen
     ldx currentPlayerOffset_4
 
-    compare32 playerIncome,x : #$00002710    // Obergrenze
+    compare32 playerIncome,x : #$0000ffff    // Obergrenze
     bcc smallTheftJobIsPoor
 
     // Zu wohlhabend
