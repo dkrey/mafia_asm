@@ -177,7 +177,7 @@ playerEstates:
 
 // Besitz:
 playerSlotMachines:
-    .byte $01
+    .byte $0F
     .byte $0a
     .byte $01
     .byte $01
@@ -195,7 +195,7 @@ playerProstitutes:
     .byte $09
     .byte $09
 playerBars:
-    .byte $00
+    .byte $08
     .byte $1f
     .byte $0b
     .byte $0c
@@ -294,7 +294,7 @@ playerAttorneys:
 
 //Bestechungen:
 playerPolice:
-    .byte $00
+    .byte $0A
     .byte $01
     .byte $00
     .byte $00

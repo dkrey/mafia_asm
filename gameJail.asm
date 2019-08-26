@@ -52,6 +52,13 @@ gameJailStay:
     jmp mainTheftOrMenu
 
 gameJailNoEscape:
+    // Keine Nuttenflucht bei Bordell
+    ldx currentPlayerNumber
+    lda playerBrothels,x
+    cmp #0
+    beq !skip+
+    jmp gameJailNoProtitutes
+!skip:
     // Nuttenflucht
     ldx currentPlayerNumber
     lda playerProstitutes,x

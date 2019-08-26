@@ -38,9 +38,9 @@ strTitleScreen:
 
     .byte PET_RED
     .fill 5, PET_CR
-    .text "(c) 2019 Geriatrisches Kombinat f*r "
+    .text "(c)2019 Geriatrisches Kombinat f*r"
     .byte PET_CR
-    .text "    D*ngemittel und Datenverarbeitung"
+    .text "   D*ngemittel und Datenverarbeitung"
     .byte PET_BLACK, 0
 
 //===============================================================================
@@ -90,7 +90,7 @@ strYouHave:
     .text " Sie haben "
     .byte 0
 strHeHas:
-    .text " hat"
+    .text " hat "
     .byte 0
 
 strPerRound:
@@ -132,6 +132,9 @@ strLine14:
     .fill 14,PET_LINE
     .byte PET_CR,0
 
+strLine18:
+    .fill 18,PET_LINE
+    .byte 0
 //===============================================================================
 // Jail
 //
@@ -606,7 +609,7 @@ strMainMenuTitle:
     .byte PET_CR, PET_CR
     .text "   4. Bestechung"
     .byte PET_CR, PET_CR
-    .text "   5. Aktionen"
+    .text "   5. Bandenkrieg"
     .byte PET_CR, PET_CR
     .text "   6. Geldtransfer"
     .byte PET_CR, PET_CR
@@ -761,7 +764,7 @@ strDisasterJail2:
 
 strGangwarTitle1:
     .byte PET_CR
-    .text " Im Namen der Familie"
+    .text " Bandenkrieg"
     .byte PET_CR
     .fill 40,PET_LINE
     .byte 0
@@ -769,6 +772,13 @@ strGangwarTitle2:
     .byte PET_CR
     .text " Mit wem wollen Sie sich anlegen?"
     .byte PET_CR, PET_CR,0
+strGangwarTitle3:
+    .byte PET_CR
+    .text " Der Kampf entbrennt"
+    .byte PET_CR
+    .fill 40,PET_LINE
+    .byte PET_CR
+    .byte 0
 strGangwarCancel:
     .text " 0. Den Schwanz einkneifen."
     .byte PET_CR,0
@@ -776,7 +786,7 @@ strGangwarImpossible:
     .byte PET_CR
     .text " Sie hauen Sich selbst eine rein"
     .byte PET_CR
-    .text " und belassen es dabei"
+    .text " und belassen es dabei."
     .byte PET_CR,0
 strGangwarMissing:
     .byte PET_CR
@@ -795,7 +805,7 @@ strGangwarSummary2:
 
 strGangwarAttackersAmount:
     .byte PET_CR
-    .text " Aber nur 9 Schergen passen"
+    .text " Davon passen 9 Schergen"
     .byte PET_CR
     .text " in Ihren Kleintransporter."
     .byte 0
@@ -804,12 +814,39 @@ strGangwarAttackersBonus:
     .byte PET_CR
     .text " Durch Ihre ausgezeichneten Kontakte"
     .byte PET_CR
-    .text " bekommen Sie Verst@rkung:"
+    .text " bekommen Sie Verst@rkung."
+    .byte 0
+
+strGangwarDefendersAmount:
+    .byte PET_CR
+    .text " 9 Nachtw@chter schaffen es rechtzeitig"
+    .byte PET_CR
+    .text " zum vereinbarten Treffpunkt. "
     .byte 0
 
 strGangwarDefendersBonus:
     .byte PET_CR
-    .text " Auch Ihr Gegner unterh@lt beste Kontakte"
+    .text " Ihr Gegner wurde vorgewarnt"
     .byte PET_CR
-    .text " und bekommt Unterst&tzung: "
+    .text " und bekommt Unterst&tzung."
+    .byte 0
+strGangwarCasualties:
+    .text "Verluste:"
+    .byte PET_CR,0
+strGangwarBurialCost:
+    .text "Begr@bniskosten:"
+    .byte PET_CR,0
+
+strGangwarWinner1:
+    .byte PET_CR, PET_CR
+    .text " Die Familie von "
+    .byte 0
+strGangwarWinner2:
+    .byte PET_CR
+    .text " hat den Kampf gewonnen."
+    .byte 0
+
+strGangwarLoose:
+    .byte PET_CR, PET_CR
+    .text " Verlusst f*r "
     .byte 0
