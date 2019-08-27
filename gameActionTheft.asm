@@ -161,6 +161,10 @@ smallTheftContinue:
 
     compare32 playerMoney,y : minMoneyForMenu
     bcc !end+
+    ldy currentPlayerNumber // Auch kein Shopping bei Schulden
+    lda playerDebtFlag, y
+    cmp #$0
+    bne !end+
     jsr gameShopMenu
 !end:
     jmp mainContinue

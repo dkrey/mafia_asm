@@ -35,6 +35,7 @@ BasicUpstart2(init)
 #import "gameJob.asm"
 #import "gameDisaster.asm"
 #import "gameActionGangwar.asm"
+#import "gameInformants.asm"
 
 //===============================================================================
 // Spiel initialisieren
@@ -106,6 +107,8 @@ mainTheftOrMenu:
     lda playerJailTotal, x
     cmp #0
     bne mainGotoJail
+
+    jsr gameCheckInformantHint      // Vielleicht hat der Informant einen Tipp
 
     // Wenn Vermögen < 20.000 $ bzw 00004e20h dann nur kleine Diebstähle
     ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte

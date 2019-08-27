@@ -82,6 +82,27 @@ strWelcomePayment:
     .byte 0
 
 //===============================================================================
+// strGameModes
+//
+// Spielmodus
+//===============================================================================
+strGameModeChoice:
+    .byte PET_CR, PET_CR
+    .text " W@hlen Sie das Ziel des Spiels!"
+    .byte PET_CR, PET_CR
+    .text " 1. Die ganze Gegend:"
+    .byte PET_CR
+    .text "    Besitzen Sie mehr als alle anderen"
+    .byte PET_CR,PET_CR
+    .text " 2. Meine erste Million"
+    .byte PET_CR
+    .text "    H@ufen Sie eine Million Dollar an"
+    .byte PET_CR,PET_CR
+    .text " 3. Las Vegas:"
+    .byte PET_CR
+    .text "    Ein Hotel und 100 Automaten"
+    .byte PET_CR, PET_CR, 0
+//===============================================================================
 // General Purpose
 //
 // Wiederkehrende Texte
@@ -187,7 +208,7 @@ strSmallTheftMenu1:
     .byte PET_CR, PET_CR
     .text "   Eine Bar *berfallen ........... 3"
     .byte PET_CR, PET_CR
-    .text "   Auf dem Strich missionieren ... 4"
+    .text "   Prostituierte prellen ......... 4"
     .byte PET_CR, PET_CR
     .byte 0
 strSmallTheftMenu2:
@@ -298,7 +319,7 @@ strTheftKerbOwner:
     .text " Die Prostituierte geh&rte zu "
     .byte 0
 strTheftKerbSuccess1:
-    .text " Sie waren sehr beeindruckend."
+    .text " Ihre Performance war lausig."
     .byte PET_CR, PET_CR,0
 
 strTheftKerbSuccess2:
@@ -549,6 +570,32 @@ strPropertyWin:
     .text " Damit haben sie gewonnen!!!"
     .byte PET_CR, PET_CR
     .byte 0
+
+strGameModeMillionAlmost:
+    .byte PET_CR
+    .text " Sie besitzen bereits *ber 750.000 $"
+    .byte PET_CR
+    .text " Es fehlen nur noch "
+    .byte 0
+
+strGameModeMillionWin:
+    .byte PET_CR
+    .text " Sie haben die Million zuerst erreicht!"
+    .byte PET_CR,0
+
+strGameModeVegasAlmost:
+    .byte PET_CR
+    .text " Das Hotel steht bereits."
+    .byte PET_CR
+    .text " Es fehlen nur noch "
+    .byte 0
+
+strGameModeVegasWin:
+    .byte PET_CR
+    .text " Das Hotel und alle Automaten "
+    .byte PET_CR
+    .text " sind an Ort und Stelle."
+    .byte PET_CR,0
 
 //===============================================================================
 // strDept
@@ -850,3 +897,49 @@ strGangwarLoose:
     .byte PET_CR, PET_CR
     .text " Verlusst f*r "
     .byte 0
+
+strInformantTitle:
+    .byte PET_CR, PET_CR
+    .text " Ihr Informant hat einen Tipp f*r Sie:"
+    .byte PET_CR, PET_CR,0
+
+strInformantProperty:
+    .text " Ey Meister, hab hier diese brandheisse"
+    .byte PET_CR
+    .text " Immobilie an der Hand: "
+    .byte PET_CR, PET_CR, 0
+
+strInformantBar:
+    .text "Eine schmierige Bar"
+    .byte 0
+strInformantBetting:
+    .text "Ein finsteres Wettb*ro"
+    .byte 0
+strInformantGambling:
+    .text "Ein ranziger Spielsalon"
+    .byte 0
+strInformantBrothel:
+    .text "Ein k@siges Bordell"
+    .byte 0
+strInformantHotel:
+    .text "Ein bauf@lliges Grandhotel"
+    .byte 0
+
+strInformantForJust:
+    .byte PET_CR,PET_CR
+    .text "f*r nur "
+
+strInformantDeal:
+    .byte PET_CR,PET_CR
+    .text "Schlagen Sie ein? "
+    .byte 0
+
+strInformantYes:
+    .byte PET_CR
+    .text " Das freut mich (lechz)!"
+    .byte PET_CR, PET_CR, 0
+
+strInformantNo:
+    .byte PET_CR
+    .text " Dann eben nicht (grummel)!"
+    .byte PET_CR, PET_CR, 0

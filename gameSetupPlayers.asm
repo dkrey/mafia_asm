@@ -100,7 +100,7 @@ checkPlayerNames:
 !getinput:
     jsr GETIN
     cmp inputYes            // Spieler hat J gedrückt
-    beq welcomePayment
+    beq selectGameMode
     cmp inputNo            // Spieler hat N gedrückt
     beq !skip+
     jmp !getinput-          // nichts gedrückt
@@ -108,9 +108,61 @@ checkPlayerNames:
     jsr resetGame
     jmp howManyPlayers      // Ansonsten von vorn
 
-welcomePayment:
+
+selectGameMode:
+//===============================================================================
+// Spielmodus
+//===============================================================================
     // noch das Ja von vorhin anzeigen
     jsr BSOUT
+    mov16 #strGameModeChoice: TextPtr // Spielmodi anzeigen
+    jsr Print_text
+    mov16 #strChoice : TextPtr
+    jsr Print_text
+!getinput:
+    jsr GETIN
+    cmp #$30        // sichergehen, dass es eine gültige Ziffer ist <= 0
+    bcc !getinput-
+    cmp #$3a        // sichergehen, dass es eine gültige Ziffer ist >= #$3a
+    bcs !getinput-
+
+    cmp #0                          // 0 oder Enter, Abfrage erneut starten
+    beq !getinput-
+
+    sec                             // Konv PetSCII Zeichen zur Zahl
+    sbc #$30
+
+    // Auswahl: Die ganze Gegend
+    cmp #01
+    bne !skip+
+    lda #00
+    sta gameMode
+    lda #'1'
+    jsr BSOUT
+    jmp welcomePayment
+!skip:
+    cmp #02
+    bne !skip+
+    lda #01
+    sta gameMode
+    lda #'2'
+    jsr BSOUT
+    jmp welcomePayment
+!skip:
+    cmp #03
+    bne !skip+
+    lda #02
+    sta gameMode
+    lda #'3'
+    jsr BSOUT
+    jmp welcomePayment
+!skip:
+    jmp !getinput-
+
+//===============================================================================
+// Begrüßungsgeld
+//===============================================================================
+welcomePayment:
     mov16 #strWelcomePayment : TextPtr
     jsr Print_text
 

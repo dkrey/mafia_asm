@@ -382,9 +382,12 @@ gameGangwarFight:
 
     // Würfeln von 0 - 10
     getRandomRange8 #$00 : #$0A
+    /*
+     // DEBUG Print Random Result
     pha
     Print_hex8_dec rnd8_result
     pla
+    */
     cmp #05
     bcc !skip+
     // Treffer weil > 5
