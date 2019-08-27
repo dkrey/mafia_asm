@@ -126,7 +126,7 @@ playerEmployee:
 // Vermögen: 4 Byte pro Spieler
 playerMoney:
     .dword $00000064
-    .dword $0000fffa
+    .dword $0001000a
     .dword $00000064
     .dword $00000064
     .dword $00000064
@@ -196,7 +196,7 @@ playerProstitutes:
     .byte $09
 playerBars:
     .byte $08
-    .byte $1f
+    .byte $00
     .byte $0b
     .byte $0c
     .byte $0a

@@ -5,11 +5,16 @@ gameCheckInformantHint:
     ldx currentPlayerNumber
     lda playerInformants,x
     cmp #0
-    bne gameCheckInformats   // Ohne Informanten, gleich raus
+    bne gameCheckInformantHint2   // Ohne Informanten, gleich raus
+    rts
+gameCheckInformantHint2:
+    lda playerDebtFlag, x
+    cmp #0
+    beq gameCheckInformats  // Nur óhne Schulden zum Informanten
     rts
 
     // 90 / sqrt(1+Informanten)
-    gameCheckInformats:
+gameCheckInformats:
     adc #01 // Ein Extra-Informant als Basis
     sta randomFactor
     sqrt16 randomFactor
@@ -37,13 +42,13 @@ gameCheckInformantHint:
     cmp #0
     beq gameInformantsProperty
     //später mal verschiedene Arten, erstmal dieser eine Tipp
+    // denkbar später Entführungen und andere Verbrechen
 
 gameInformantsProperty:
     mov16 #strInformantProperty : TextPtr // Text: Immobilie
     jsr Print_text
 
     getRandomRange8 #0 : #4
-
     cmp #0 // Bar
     bne !skip+
     jmp gameInformantsPropertyBars
@@ -69,9 +74,42 @@ gameInformantsProperty:
 gameInformantsPropertyBars:
     mov16 #strInformantBar : TextPtr // Bar
     jsr Print_text
+    mov32 gameShopPriceBars : gameInformantsPrice
+    mov #playerBars : gameInformantsTypeAdr
+    jmp gameInformantsPropertyContinue
+
+gameInformantsPropertyBetting:
+    mov16 #strInformantBetting : TextPtr // Wettbüro
+    jsr Print_text
+    mov32 gameShopPriceBetting : gameInformantsPrice
+    mov #playerBetting : gameInformantsTypeAdr
+    jmp gameInformantsPropertyContinue
+
+gameInformantsPropertyGambling:
+    mov16 #strInformantGambling : TextPtr // Spielsalon
+    jsr Print_text
+    mov32 gameShopPriceGambling : gameInformantsPrice
+    mov #playerGambling : gameInformantsTypeAdr
+    jmp gameInformantsPropertyContinue
+
+gameInformantsPropertyBrothels:
+    mov16 #strInformantBrothel : TextPtr // Bordell
+    jsr Print_text
+    mov32 gameShopPriceBrothels : gameInformantsPrice
+    mov #playerBrothels : gameInformantsTypeAdr
+    jmp gameInformantsPropertyContinue
+
+gameInformantsPropertyHotels:
+    mov16 #strInformantHotel : TextPtr // Hotel
+    jsr Print_text
+    mov32 gameShopPriceHotels : gameInformantsPrice
+    mov #playerHotels : gameInformantsTypeAdr
+    jmp gameInformantsPropertyContinue
+
+gameInformantsPropertyContinue:
     mov16 #strInformantForJust : TextPtr
     jsr Print_text
-    getRandomRange32 #$00000000 : gameShopPriceBars
+    getRandomRange32 #$00000064 : gameInformantsPrice
     Print_hex32_dec rnd32_result
     lda #'$'
     jsr BSOUT
@@ -94,29 +132,38 @@ gameInformantsPropertyBars:
     jmp !end+
 
 !selectedYes:
-    ldx currentPlayerNumber
+    jsr BSOUT
+    ldx currentPlayerOffset_4
+    Print_hex32_dec playerMoney,x
+    ldx currentPlayerOffset_4
     compare32 playerMoney,x : rnd32_result
     bcc !notEnoughMoney+
 
     ldx currentPlayerNumber
-    inc playerBars, x
+    inc gameInformantsTypeAdr, x
+    ldx currentPlayerOffset_4
     sub32 playerMoney,x :rnd32_result : playerMoney,x
     mov16 #strInformantYes : TextPtr
     jsr Print_text
     jmp !end+
 
 !notEnoughMoney:
-    mov16 #strTransferNotEnough : TextPtr
+    lda #PET_CR
     jsr BSOUT
+    mov16 #strTransferNotEnough : TextPtr
+    jsr Print_text
     jmp !end+
-
-gameInformantsPropertyBetting:
-gameInformantsPropertyGambling:
-gameInformantsPropertyBrothels:
-gameInformantsPropertyHotels:
 
 !end:
     mov16 #strPressKey : TextPtr // Text: Weiter
     jsr Print_text
     jsr Wait_for_key
     rts
+
+// Adress of the player variable Bar, Brothel etc
+gameInformantsTypeAdr:
+    .word $0000
+
+// Negotiated Price
+gameInformantsPrice:
+    .dword $00000000

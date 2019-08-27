@@ -105,13 +105,15 @@ getRandom16:
     //jsr rndTimer            // HighByte generieren
     sta rnd16_result +1
     cmp rnd16_diff + 1
+    beq !end+
     bcs !again-             // Wenn der Wert darüber liegt, neu berechnen
 !skip:
-    //
+
     rndCiaTimer()
     //jsr rndTimer            // lowbyte generieren
     sta rnd16_result
     cmp rnd16_diff
+    beq !end+
     bcs !skip-              // Wenn zu hoch, dann nochmal
 !end:
     add16 rnd16_result : rnd16_low : rnd16_result // Untergrenze hinzuaddieren
@@ -168,6 +170,7 @@ getRandom32:
     rndCiaTimer()
     sta rnd32_result +3
     cmp rnd32_diff + 3      // Ist der Wert zu groß?
+    beq !skip2+
     bcs !skip3-
 
 !skip2:
@@ -179,6 +182,7 @@ getRandom32:
     rndCiaTimer()
     sta rnd32_result +2
     cmp rnd32_diff + 2
+    beq !skip1+
     bcs !skip2-
 
  !skip1:
@@ -189,12 +193,14 @@ getRandom32:
     rndCiaTimer()
     sta rnd32_result + 1
     cmp rnd32_diff + 1
+    beq !skip0+
     bcs !skip1-
 !skip0:
     //jsr rndTimer
     rndCiaTimer()
     sta rnd32_result
     cmp rnd32_diff
+    beq !end+
     bcs !skip0-
 !end:
     add32 rnd32_result : rnd32_low : rnd32_result // Untergrenze hinzuaddieren

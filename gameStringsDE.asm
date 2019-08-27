@@ -900,7 +900,9 @@ strGangwarLoose:
 
 strInformantTitle:
     .byte PET_CR, PET_CR
-    .text " Ihr Informant hat einen Tipp f*r Sie:"
+    .text " Ihr Informant hat einen Tipp f*r Sie"
+    .byte PET_CR
+    .fill 40,PET_LINE
     .byte PET_CR, PET_CR,0
 
 strInformantProperty:
@@ -910,36 +912,39 @@ strInformantProperty:
     .byte PET_CR, PET_CR, 0
 
 strInformantBar:
-    .text "Eine schmierige Bar"
+    .text " Eine schmierige Bar"
     .byte 0
 strInformantBetting:
-    .text "Ein finsteres Wettb*ro"
+    .text " Ein finsteres Wettb*ro"
     .byte 0
 strInformantGambling:
-    .text "Ein ranziger Spielsalon"
+    .text " Ein ranziger Spielsalon"
     .byte 0
 strInformantBrothel:
-    .text "Ein k@siges Bordell"
+    .text " Ein k@siges Bordell"
     .byte 0
 strInformantHotel:
-    .text "Ein bauf@lliges Grandhotel"
+    .text " Ein bauf@lliges Grandhotel"
     .byte 0
 
 strInformantForJust:
-    .byte PET_CR,PET_CR
-    .text "f*r nur "
+    .byte PET_CR,PET_CR,PET_CR
+    .text " f*r nur lumpige "
+    .byte 0
 
 strInformantDeal:
     .byte PET_CR,PET_CR
-    .text "Schlagen Sie ein? "
+    .text " Schlagen Sie ein? (J/N) "
     .byte 0
 
 strInformantYes:
-    .byte PET_CR
-    .text " Das freut mich (lechz)!"
+    .byte PET_CR, PET_CR
+    .text " Das erfreut das Informantenherz."
     .byte PET_CR, PET_CR, 0
 
 strInformantNo:
+    .byte PET_CR, PET_CR
+    .text " Dann kopuliere er selber mit sich, "
     .byte PET_CR
-    .text " Dann eben nicht (grummel)!"
+    .text " elender B*rzel! "
     .byte PET_CR, PET_CR, 0

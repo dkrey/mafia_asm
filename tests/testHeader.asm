@@ -26,5 +26,6 @@ BasicUpstart2(init)
 
 
 init:
+mainTheftOrMenu:
     //jsr charsetAddUmlaut
 jmp main
