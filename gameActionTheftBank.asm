@@ -9,7 +9,7 @@
     lda rnd8_result
     cmp #90
     // DEBUG
-    jmp smallTheftBankSuccess
+    //jmp smallTheftBankSuccess
     // DEBUG
     bcs smallTheftBankSuccess   // Wenn >= 90, überspringe smallTheftBankSuccess
     jmp smallTheftBankFail

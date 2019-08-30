@@ -1,6 +1,15 @@
 //===============================================================================
 // Mafia ASM Project
 //
+/*
+.disk [filename="mafiasm.d64", name="MafiASM" ] {
+    [name="----------------", type="rel"],
+    [name="MAFIA ASM       ", type="prg", segments="THEGAME" ],
+    [name="----------------", type="rel"],
+}
+
+.segment THEGAME []
+*/
 .encoding "petscii_mixed"
 //===============================================================================
 // Set the Basic Loader
@@ -67,7 +76,7 @@ showTitle:
     jsr Print_text_xy                  // Text anzeigen
     jsr Wait_for_key                // auf Testendruck warten
 
-    // Wie viele Spiele, welche Namen etc.
+    // Wie viele Spieler, welche Namen etc.
     jsr howManyPlayers
 
     ldx #00 // Spieler 0 beginnt
@@ -121,7 +130,8 @@ mainGotoJail:
     jmp gameJailStay                // Knast
 
 mainNoMoney:
-    jmp smallTheft                  // Kein Geld, nur kleine Diebstähle
+    jsr smallTheft                  // Kein Geld, nur kleine Diebstähle
+    jmp mainContinue
 
 mainMenu:
     jsr gameMainMenu

@@ -117,7 +117,7 @@ branchSmallTheftPedestrian:
 branchSmallTheftJob:
     jmp smallTheftJob
 branchSmallTheftNothing:
-    jmp mainContinue
+    rts
 // Bankraub
 smallTheftBank:
     #import "gameActionTheftBank.asm"
@@ -156,18 +156,21 @@ smallTheftContinue:
     cmp #0
     bne !end+
 
-    // Wenn Vermögen < 20.000 $ bzw 00004e20h dann nur kleine Diebstähle
+    // Auch kein Shopping bei Schulden
+    lda playerDebtFlag, x
+    cmp #$0
+    bne !end+
+    // Wenn Vermögen < 20.000 $ bzw 00004e20h kein Shopping
     ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte
 
     compare32 playerMoney,y : minMoneyForMenu
     bcc !end+
-    ldy currentPlayerNumber // Auch kein Shopping bei Schulden
-    lda playerDebtFlag, y
-    cmp #$0
-    bne !end+
+
     jsr gameShopMenu
+
 !end:
-    jmp mainContinue
+    //jmp mainContinue
+    rts
 
 //===============================================================================
 // showMisfortune

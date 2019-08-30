@@ -135,8 +135,7 @@ gameJailNoProtitutes:
     jsr Wait_for_key
 
     // Darf in der selben Runde weitermachen
-    ldx currentPlayerNumber
-    jmp mainNextPlayerLoop
+    jmp mainTheftOrMenu
 
 gameJailNoAttorney:
     ldx currentPlayerNumber     // Sind noch Knastrunden übrig?

@@ -40,7 +40,8 @@ gameMainMenuChoice:
 
     cmp #$01        // 1. kleine Diebstähle... dieses Wort...
     bne !skip+
-    jmp smallTheft
+    jsr smallTheft
+    rts
 !skip:
 
     cmp #$02        // 2. Shop
