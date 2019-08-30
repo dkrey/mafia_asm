@@ -14,7 +14,9 @@ inputNo:
 //
 // Der Startbildschirm
 //===============================================================================
-
+strVersion:
+    .text "Beta 1"
+    .byte 0
 strTitleScreen:
     .byte PET_BLACK
     .fill 8, PET_SPACE

@@ -2,7 +2,7 @@
 // Mafia ASM Project
 //
 /*
-.disk [filename="mafiasm.d64", name="MafiASM" ] {
+.disk [filename="mafiasm.d64", name="MAFIA ASM" ] {
     [name="----------------", type="rel"],
     [name="MAFIA ASM       ", type="prg", segments="THEGAME" ],
     [name="----------------", type="rel"],
@@ -68,6 +68,9 @@ showTitle:
     jsr CLEAR
     mov #RED:EXTCOL                 // Roter Overscan
     mov #YELLOW: BGCOL0             // Gelber Hintergrund
+
+    mov16 #strVersion : TextPtr
+    jsr Print_text
 
     ldx #06                         // Zeile setzen
     ldy #00                         // Spalte setzen
