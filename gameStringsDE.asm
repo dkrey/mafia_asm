@@ -535,16 +535,16 @@ strShopBars:
     .text " 3. Bar ....................... "
     .byte 0
 strShopBetting:
-    .text " 4. Wettb*ro ................. "
+    .text " 4. Wettb*ro .................. "
     .byte 0
 strShopGambling:
-    .text " 5. Spielsalon ............... "
+    .text " 5. Spielsalon ................ "
     .byte 0
 strShopBrothels:
-    .text " 6. Nobelbordell ............ "
+    .text " 6. Nobelbordell .............. "
     .byte 0
 strShopHotels:
-    .text " 7. Grandhotel ............. "
+    .text " 7. Grandhotel ................ "
     .byte 0
 
 //===============================================================================
@@ -733,7 +733,7 @@ strTransferWho:
     .byte 0
 
 strTransferAccountant:
-    .text " Der beg&nstigte ist "
+    .text " Der Beg&nstigte ist "
     .byte 0
 
 strTransferAmount:
@@ -829,7 +829,7 @@ strGangwarTitle3:
     .byte PET_CR
     .byte 0
 strGangwarCancel:
-    .text " 0. een Schwanz einkneifen."
+    .text " 0. den Schwanz einkneifen."
     .byte PET_CR,0
 strGangwarImpossible:
     .byte PET_CR
@@ -908,7 +908,7 @@ strInformantTitle:
     .byte PET_CR, PET_CR,0
 
 strInformantProperty:
-    .text " Ey Meister, hab hier diese brandheisse"
+    .text " Chef, ich hab hier diese brandheisse"
     .byte PET_CR
     .text " Immobilie an der Hand: "
     .byte PET_CR, PET_CR, 0
@@ -941,12 +941,10 @@ strInformantDeal:
 
 strInformantYes:
     .byte PET_CR, PET_CR
-    .text " Das erfreut das Informantenherz."
+    .text " Mein Kontaktmann wird sich freuen."
     .byte PET_CR, PET_CR, 0
 
 strInformantNo:
     .byte PET_CR, PET_CR
-    .text " Dann kopuliere er selber mit sich, "
-    .byte PET_CR
-    .text " elender B*rzel! "
+    .text " Dann eben nicht. Grummel."
     .byte PET_CR, PET_CR, 0

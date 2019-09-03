@@ -359,28 +359,6 @@ playerDebtRounds:
     .byte 00
     .byte 00
 
-// Flag Geisel          1 Byte, bit 7 für bpl
-playerHostageFlags:
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
-    .byte 00
-
-// Name Geisel          16 Bytes
-playerHostageNames:
-    .fill playerNameLength,0    // Name Geisel          16 Bytes
-    .fill playerNameLength,0    // Name Geisel          16 Bytes
-    .fill playerNameLength,0    // Name Geisel          16 Bytes
-    .fill playerNameLength,0    // Name Geisel          16 Bytes
-    .fill playerNameLength,0    // Name Geisel          16 Bytes
-    .fill playerNameLength,0    // Name Geisel          16 Bytes
-    .fill playerNameLength,0    // Name Geisel          16 Bytes
-    .fill playerNameLength,0    // Name Geisel          16 Bytes
-
 
 //===============================================================================
 // Titel anzeigen
@@ -446,13 +424,5 @@ resetGame:
     cpx #168
     bne !loop_x-
     rts
-
-    // Geiselnamen löschen
-    tax
-!loop_x:
-    sta playerHostageNames,x
-    inx
-    cpx #(playerNames * playerNameLength)
-    bne !loop_x-
 
     rts

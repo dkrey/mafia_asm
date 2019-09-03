@@ -45,7 +45,17 @@ smallTheftJobSuccess:
     jmp !loop-
 !skip:
     sta ZeroPageTemp                    // Spielernummer für den Fall der Fälle weglegen
+    tax
+    lda playerJailTotal,x               // kein Job bei Knast
+    cmp #00
+    beq !skip+
+    iny
+    cpy playerCount
+    bcc !loop-
+    jmp smallTheftJobNotFound
 
+!skip:
+    lda ZeroPageTemp
     // Einkommen unter 5000$ werden geschont
     asl
     asl
