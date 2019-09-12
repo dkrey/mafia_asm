@@ -15,7 +15,7 @@ inputNo:
 // Der Startbildschirm
 //===============================================================================
 strVersion:
-    .text "Beta 1"
+    .text "Beta 2"
     .byte 0
 strTitleScreen:
     .byte PET_BLACK
@@ -26,16 +26,16 @@ strTitleScreen:
     .fill 8, PET_SPACE
     .fill 23,PET_LINE
     .byte PET_CR,PET_CR,PET_CR
-    .text " After a fable of Sascha Laffrenzen"
+    .text "   After a fable by Sascha Laffrenzen"
     .byte PET_CR,PET_CR
 
     .fill 7, PET_SPACE
-    .text "Content rated: elderly 80+ "
+    .text "Content rated: Elderly 80+ "
     .fill 4,PET_CR
 
 
 
-    .fill 5, PET_SPACE
+    .fill 12, PET_SPACE
     .text "(Press any key)"
 
     .byte PET_RED
@@ -72,9 +72,9 @@ strIsThatCorrect:
     .byte 0
 strGoodLuck:
     .byte PET_CR,PET_CR
-    .text "Godspeed, suckers!"
+    .text " Godspeed, suckers!"
     .byte PET_CR, PET_CR
-    .text "(Press any key)"
+    .text " (Press any key)"
     .byte 0
 
 strWelcomePayment:
@@ -110,7 +110,7 @@ strGameModeChoice:
 // Wiederkehrende Texte
 //===============================================================================
 strYouHave:
-    .text " You have"
+    .text " You have "
     .byte 0
 strHeHas:
     .text " has "
@@ -122,7 +122,7 @@ strPerRound:
 
 strPressKey:
     .byte PET_CR
-    .text "(Press any key)"
+    .text " (Press any key)"
     .byte 0
 strRound:
     .text " round"
@@ -275,6 +275,8 @@ strTheftJail1:
     .text " The police cought you."
     .byte PET_CR
     .text " You've been sentenced to "
+    .byte PET_CR
+    .text " "
     .byte 0
 strTheftJail2:
     .text " of jail."
@@ -403,7 +405,7 @@ strTheftJobIntro2:
     .byte PET_CR
     .byte 0
 strTheftJobIntro3:
-    .text " is working for you as "
+    .text " is working for you as a"
     .byte PET_CR
     .byte 0
 
@@ -532,16 +534,16 @@ strShopBars:
     .text " 3. Bar ....................... "
     .byte 0
 strShopBetting:
-    .text " 4. Gambling office ........... "
+    .text " 4. Gambling office .......... "
     .byte 0
 strShopGambling:
-    .text " 5. Arcade .................... "
+    .text " 5. Arcade ................... "
     .byte 0
 strShopBrothels:
-    .text " 6. Brothel ................... "
+    .text " 6. Brothel ................. "
     .byte 0
 strShopHotels:
-    .text " 7. Grandhotel ................ "
+    .text " 7. Grandhotel ............. "
     .byte 0
 
 //===============================================================================
@@ -758,48 +760,48 @@ strTransferDone:
 // Schicksalschläge
 //===============================================================================
 strDisasterProstitute1:
-    .text " Ihrer Prostituierten sind schwanger. "
+    .text " of your prostitutes became pregnant. "
     .byte PET_CR, 0
 strDisasterProstitute2:
-    .text " Ihrer Prostituierten sind veraltet. "
+    .text " of your prostitutes got antiquated. "
     .byte PET_CR, 0
 strDisasterProstitute3:
-    .text "Sie helfen finanziell mit "
+    .text "You provide financial support of "
     .byte 0
 strDisasterSlotMachines:
-    .text " Ihrer Automaten sind veraltet. "
+    .text " of your slotmachines got antiquated. "
     .byte 0
 strDisasterHadTo:
-    .text " musste(n) "
+    .text " "
     .byte 0
 strDisasterYours:
-    .text " Ihrer"
+    .text " of your"
     .byte 0
 strDisasterCloseDown:
     .byte PET_CR
-    .text " geschlossen werden."
+    .text " had to be shut down."
     .byte PET_CR, 0
 strDisasterReason1:
-    .text " Aus hygenischen Gr*nden"
+    .text " Because of sanitary reasons "
     .byte PET_CR,0
 strDisasterReason2:
-    .text " Wegen akuter Einsturzgefahr"
+    .text " Due to danger of collapse "
     .byte PET_CR,0
 strDisasterReason3:
-    .text " Wegen wiederholter Steuerhinterziehung"
+    .text " Due to repeated fiscal fraud"
     .byte PET_CR,0
 strDisasterReason4:
-    .text " Auf Dr@ngen einer B*rgerinitiative"
+    .text " Because of an action group "
     .byte PET_CR,0
 strDisasterReason5:
-    .text " Aus Fairness gegen*ber Ihren Mitspielern"
+    .text " Out of fairness towards your co-players"
     .byte PET_CR,0
 strDisasterJail1:
     .byte PET_CR
-    .text " Sie selbst erhielten "
+    .text " You were sentenced to "
     .byte 0
 strDisasterJail2:
-    .text " Runden Haft."
+    .text " rounds of jail."
     .byte PET_CR,0
 
 //===============================================================================
@@ -810,140 +812,135 @@ strDisasterJail2:
 
 strGangwarTitle1:
     .byte PET_CR
-    .text " Bandenkrieg"
+    .text " Gang war"
     .byte PET_CR
     .fill 40,PET_LINE
     .byte 0
 strGangwarTitle2:
     .byte PET_CR
-    .text " Mit wem wollen Sie sich anlegen?"
+    .text " Who do you want to mess up?"
     .byte PET_CR, PET_CR,0
 strGangwarTitle3:
     .byte PET_CR
-    .text " Der Kampf entbrennt"
+    .text " The fight begins"
     .byte PET_CR
     .fill 40,PET_LINE
     .byte PET_CR
     .byte 0
 strGangwarCancel:
-    .text " 0. een Schwanz einkneifen."
+    .text " 0. bail out."
     .byte PET_CR,0
 strGangwarImpossible:
     .byte PET_CR
-    .text " Sie hauen Sich selbst eine rein"
+    .text " You punch yourself in the face"
     .byte PET_CR
-    .text " und belassen es dabei."
+    .text " and keep it that way."
     .byte PET_CR,0
 strGangwarMissing:
     .byte PET_CR
-    .text " Daf*r fehlen Ihnen"
+    .text " You don't have "
     .byte PET_CR
-    .text " die richtigen Leute."
+    .text " the right mobsters for that."
     .byte PET_CR,0
 strGangwarSummary1:
     .byte PET_CR
-    .text " Sie wollen bei "
+    .text " You want to mess up "
     .byte 0
 strGangwarSummary2:
     .byte PET_CR
-    .text " gr*ndlich aufr@umen."
+    .text " badly."
     .byte 0
 
 strGangwarAttackersAmount:
     .byte PET_CR
-    .text " Davon passen 9 Schergen"
-    .byte PET_CR
-    .text " in Ihren Kleintransporter."
+    .text " 9 mobsters fit in your van."
     .byte 0
 
 strGangwarAttackersBonus:
     .byte PET_CR
-    .text " Durch Ihre ausgezeichneten Kontakte"
+    .text " Because of your outstanding links"
     .byte PET_CR
-    .text " bekommen Sie Verst@rkung."
+    .text " reinforcements have been sent."
     .byte 0
 
 strGangwarDefendersAmount:
     .byte PET_CR
-    .text " 9 Nachtw@chter schaffen es rechtzeitig"
-    .byte PET_CR
-    .text " zum vereinbarten Treffpunkt. "
+    .text " 9 watchmen made it in time. "
+
     .byte 0
 
 strGangwarDefendersBonus:
     .byte PET_CR
-    .text " Ihr Gegner wurde vorgewarnt"
+    .text " Your enemy has been warned "
     .byte PET_CR
-    .text " und bekommt Unterst&tzung."
+    .text " and gets support."
     .byte 0
 strGangwarCasualties:
-    .text "Verluste:"
+    .text "Casualties:"
     .byte PET_CR,0
 strGangwarBurialCost:
-    .text "Begr@bniskosten:"
+    .text "Burial costs:"
     .byte PET_CR,0
 
 strGangwarWinner1:
     .byte PET_CR, PET_CR
-    .text " Die Familie von "
+    .text " The family of "
     .byte 0
 strGangwarWinner2:
     .byte PET_CR
-    .text " hat den Kampf gewonnen."
+    .text " won the fight"
     .byte 0
 
 strGangwarLoose:
     .byte PET_CR, PET_CR
-    .text " Verlusst f*r "
+    .text " Casualties "
     .byte 0
 
 strInformantTitle:
     .byte PET_CR, PET_CR
-    .text " Ihr Informant hat einen Tipp f*r Sie"
+    .text " Your informant has a clue for you"
     .byte PET_CR
     .fill 40,PET_LINE
     .byte PET_CR, PET_CR,0
 
 strInformantProperty:
-    .text " Ey Meister, hab hier diese brandheisse"
+    .text " Hey Buster, I have a great deal"
     .byte PET_CR
-    .text " Immobilie an der Hand: "
+    .text " on this real estate: "
     .byte PET_CR, PET_CR, 0
 
 strInformantBar:
-    .text " Eine schmierige Bar"
+    .text " A sleazy Bar"
     .byte 0
 strInformantBetting:
-    .text " Ein finsteres Wettb*ro"
+    .text " A shady Betting Office"
     .byte 0
 strInformantGambling:
-    .text " Ein ranziger Spielsalon"
+    .text " A shabby Arcade"
     .byte 0
 strInformantBrothel:
-    .text " Ein k@siges Bordell"
+    .text " A rancid Brothel"
     .byte 0
 strInformantHotel:
-    .text " Ein bauf@lliges Grandhotel"
+    .text " A ruinous Grandhotel"
     .byte 0
 
 strInformantForJust:
     .byte PET_CR,PET_CR,PET_CR
-    .text " f*r nur lumpige "
+    .text " for just "
     .byte 0
 
 strInformantDeal:
     .byte PET_CR,PET_CR
-    .text " Schlagen Sie ein? (J/N) "
+    .text " Accept the deal? (Y/N) "
     .byte 0
 
 strInformantYes:
     .byte PET_CR, PET_CR
-    .text " Das erfreut das Informantenherz."
+    .text " My contact will be pleased."
     .byte PET_CR, PET_CR, 0
 
 strInformantNo:
     .byte PET_CR, PET_CR
-    .text " Dann kopuliere er selber mit sich, "
-    .byte PET_CR
-    .text " elender B*rzel! "
+    .text " Well then get lost. "
     .byte PET_CR, PET_CR, 0

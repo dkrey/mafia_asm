@@ -8,7 +8,7 @@
 
     // Erfolg oder Misserfolg beim Überfall
     getRandomRange8 #01 : #100
-    cmp #10
+    cmp #$0a
     bcs smallTheftPedestrianSuccess   // Wenn >= 10 Erfolg
     jmp smallTheftPedestrianFail
 
@@ -38,7 +38,7 @@ smallTheftPedestrianPlayer:
 
     // Check
     tax                     // Akku nach X
-    pha                     // Akku auch nochmal sichern
+    sta ZeroPageTemp        // noch mal temp sichern
 
     // Sitzt der Spieler im Knast?
     lda playerJailTotal, x
@@ -71,8 +71,8 @@ smallTheftPedestrianBodyguardSuccess:
     mov16 #strTheftPedestrianPlayer1 : TextPtr   // Text: Der Passant war
     jsr Print_text
     mov16 #playerNames : TextPtr
-    // 4 mal weiterschieben für 16 bit: Namensoffset
-    pla
+    // Spielernummer von temp und 4 mal weiterschieben für 16 bit: Namensoffset
+    lda ZeroPageTemp
     asl
     asl
     asl
@@ -94,7 +94,7 @@ smallTheftPedestrianBodyguardSuccess:
     jmp !exit+
 
 smallTheftPedestrianNoBodyguard:
-    pla                 // Spielernummer wieder vom Stack holen
+    lda ZeroPageTemp    // Spielernummer wieder von temp holen
     // Hat der Spieler überhaupt Geld?
     asl
     asl                 // weiterer Shift auf .dword 32bit

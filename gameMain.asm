@@ -2,7 +2,7 @@
 // Mafia ASM Project
 //
 /*
-.disk [filename="mafiasm.d64", name="MAFIA ASM" ] {
+.disk [filename="mafiasm_b2.d64", name="MAFIA ASM" ] {
     [name="----------------", type="rel"],
     [name="MAFIA ASM       ", type="prg", segments="THEGAME" ],
     [name="----------------", type="rel"],
@@ -27,7 +27,9 @@ BasicUpstart2(init)
 #import "libInput.asm"
 #import "libRandom.asm"
 #import "libMath.asm"
-#import "gameStringsDE.asm"
+
+#import "gameStringsEN.asm" // Language
+
 #import "gameActionTheft.asm"
 #import "gameJail.asm"
 #import "gameFinances.asm"
