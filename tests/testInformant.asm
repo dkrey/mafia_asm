@@ -1,9 +1,13 @@
 #import "testHeader.asm"
+#import "../gameDebt.asm"
 #import "../gameInformants.asm"
 #import "../gameActionTheft.asm"
 
 main:
+
 mainNextPlayerLoop:
+    jsr gameDept
+    jsr smallTheft
     // Spieler 1 Bertram sein
     lda #01
     sta currentPlayerNumber
@@ -15,7 +19,7 @@ mainNextPlayerLoop:
 
     // Informententest
     jsr gameCheckInformantHint
-    jsr smallTheft
+
 
 mainContinue:
     jsr main

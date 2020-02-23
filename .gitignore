@@ -4,3 +4,5 @@ bin/
 # Editor project files
 mafia_asm.sublime-project
 mafia_asm.sublime-workspace
+.DS_Store
+*.vsf

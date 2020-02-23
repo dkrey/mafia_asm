@@ -60,9 +60,11 @@ gameJobContinue2:
     tax
     add32 playerMoney, x : rnd32_result : playerMoney, x
 
-    // Gehalt anzeigen
+    // Gehalt anzeigen#
+    mov #WHITE : TEXTCOL
     mov32 rnd32_result : hex32dec_value
     jsr Print_hex32_dec
+    mov #GREEN : TEXTCOL
 
     // Arbeitnehmer anzeigen
     mov16 #strTheftJobIntro2 : TextPtr
@@ -84,6 +86,7 @@ gameJobContinue2:
     jsr Print_text
 
     // Beruf ausknobeln und anzeigen
+    mov #WHITE : TEXTCOL
     getRandomRange8 #0 : #7
     tax
     lda job_table_low, x
@@ -91,7 +94,7 @@ gameJobContinue2:
     lda job_table_high, x
     sta TextPtr + 1
     jsr Print_text
-
+    mov #GREEN : TEXTCOL
     lda #'.'
     jsr BSOUT
 

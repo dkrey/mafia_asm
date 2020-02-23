@@ -15,7 +15,7 @@ inputNo:
 // Der Startbildschirm
 //===============================================================================
 strVersion:
-    .text "Beta 2"
+    .text "Beta 3"
     .byte 0
 strTitleScreen:
     .byte PET_BLACK
@@ -321,7 +321,7 @@ strTheftKerbOwner:
     .text " Die Prostituierte geh&rte zu "
     .byte 0
 strTheftKerbSuccess1:
-    .text " Ihre Performance war lausig."
+    .text " Ihre Begattungsversuche waren k*mmlich."
     .byte PET_CR, PET_CR,0
 
 strTheftKerbSuccess2:
@@ -417,7 +417,7 @@ strTheftJob2:
     .text " Z@pfchen"
     .byte 0
 strTheftJob3:
-    .text " Axelhaar-Stylist"
+    .text " Sackhaar-Fris&r"
     .byte 0
 strTheftJob4:
     .text " Luftpumpe"
@@ -429,7 +429,7 @@ strTheftJob6:
     .text " Arschgeweih"
     .byte 0
 strTheftJob7:
-    .text " Brusthaartoupet"
+    .text " Popeldreher"
     .byte 0
 strTheftJob8:
     .text " T*rstopper"
@@ -535,16 +535,16 @@ strShopBars:
     .text " 3. Bar ....................... "
     .byte 0
 strShopBetting:
-    .text " 4. Wettb*ro .................. "
+    .text " 4. Wettb*ro ................. "
     .byte 0
 strShopGambling:
-    .text " 5. Spielsalon ................ "
+    .text " 5. Spielsalon ............... "
     .byte 0
 strShopBrothels:
-    .text " 6. Nobelbordell .............. "
+    .text " 6. Nobelbordell ............ "
     .byte 0
 strShopHotels:
-    .text " 7. Grandhotel ................ "
+    .text " 7. Grandhotel ............. "
     .byte 0
 
 //===============================================================================
@@ -680,7 +680,7 @@ strRecruitingTitle:
     .fill 40,PET_LINE
     .byte PET_CR,0
 strRecruitingFireAll:
-    .text " Alle wieder entlassen"
+    .text " Alle entlassen"
     .byte 0
 
 //===============================================================================
@@ -733,7 +733,7 @@ strTransferWho:
     .byte 0
 
 strTransferAccountant:
-    .text " Der Beg&nstigte ist "
+    .text " Der Beg*nstigte ist "
     .byte 0
 
 strTransferAmount:
@@ -877,7 +877,7 @@ strGangwarDefendersBonus:
     .byte PET_CR
     .text " Ihr Gegner wurde vorgewarnt"
     .byte PET_CR
-    .text " und bekommt Unterst&tzung."
+    .text " und bekommt Unterst*tzung."
     .byte 0
 strGangwarCasualties:
     .text "Verluste:"
@@ -931,7 +931,7 @@ strInformantHotel:
 
 strInformantForJust:
     .byte PET_CR,PET_CR,PET_CR
-    .text " f*r nur lumpige "
+    .text " f*r nur schlappe "
     .byte 0
 
 strInformantDeal:
@@ -946,5 +946,9 @@ strInformantYes:
 
 strInformantNo:
     .byte PET_CR, PET_CR
-    .text " Dann eben nicht. Grummel."
+    .text " Dann verzieh dich, Meister."
+    .byte PET_CR, PET_CR, 0
+
+strInformantDept:
+    .text " Ihr Bankkonto eher nicht."
     .byte PET_CR, PET_CR, 0

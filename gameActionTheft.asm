@@ -149,6 +149,7 @@ smallTheftJob:
     jmp !end+
 
 // Wenn das Vermögen jetzt über 20.000 $ liegt: einkaufen!
+// TODO aber nicht, wenn man aus dem Hauptmenü kommt
 smallTheftContinue:
 
     // Spieler im Gefängnis?
@@ -159,6 +160,11 @@ smallTheftContinue:
 
     // Auch kein Shopping bei Schulden
     lda playerDebtFlag, x
+    cmp #$0
+    bne !end+
+
+    // Wenn der Spieler schon im Menü war, kein Shopping
+    lda playerCameFromMenu
     cmp #$0
     bne !end+
 

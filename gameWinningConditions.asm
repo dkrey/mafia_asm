@@ -34,11 +34,25 @@ gameCheckWinEstate:
     // Besitzanteile ausrechnen
     jsr gamePropertyCalc
 
+    // Ohne Prozente auch keine Anzeige
+    ldx currentPlayerNumber
+    lda playerEstates,x
+    cmp #$00
+    bne !skip+
+    rts
+
     // Mit Schulden kann man nicht gewinnen
     ldx currentPlayerNumber
     lda playerDebtFlag,x
     cmp #$00
     beq !skip+
+    rts
+!skip:
+    // mit neuen Schulden kann man auch nicht gewinnen
+    ldx currentPlayerOffset_4
+    lda playerMoney + 3, x
+    and #$80
+    bpl !skip+  // Keine Schulden
     rts
 
 !skip:

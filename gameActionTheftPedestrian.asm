@@ -100,7 +100,15 @@ smallTheftPedestrianNoBodyguard:
     asl                 // weiterer Shift auf .dword 32bit
     tax
 
+    lda playerMoney + 3, x
+    and #$80
+    bpl !nodept+  // Keine Schulden
+    jmp smallTheftPedestrianContinue  // doch nix
+
+    !nodept:
     lda playerMoney,x                   // Pos im Speicher
+    // Erst auf Schulden prüfen
+
     compare32 playerMoney,x : #$00000064 // Bei weniger als 100 $ kein Diebstahl
 
     bcs smallTheftPedestrianPlayer2

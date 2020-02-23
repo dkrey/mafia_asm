@@ -944,3 +944,7 @@ strInformantNo:
     .byte PET_CR, PET_CR
     .text " Well then get lost. "
     .byte PET_CR, PET_CR, 0
+
+strInformantDept:
+    .text " You bankaccount might not."
+    .byte PET_CR, PET_CR, 0

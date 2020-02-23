@@ -10,7 +10,7 @@ gameCheckInformantHint:
 gameCheckInformantHint2:
     lda playerDebtFlag, x
     cmp #0
-    beq gameCheckInformats  // Nur óhne Schulden zum Informanten
+    beq gameCheckInformats  // Nur ohne Schulden zum Informanten
     rts
 
     // 90 / sqrt(1+Informanten)
@@ -38,9 +38,9 @@ gameCheckInformats:
     mov #BLACK : TEXTCOL           // Schwarze Schrift
     mov16 #strInformantTitle : TextPtr
     jsr Print_text
-    getRandomRange8 #0 : #3
-    cmp #0
-    beq gameInformantsProperty
+    //getRandomRange8 #0 : #3
+    //cmp #0
+    //beq gameInformantsProperty
     //später mal verschiedene Arten, erstmal dieser eine Tipp
     // denkbar später Entführungen und andere Verbrechen
 
@@ -113,6 +113,22 @@ gameInformantsPropertyContinue:
     Print_hex32_dec rnd32_result
     lda #'$'
     jsr BSOUT
+    lda #PET_CR
+    jsr BSOUT
+    lda #PET_CR
+    jsr BSOUT
+
+    // Eigenes Vermögen anzeigen
+    mov16 #strYouHave : TextPtr
+    jsr Print_text
+    ldy currentPlayerOffset_4
+    mov32 playerMoney,y : hex32dec_value
+    jsr Print_hex32_dec_signed
+    // mit Einheit $
+    lda #' '
+    jsr BSOUT
+    lda #'$'
+    jsr BSOUT
     lda PET_CR
     jsr BSOUT
     mov16 #strInformantDeal : TextPtr
@@ -133,11 +149,6 @@ gameInformantsPropertyContinue:
 
 !selectedYes:
     jsr BSOUT
-    ldx currentPlayerOffset_4
-    Print_hex32_dec playerMoney,x
-    ldx currentPlayerOffset_4
-    compare32 playerMoney,x : rnd32_result
-    bcc !notEnoughMoney+
 
     ldx currentPlayerNumber
     inc gameInformantsTypeAdr, x
@@ -145,14 +156,16 @@ gameInformantsPropertyContinue:
     sub32 playerMoney,x :rnd32_result : playerMoney,x
     mov16 #strInformantYes : TextPtr
     jsr Print_text
-    jmp !end+
 
-!notEnoughMoney:
+    // Schulden erlaubt mit Hinweis
+    ldx currentPlayerOffset_4
+    compare32 playerMoney,x : rnd32_result
+    bcs !end+
+
     lda #PET_CR
     jsr BSOUT
-    mov16 #strTransferNotEnough : TextPtr
+    mov16 #strInformantDept : TextPtr
     jsr Print_text
-    jmp !end+
 
 !end:
     mov16 #strPressKey : TextPtr // Text: Weiter

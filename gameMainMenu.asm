@@ -1,13 +1,17 @@
 #importonce
 
 gameMainMenu:
-    // Anzeige der Pfändungsgüter
+    // Anzeige
     jsr CLEAR
     mov #BLACK : EXTCOL             // Schwarzer Overscan
     mov #RED : BGCOL0               // Roter Hintergrund
     mov #BLACK : TEXTCOL            // Schwarze Schrift
 
-   // Spielernamen anzeigen
+    // Menü-Flag setzen, damit nach dem Diebstahl nicht mehr eingekauft werden kann
+    lda #01
+    sta playerCameFromMenu
+
+    // Spielernamen anzeigen
     ldy currentPlayerOffset_16      // Offset für Spielernamen 16 Byte
 
     lda #PET_CR                     // Zeilenumbruch

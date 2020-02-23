@@ -27,6 +27,10 @@ playerNames:
 playerCount:
     .byte 08
 
+// Spieler war schon im Hauptmenü
+playerCameFromMenu:
+    .byte 0
+
 // Spieler, der an der Reihe ist 0-7(max)
 currentPlayerNumber:
     .byte 0
@@ -126,7 +130,7 @@ playerEmployee:
 // Vermögen: 4 Byte pro Spieler
 playerMoney:
     .dword $00000064
-    .dword $0001000a
+    .dword $0000000a
     .dword $00000064
     .dword $00000064
     .dword $00000064

@@ -61,7 +61,7 @@ gameBriberyMenu:
     mov16 #strBriberyTitle : TextPtr
     jsr Print_text
 
-    // Anzeige Polzilei
+    // Anzeige Pozilei
     lda #PET_SPACE
     jsr BSOUT
     lda #'1'
@@ -76,7 +76,9 @@ gameBriberyMenu:
     jsr Print_hex32_dec_signed
     lda #'$'
     jsr BSOUT
-
+    lda #' '
+    jsr BSOUT
+    jsr BSOUT
     mov16 #strPerRound : TextPtr // Text: "Pro Runde"
     jsr Print_text
     lda #':'
@@ -105,6 +107,9 @@ gameBriberyMenu:
     mov32 gameBribePriceInspectors : hex32dec_value
     jsr Print_hex32_dec_signed
     lda #'$'
+    jsr BSOUT
+
+    lda #' '
     jsr BSOUT
 
     mov16 #strPerRound : TextPtr // Text: "Pro Runde"
@@ -137,6 +142,8 @@ gameBriberyMenu:
     lda #'$'
     jsr BSOUT
 
+    lda #' '
+    jsr BSOUT
     mov16 #strPerRound : TextPtr // Text: "Pro Runde"
     jsr Print_text
     lda #':'
@@ -167,6 +174,8 @@ gameBriberyMenu:
     lda #'$'
     jsr BSOUT
 
+    lda #' '
+    jsr BSOUT
     mov16 #strPerRound : TextPtr // Text: "Pro Runde"
     jsr Print_text
     lda #':'

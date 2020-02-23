@@ -28,7 +28,7 @@ BasicUpstart2(init)
 #import "libRandom.asm"
 #import "libMath.asm"
 
-#import "gameStringsEN.asm" // Language
+#import "gameStringsDE.asm" // Language
 
 #import "gameActionTheft.asm"
 #import "gameJail.asm"
@@ -130,11 +130,16 @@ mainTheftOrMenu:
     compare32 playerMoney,y : minMoneyForMenu
     bcc mainNoMoney
     jmp mainMenu                    // Geld ist vorhanden, ab ins Hauptmenü
+                                    // Bei Schulden ist das Hauptmenü auch erlaubt
 
 mainGotoJail:
     jmp gameJailStay                // Knast
 
 mainNoMoney:
+    // Menü-Flag setzen, ohne Hauptmenü kann direkt eingekaft werden.
+    lda #0
+    sta playerCameFromMenu
+
     jsr smallTheft                  // Kein Geld, nur kleine Diebstähle
     jmp mainContinue
 

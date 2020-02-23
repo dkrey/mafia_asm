@@ -25,6 +25,10 @@ winFactorEstatePercentage:
 playerCount:
     .byte 0
 
+// Spieler war schon im Hauptmenü
+playerCameFromMenu:
+    .byte 0
+
 // Spieler, der an der Reihe ist 0-7(max)
 currentPlayerNumber:
     .byte 0
@@ -368,6 +372,7 @@ resetGame:
     lda #00
     sta playerCount
     sta currentPlayerNumber
+    sta playerCameFromMenu
     sta gameOver
     sta gameMode
 
