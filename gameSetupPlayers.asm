@@ -185,7 +185,7 @@ welcomePayment:
     asl
     asl
     tay
-    add32 playerMoney, y : #$0010EA60 : playerMoney, y
+    add32 playerMoney, y : #$0000EA60 : playerMoney, y
     inx
     cpx playerCount                 // Solange x< Spieleranzahl
     bne !loop-                      // weiter mit Schleife
