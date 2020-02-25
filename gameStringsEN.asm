@@ -946,5 +946,5 @@ strInformantNo:
     .byte PET_CR, PET_CR, 0
 
 strInformantDept:
-    .text " You bankaccount might not."
+    .text " You bankaccount might not be."
     .byte PET_CR, PET_CR, 0

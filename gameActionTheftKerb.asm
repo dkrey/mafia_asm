@@ -73,10 +73,11 @@ smallTheftKerbContinue:
 
     mov16 #strTheftKerbSuccess2 : TextPtr // Text: "Sie waren sehr beeindruckend"
     jsr Print_text
-
+    mov #WHITE : TEXTCOL
     print_int32 smallTheftJackpot
     lda #'$'
     jsr BSOUT
+    mov #YELLOW : TEXTCOL
 
     mov16 #strTheftKerbSuccess3 : TextPtr // Text: "dürfen sie behalten"
     jsr Print_text

@@ -15,7 +15,7 @@ inputNo:
 // Der Startbildschirm
 //===============================================================================
 strVersion:
-    .text "Beta 3"
+    .text "RC 1"
     .byte 0
 strTitleScreen:
     .byte PET_BLACK
@@ -321,20 +321,22 @@ strTheftKerbOwner:
     .text " Die Prostituierte geh&rte zu "
     .byte 0
 strTheftKerbSuccess1:
-    .text " Ihre Begattungsversuche waren k*mmlich."
-    .byte PET_CR, PET_CR,0
+    .text " Ihre Begattungsversuche waren "
+    .byte PET_CR
+    .text " unterirdisch."
+    .byte PET_CR,PET_CR,0
 
 strTheftKerbSuccess2:
-    .text " Die Prostituierte hat sich einen"
+    .text " Die Prostituierte h@ngt ihren "
     .byte PET_CR
-    .text " neuen Job gesucht."
+    .text " Job an den Nagel."
     .byte PET_CR, PET_CR
-    .text " Die Tageseinnahmen von "
+    .text " Sie sind mit den Tageseinnahmen von"
+    .byte PET_CR, PET_SPACE
     .byte 0
 
 strTheftKerbSuccess3:
-    .byte PET_CR
-    .text " d*rfen sie behalten."
+    .text " unerkannt entkommen."
     .byte PET_CR, 0
 
 strTheftKerbFail:
@@ -941,8 +943,8 @@ strInformantDeal:
 
 strInformantYes:
     .byte PET_CR, PET_CR
-    .text " Mein Kontaktmann wird sich freuen."
-    .byte PET_CR, PET_CR, 0
+    .text " Wir haben einen Deal!"
+    .byte PET_CR, 0
 
 strInformantNo:
     .byte PET_CR, PET_CR
@@ -950,5 +952,5 @@ strInformantNo:
     .byte PET_CR, PET_CR, 0
 
 strInformantDept:
-    .text " Ihr Bankkonto eher nicht."
+    .text " Und in der Kasse herrscht nun Ebbe."
     .byte PET_CR, PET_CR, 0

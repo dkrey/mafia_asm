@@ -109,10 +109,13 @@ gameInformantsPropertyHotels:
 gameInformantsPropertyContinue:
     mov16 #strInformantForJust : TextPtr
     jsr Print_text
+    mov #WHITE : TEXTCOL
     getRandomRange32 #$00000064 : gameInformantsPrice
     Print_hex32_dec rnd32_result
+
     lda #'$'
     jsr BSOUT
+    mov #BLACK : TEXTCOL
     lda #PET_CR
     jsr BSOUT
     lda #PET_CR
@@ -123,12 +126,12 @@ gameInformantsPropertyContinue:
     jsr Print_text
     ldy currentPlayerOffset_4
     mov32 playerMoney,y : hex32dec_value
+    mov #WHITE : TEXTCOL
     jsr Print_hex32_dec_signed
     // mit Einheit $
-    lda #' '
-    jsr BSOUT
     lda #'$'
     jsr BSOUT
+    mov #BLACK : TEXTCOL
     lda PET_CR
     jsr BSOUT
     mov16 #strInformantDeal : TextPtr
