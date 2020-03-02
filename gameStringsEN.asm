@@ -3,7 +3,7 @@
 //===============================================================================
 // InputYESNO
 //
-// Eingabe Ja / Nein bzw. yes no später
+// Input Yes / No
 //===============================================================================
 inputYes:
     .byte 'Y'
@@ -12,10 +12,10 @@ inputNo:
 //===============================================================================
 // titleScreen
 //
-// Der Startbildschirm
+// The Titlescreen
 //===============================================================================
 strVersion:
-    .text "Beta 2"
+    .text "RC 1"
     .byte 0
 strTitleScreen:
     .byte PET_BLACK
@@ -64,7 +64,7 @@ strEnterName:
 strCheckAllNames:
     .byte PET_CLEAR_SCREEN
     .byte PET_YELLOW
-    .text "Todays players: "
+    .text "Today's players: "
     .byte PET_CR, PET_CR
     .byte 0
 strIsThatCorrect:
@@ -90,7 +90,7 @@ strWelcomePayment:
 //===============================================================================
 strGameModeChoice:
     .byte PET_CR, PET_CR
-    .text " Please chose the game's goal!"
+    .text " Please choose the game's goal!"
     .byte PET_CR, PET_CR
     .text " 1. The whole neighborhood"
     .byte PET_CR
@@ -168,7 +168,7 @@ strJailEscape:
     .byte PET_CR, 0
 
 strJailProstitute:
-    .text " Your received the message that"
+    .text " Your received a message that"
     .byte PET_CR
     .text " one of your prostitutes went"
     .byte PET_CR
@@ -216,7 +216,7 @@ strSmallTheftMenu1:
 strSmallTheftMenu2:
     .text "   Rip off a pedestrian .......... 5"
     .byte PET_CR, PET_CR
-    .text "   Find a honest job ............. 6"
+    .text "   Find an honest job ............ 6"
     .byte PET_CR, PET_CR
     .text "   Nothing ....................... 7"
     .byte PET_CR, PET_CR
@@ -312,7 +312,7 @@ strTheftBarSuccess:
     .text " The robbery brought you "
     .byte 0
 strTheftBarFail:
-    .text " You managed to get way, but"
+    .text " You managed to get away, but"
     .byte PET_CR
     .text " without any loot. "
     .byte PET_CR, PET_CR , 0
@@ -328,7 +328,7 @@ strTheftKerbSuccess1:
 strTheftKerbSuccess2:
     .text " The prostitute decided to look"
     .byte PET_CR
-    .text " for a new job."
+    .text " for a different job."
     .byte PET_CR, PET_CR
     .text " The day's takings of "
     .byte 0
@@ -377,9 +377,9 @@ strTheftJobWait:
 
 strTheftTooRich:
     .byte PET_CR
-    .text " Oh please..."
+    .text " Oh come on..."
     .byte PET_CR, PET_CR
-    .text " With your income "
+    .text " With this much income "
     .byte PET_CR
     .text " you won't dirty your hands."
     .byte PET_CR, 0
