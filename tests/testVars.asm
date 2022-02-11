@@ -182,7 +182,7 @@ playerEstates:
 // Besitz:
 playerSlotMachines:
     .byte $0F
-    .byte $0a
+    .byte $03
     .byte $01
     .byte $01
     .byte $01
@@ -191,7 +191,7 @@ playerSlotMachines:
     .byte $01
 playerProstitutes:
     .byte $00
-    .byte $0A
+    .byte $00
     .byte $09
     .byte $09
     .byte $09
@@ -209,7 +209,7 @@ playerBars:
     .byte $0a
 playerBetting:
     .byte $00
-    .byte $04
+    .byte $00
     .byte $00
     .byte $00
     .byte $00
@@ -218,7 +218,7 @@ playerBetting:
     .byte $00
 playerGambling:
     .byte $00
-    .byte $05
+    .byte $00
     .byte $00
     .byte $00
     .byte $00
@@ -227,7 +227,7 @@ playerGambling:
     .byte $00
 playerBrothels:
     .byte $00
-    .byte $06
+    .byte $00
     .byte $03
     .byte $04
     .byte $05
@@ -246,8 +246,8 @@ playerHotels:
 
 // Personal: 10 Byte pro Spieler
 playerGunfighters:
+    .byte $0a
     .byte $00
-    .byte $0A
     .byte $00
     .byte $00
     .byte $00
@@ -257,7 +257,7 @@ playerGunfighters:
 
 playerBodyguards:
     .byte $00
-    .byte $01
+    .byte $00
     .byte $09
     .byte $09
     .byte $09
@@ -267,7 +267,7 @@ playerBodyguards:
 
 playerGuards:
     .byte $00
-    .byte $01
+    .byte $00
     .byte $00
     .byte $00
     .byte $00
@@ -277,7 +277,7 @@ playerGuards:
 
 playerInformants:
     .byte $00
-    .byte $01
+    .byte $0a
     .byte $00
     .byte $00
     .byte $00
@@ -287,7 +287,7 @@ playerInformants:
 
 playerAttorneys:
     .byte $00
-    .byte $01
+    .byte $00
     .byte $00
     .byte $00
     .byte $00
@@ -299,7 +299,7 @@ playerAttorneys:
 //Bestechungen:
 playerPolice:
     .byte $0A
-    .byte $01
+    .byte $00
     .byte $00
     .byte $00
     .byte $00
@@ -309,7 +309,7 @@ playerPolice:
 
 playerInspectors:
     .byte $00
-    .byte $01
+    .byte $00
     .byte $00
     .byte $00
     .byte $00
@@ -319,7 +319,7 @@ playerInspectors:
 
 playerJudges:
     .byte $00
-    .byte $01
+    .byte $00
     .byte $00
     .byte $00
     .byte $00
@@ -329,7 +329,7 @@ playerJudges:
 
 playerStateAttorneys:
     .byte $00
-    .byte $01
+    .byte $00
     .byte $00
     .byte $00
     .byte $00
@@ -339,7 +339,7 @@ playerStateAttorneys:
 
 playerMajors:
     .byte $00
-    .byte $01
+    .byte $00
     .byte $00
     .byte $00
     .byte $00

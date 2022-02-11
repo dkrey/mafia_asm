@@ -15,7 +15,7 @@ inputNo:
 // The Titlescreen
 //===============================================================================
 strVersion:
-    .text "RC 1"
+    .text "RC 2
     .byte 0
 strTitleScreen:
     .byte PET_BLACK

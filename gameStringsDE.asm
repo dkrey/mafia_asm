@@ -15,7 +15,7 @@ inputNo:
 // Der Startbildschirm
 //===============================================================================
 strVersion:
-    .text "RC 1"
+    .text "RC 2"
     .byte 0
 strTitleScreen:
     .byte PET_BLACK
@@ -72,7 +72,7 @@ strIsThatCorrect:
     .byte 0
 strGoodLuck:
     .byte PET_CR,PET_CR
-    .text "M&ge der Bessere gewinnen!"
+    .text "M&ge der Schlechtere gewinnen!"
     .byte PET_CR, PET_CR
     .text "(Weiter mit beliebiger Taste)"
     .byte 0

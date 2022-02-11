@@ -1,4 +1,5 @@
 #import "testHeader.asm"
+#import "../gameOverview.asm"
 #import "../gameDebt.asm"
 #import "../gameInformants.asm"
 #import "../gameActionTheft.asm"
@@ -6,9 +7,10 @@
 main:
 
 mainNextPlayerLoop:
-    jsr gameDept
+    //jsr gameDept
+    jsr gameOverviewMenu
     jsr smallTheft
-    // Spieler 1 Bertram sein
+    // Spieler 2 Bertram sein
     lda #01
     sta currentPlayerNumber
     jsr calcPlayerOffsets

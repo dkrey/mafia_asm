@@ -2,6 +2,7 @@
 
 
 main:
+/*
     //getRandomRange16 #$0001 : #$0064
     //print_int16 rnd16_result
 
@@ -13,15 +14,18 @@ main:
 
     //randomPerm8 #$08
 
-    getRandomRange32 #$00000000 : randomUpper
-    print_int32 rnd32_result
+    //getRandomRange32 #$00000000 : randomUpper
+    //print_int32 rnd32_result
+    //getRandomRange8 #$00 : #$08
+    //print_int8 rnd8_result
+
     lda #PET_CR
     jsr BSOUT
     jsr Wait_for_key
     jmp main
 randomUpper:
     .dword $00037100
-/*
+*/
 //Zahlenreihe Durcheinander:
 randomPerm8 #$08
     ldx #00
@@ -41,6 +45,6 @@ randomPerm8 #$08
     jsr BSOUT
     jsr Wait_for_key
     jmp main
-*/
+
 mainNextPlayerLoop:
 mainContinue:
