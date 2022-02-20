@@ -49,8 +49,9 @@ gameDeptSet:
 
 gameDeptRounds:
     dec playerDebtRounds, x // Eine Runde abziehen
-
     lda playerDebtRounds, x
+    cmp #$06                // mehr als 6 Runden , was nicht gehen sollte
+    bcs gameDeptSet
     cmp #00                 // Alle Runden abgelaufen, Pfändung
     bne gameDeptShow
     jmp gameDeptPawn

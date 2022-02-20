@@ -40,7 +40,7 @@ strTitleScreen:
 
     .byte PET_RED
     .fill 5, PET_CR
-    .text "(c)2019 Geriatrisches Kombinat f*r"
+    .text "(c)2019 Volksfremdes Kombinat f*r"
     .byte PET_CR
     .text "   D*ngemittel und Datenverarbeitung"
     .byte PET_BLACK, 0
@@ -72,7 +72,7 @@ strIsThatCorrect:
     .byte 0
 strGoodLuck:
     .byte PET_CR,PET_CR
-    .text "M&ge der Schlechtere gewinnen!"
+    .text "M&ge der Miesere gewinnen!"
     .byte PET_CR, PET_CR
     .text "(Weiter mit beliebiger Taste)"
     .byte 0

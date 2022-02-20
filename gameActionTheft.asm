@@ -184,7 +184,7 @@ smallTheftContinue:
 // Unglück für alle
 //===============================================================================
 showMisfortune:
-    getRandomRange8 #0 : #8
+    getRandomRange8 #0 : #7
     //lda #07             // DEBUG Immer Mutter
     //sta rnd_result      // DEBUG Immer Mutter
     tax

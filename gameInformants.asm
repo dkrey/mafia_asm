@@ -149,7 +149,7 @@ gameInformantsPropertyContinue:
     jsr BSOUT
     mov16 #strInformantNo : TextPtr
     jsr Print_text
-    jmp !end+
+    jmp !finalend+
 
 gameInformantsSetProperty:
     ldx currentPlayerNumber
@@ -194,24 +194,19 @@ gameInformantsSetProperty:
 
     // Schulden erlaubt mit Hinweis
     ldx currentPlayerOffset_4
-    compare32 playerMoney,x : rnd32_result
-    bcs !end+
+    lda playerMoney + 3, x
+    and #$80
+    bpl !finalend+  // Keine Schulden
+
+    mov16 #strInformantDept : TextPtr
+    jsr Print_text
 
     lda #PET_CR
     jsr BSOUT
     
-    mov16 #strInformantDept : TextPtr
-    jsr Print_text
 
-!end:
-    // Schulden prüfen und setzen
-    ldx currentPlayerOffset_4
-    lda playerMoney + 3, x
-    and #$80
-    bpl !nodept+  // Keine Schulden
-    lda #01
-    sta playerDebtFlag, x
- !nodept:   
+
+!finalend:
     mov16 #strPressKey : TextPtr // Text: Weiter
     jsr Print_text
     jsr Wait_for_key

@@ -21,6 +21,8 @@ mainNextPlayerLoop:
 
     // Informententest
     jsr gameCheckInformantHint
+    // Schulden prüfen
+    jsr gameDept
 
 
 mainContinue:

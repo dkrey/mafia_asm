@@ -73,7 +73,7 @@ getRandom8:
 // das Ergebnis steht dann im Akku
 //===============================================================================
 getRandomBounds:
-    dec rnd8_high           // stupid fix
+    //dec rnd8_high           // stupid fix
     lda rnd8_high           // Obergrenze berechnen
     sta rnd8_high
     cmp rnd8_low            // Wenn die Obergrenze = Untergrenze ist

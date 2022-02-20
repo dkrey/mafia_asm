@@ -30,7 +30,7 @@ smallTheftBarSuccess:
 
     lda rnd8_result
     cmp randomFactor                        // Ist es eine Bar eines Mitspielers?
-    bcs smallTheftBarContinue
+    bcc smallTheftBarContinue
 
 smallTheftBarOwner:
     getRandomRange8 #0 : playerCount

@@ -21,12 +21,14 @@ gameShopPriceHotels:
 gameShopCheckBudget:
     lda #0
     sta gameShopBuyingMask
+
     // Schulden?
-    ldx currentPlayerNumber
-    lda playerDebtFlag, x
-    cmp #00
-    beq !skip+  // keine Schulden, also weiter
+    ldx currentPlayerOffset_4
+    lda playerMoney + 3, x
+    and #$80
+    bpl !skip+  // Keine Schulden
     jmp !end+   // doch Schulden, also Ende
+    
 !skip:
     // Gehalt holen und vergleichen
     ldy currentPlayerOffset_4       // Offset für dword holen: 4 Byte

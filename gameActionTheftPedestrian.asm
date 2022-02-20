@@ -28,7 +28,7 @@ smallTheftPedestrianSuccess:
     lda rnd8_result
     cmp randomFactor                        // Trifft es einen Mitspieler
 
-    bcc smallTheftPedestrianPlayer
+    bcs smallTheftPedestrianPlayer
     jmp smallTheftPedestrianContinue
 
 smallTheftPedestrianPlayer:
