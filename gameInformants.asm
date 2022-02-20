@@ -210,7 +210,7 @@ gameInformantsSetProperty:
     and #$80
     bpl !nodept+  // Keine Schulden
     lda #01
-    sta playerDebtFlag,x
+    sta playerDebtFlag, x
  !nodept:   
     mov16 #strPressKey : TextPtr // Text: Weiter
     jsr Print_text

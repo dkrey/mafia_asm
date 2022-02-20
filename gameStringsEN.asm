@@ -15,8 +15,9 @@ inputNo:
 // The Titlescreen
 //===============================================================================
 strVersion:
-    .text "RC 2
+    .text "RC 2"
     .byte 0
+
 strTitleScreen:
     .byte PET_BLACK
     .fill 8, PET_SPACE
@@ -26,7 +27,7 @@ strTitleScreen:
     .fill 8, PET_SPACE
     .fill 23,PET_LINE
     .byte PET_CR,PET_CR,PET_CR
-    .text "   After a fable by Sascha Laffrenzen"
+    .text "   After a fable by Lascha Saffrenzen"
     .byte PET_CR,PET_CR
 
     .fill 7, PET_SPACE
