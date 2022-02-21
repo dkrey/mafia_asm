@@ -8,6 +8,7 @@ würfeln von 0-10
 Abfrage von Disastern: Wenn genug Bestechungen: Würfeln für mehr Angreifer bzw. Wächter
 dann max 3 Revolverhelden oder 3 Wächter extra, ebenfalls per Zufall
 
+Bei Schulden kein Bandenkrieg
  */
 
 
@@ -45,7 +46,22 @@ gameGangwarCheck:
     jsr Wait_for_key
     rts
 
-// RH vorhanden
+    // RH vorhanden
+!skip:
+    // Schulden prüfen
+    ldx currentPlayerOffset_4
+    lda playerMoney + 3, x
+    and #$80
+    bpl !skip+  // Keine Schulden
+    mov16 #strGangwarDebt : TextPtr
+    jsr Print_text
+    lda #PET_CR
+    jsr BSOUT
+    mov16 #strPressKey : TextPtr // Text: Weiter
+    jsr Print_text
+    jsr Wait_for_key
+    rts
+
 !skip:
     mov16 #strGangwarTitle2 : TextPtr // Text: "Überschrift2"
     jsr Print_text
@@ -233,6 +249,7 @@ gameGangwarDefenderSummary:
     mov16 #strHeHas : TextPtr
     jsr Print_text
     ldx gameGangwarVictim
+
     lda playerGuards, x
     sta gameGangwarDefenders
     pha
@@ -254,9 +271,10 @@ gameGangwarDefenderSummary:
 !skip:
     // Verteidigungsbonus durch Informanten
     ldx gameGangwarVictim
+
     // Angriffbonus durch Bestechungen
     mov16 #$0000 : disasterTotalFactor
-    mov gameGangwarVictim : disasterPlayer
+    mov gameGangwarVictim: disasterPlayer
     jsr gameCalcTotalFactor
     lda #PET_CR
     jsr BSOUT
@@ -323,6 +341,7 @@ gameGangwarStartFight:
     plot_set
 
     lda gameGangwarVictim
+
     asl
     asl
     asl
@@ -480,6 +499,7 @@ gameGangwarFightOver:
     sub32 playerMoney,x : gameGangwarAttackersBurial : playerMoney,x
 
     lda gameGangwarVictim
+
     asl
     asl
     tax
@@ -496,6 +516,7 @@ gameGangwarFightOver:
     sta playerGunfighters, x
 
     ldx gameGangwarVictim
+
     lda playerGuards, x
     sec
     sbc gameGangwarDefendersLoss
@@ -518,6 +539,7 @@ gameGangwarFightOver:
 !skip:
     mov16 #playerNames : TextPtr
     lda gameGangwarVictim
+
     asl
     asl
     asl
@@ -538,6 +560,7 @@ gameGangwarFightOver:
 
     mov16 #playerNames : TextPtr
     lda gameGangwarVictim
+
     asl
     asl
     asl
@@ -553,6 +576,7 @@ gameGangwarFightOver:
 // Dinge, die dem Verlierer abgezogen werden, teuerste Immobilien zuerst
 gameGangwarFightLoss:
     ldx gameGangwarVictim
+
 // Hotel?
     lda playerHotels, x
     cmp #00
@@ -668,6 +692,7 @@ gameGangwarFightLoss:
 
 !skip:
 // Prost?
+    ldx gameGangwarVictim
     lda playerProstitutes, x
     cmp #00
     beq !skip+

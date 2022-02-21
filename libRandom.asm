@@ -72,6 +72,7 @@ getRandom8:
 // Berechnet einen 8 Bit Zufallswert in den Grenzen von rnd_low und rnd_high
 // das Ergebnis steht dann im Akku
 //===============================================================================
+/*
 getRandomBounds:
     //dec rnd8_high           // stupid fix
     lda rnd8_high           // Obergrenze berechnen
@@ -97,6 +98,95 @@ getRandomBounds:
 !gofwd:
     dex
     bne !goback-
+    clc
+    adc rnd8_result
+    lda rnd8_low
+    adc rnd8_diff
+!end:
+    sta rnd8_result
+    rts
+
+*/
+getRandomBounds:
+    lda rnd8_high           // Obergrenze berechnen
+    sta rnd8_high
+    cmp rnd8_low            // Wenn die Obergrenze = Untergrenze ist
+    bne !skip+
+    jmp !end+
+!skip:
+    sec
+    sbc rnd8_low
+    sta rnd8_diff
+    rndSidTimer()
+    rndCiaTimer()
+    sta rnd8_result
+    lda #0
+
+    asl 
+    rol rnd8_diff
+    bcc !gofwd+
+    clc 
+    adc rnd8_result
+    bcc !gofwd+
+    inc rnd8_diff
+
+!gofwd:
+    asl 
+    rol rnd8_diff
+    bcc !gofwd+
+    clc 
+    adc rnd8_result
+    bcc !gofwd+
+    inc rnd8_diff
+!gofwd:
+    asl 
+    rol rnd8_diff
+    bcc !gofwd+
+    clc 
+    adc rnd8_result
+    bcc !gofwd+
+    inc rnd8_diff
+!gofwd:
+    asl 
+    rol rnd8_diff
+    bcc !gofwd+
+    clc 
+    adc rnd8_result
+    bcc !gofwd+
+    inc rnd8_diff
+!gofwd:
+    asl 
+    rol rnd8_diff
+    bcc !gofwd+
+    clc 
+    adc rnd8_result
+    bcc !gofwd+
+    inc rnd8_diff
+!gofwd:
+    asl 
+    rol rnd8_diff
+    bcc !gofwd+
+    clc 
+    adc rnd8_result
+    bcc !gofwd+
+    inc rnd8_diff
+!gofwd:
+    asl 
+    rol rnd8_diff
+    bcc !gofwd+
+    clc 
+    adc rnd8_result
+    bcc !gofwd+
+    inc rnd8_diff
+!gofwd:
+    asl 
+    rol rnd8_diff
+    bcc !gofwd+
+    clc 
+    adc rnd8_result
+    bcc !gofwd+
+    inc rnd8_diff
+!gofwd:
     clc
     adc rnd8_result
     lda rnd8_low

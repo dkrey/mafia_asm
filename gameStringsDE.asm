@@ -901,6 +901,13 @@ strGangwarLoose:
     .byte PET_CR, PET_CR
     .text " Verlusst f*r "
     .byte 0
+    
+strGangwarDebt:
+    .byte PET_CR
+    .text " Sie sind verschuldet!"
+    .byte PET_CR
+    .text " Kein Kampf ohne Kohle."
+    .byte PET_CR,0
 
 strInformantTitle:
     .byte PET_CR, PET_CR

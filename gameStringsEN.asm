@@ -897,6 +897,13 @@ strGangwarLoose:
     .text " Casualties "
     .byte 0
 
+strGangwarDebt:
+    .byte PET_CR
+    .text " You are in debt!" 
+    .byte PET_CR
+    .text " No war without wages."
+    .byte PET_CR,0
+
 strInformantTitle:
     .byte PET_CR, PET_CR
     .text " Your informant has a clue for you"

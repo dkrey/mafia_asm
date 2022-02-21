@@ -16,7 +16,7 @@ main:
 
     //getRandomRange32 #$00000000 : randomUpper
     //print_int32 rnd32_result
-    getRandomRange8 #$00 : #$08
+    getRandomRange8 #$01 : #$08
     print_int8 rnd8_result
 
     lda #PET_CR
