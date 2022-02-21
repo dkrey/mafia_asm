@@ -32,7 +32,9 @@ smallTheftPedestrianSuccess:
     jmp smallTheftPedestrianContinue
 
 smallTheftPedestrianPlayer:
+    dec playerCount
     getRandomRange8 #0 : playerCount
+    inc playerCount
     cmp currentPlayerNumber                 // Spielernummer darf nicht gleich sein
     beq smallTheftPedestrianPlayer
 

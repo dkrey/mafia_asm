@@ -185,8 +185,6 @@ smallTheftContinue:
 //===============================================================================
 showMisfortune:
     getRandomRange8 #0 : #7
-    //lda #07             // DEBUG Immer Mutter
-    //sta rnd_result      // DEBUG Immer Mutter
     tax
     lda missfortune_table_low, x
     sta TextPtr
@@ -202,7 +200,11 @@ showMisfortune:
     // Spielernamen auswürfeln und anzeigen
     mov16 #playerNames : TextPtr
 showMisfortuneRndPlayer:
+
+    dec playerCount
     getRandomRange8 #0 : playerCount
+    inc playerCount
+
     cmp currentPlayerNumber                 // Spielernummer darf nicht gleich sein
     beq showMisfortuneRndPlayer
 
