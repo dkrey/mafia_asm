@@ -79,14 +79,16 @@ gameJobContinue2:
     asl
     asl
     tay
+    mov #WHITE : TEXTCOL
     jsr Print_text_offset
+    mov #GREEN : TEXTCOL
 
     // Berufsüberschrift
     mov16 #strTheftJobIntro3 : TextPtr
     jsr Print_text
 
     // Beruf ausknobeln und anzeigen
-    mov #WHITE : TEXTCOL
+    mov #YELLOW : TEXTCOL
     getRandomRange8 #0 : #7
     tax
     lda job_table_low, x
