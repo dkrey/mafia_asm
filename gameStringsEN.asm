@@ -20,30 +20,25 @@ strVersion:
 
 strTitleScreen:
     .byte PET_BLACK
+    .byte PET_CR,PET_CR
+
     .fill 8, PET_SPACE
     .text "Mafia Assembler Edition"
     .byte PET_CR,PET_CR
 
     .fill 8, PET_SPACE
     .fill 23,PET_LINE
-    .byte PET_CR,PET_CR,PET_CR
-    .text "   After a fable by Lascha Saffrenzen"
     .byte PET_CR,PET_CR
 
-    .fill 7, PET_SPACE
-    .text "Content rated: Elderly 80+ "
-    .fill 4,PET_CR
-
-
-
+    .fill 4, PET_SPACE
+    .text "( Content rated: Elderly 80+ )"
+    .byte PET_CR,PET_CR
+    .fill 2, PET_SPACE
+    .text "Copyright 1986 by Lascha Saffrenzen"
+    .fill 6,PET_CR
     .fill 12, PET_SPACE
     .text "(Press any key)"
 
-    .byte PET_RED
-    .fill 5, PET_CR
-    .text "(c)2019 Geriatric state combine for"
-    .byte PET_CR
-    .text "   dung and dataprocessing"
     .byte PET_BLACK, 0
 
 //===============================================================================

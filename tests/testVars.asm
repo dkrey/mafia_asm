@@ -141,7 +141,7 @@ playerMoney:
 // Einkommen: 4 Byte pro Spieler
 playerIncome:
     .dword $00000000
-    .dword $000003e8
+    .dword $0000f3e8
     .dword $00000000
     .dword $00000000
     .dword $00000000
@@ -191,7 +191,7 @@ playerSlotMachines:
     .byte $01
 playerProstitutes:
     .byte $00
-    .byte $00
+    .byte $09
     .byte $09
     .byte $09
     .byte $09
@@ -200,7 +200,7 @@ playerProstitutes:
     .byte $09
 playerBars:
     .byte $08
-    .byte $00
+    .byte $0a
     .byte $0b
     .byte $0c
     .byte $0a
@@ -209,7 +209,7 @@ playerBars:
     .byte $0a
 playerBetting:
     .byte $00
-    .byte $00
+    .byte $03
     .byte $00
     .byte $00
     .byte $00

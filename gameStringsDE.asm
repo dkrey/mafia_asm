@@ -19,20 +19,22 @@ strVersion:
     .byte 0
 strTitleScreen:
     .byte PET_BLACK
+    .byte PET_CR,PET_CR
+
     .fill 8, PET_SPACE
     .text "Mafia Assembler Edition"
     .byte PET_CR,PET_CR
 
     .fill 8, PET_SPACE
     .fill 23,PET_LINE
-    .byte PET_CR,PET_CR,PET_CR
-    .text " Nach einer Fabel von Lascha Saffrenzen"
     .byte PET_CR,PET_CR
 
     .fill 7, PET_SPACE
-    .text "Freigegeben ab 80 Jahren"
-    .fill 4,PET_CR
-
+    .text "(freigegeben ab 80 Jahren)"
+    .byte PET_CR,PET_CR
+    .fill 2, PET_SPACE
+    .text "Copyright 1986 by Lascha Saffrenzen"
+    .fill 6,PET_CR
 
 
     .fill 5, PET_SPACE
@@ -40,9 +42,7 @@ strTitleScreen:
 
     .byte PET_RED
     .fill 5, PET_CR
-    .text "(c)2019 Volksfremdes Kombinat f*r"
-    .byte PET_CR
-    .text "   D*ngemittel und Datenverarbeitung"
+
     .byte PET_BLACK, 0
 
 //===============================================================================

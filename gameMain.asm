@@ -2,9 +2,9 @@
 // Mafia ASM Project
 //
 
-.disk [filename="mafiasm_rc2_de.d64", name="MAFIA ASM" ] {
+.disk [filename="mafiasm_de_rc2.d64", name="MAFIASM" ] {
     [name="----------------", type="rel"],
-    [name="MAFIA ASM       ", type="prg", segments="THEGAME" ],
+    [name="MAFIASM DE RC2  ", type="prg", segments="THEGAME" ],
     [name="----------------", type="rel"],
 }
 

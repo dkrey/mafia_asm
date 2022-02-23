@@ -565,7 +565,7 @@ disasterLoss:
 
 disaster_table_low:
     .byte <strDisasterReason1, <strDisasterReason2, <strDisasterReason3
-    .byte <strDisasterReason4, >strDisasterReason5
+    .byte <strDisasterReason4, <strDisasterReason5
 
 disaster_table_high:
     .byte >strDisasterReason1, >strDisasterReason2, >strDisasterReason3
